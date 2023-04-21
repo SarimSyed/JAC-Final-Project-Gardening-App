@@ -4,24 +4,24 @@ from time import sleep
 import math
 import evdev
 
-from sensors import ISensor, AReading
+from sensors import ISensor, AReading, IAccelerometerCalculate
 
-class Vibration(ISensor):
-    """The pitch of the reTerminal accelerometer in the Geo-Location subsytem.
+class Vibration(ISensor, IAccelerometerCalculate):
+    """The vibration of the reTerminal accelerometer in the Geo-Location subsytem.
 
     Args:
         ISensor (ISensor): Implements the interface.
+        IAccelerometerCalculate (IAccelerometerCalculate): Implements the interface.
     """
 
     def __init__(self, model: str, type: AReading.Type):
-        """Constructor for Pitch  class. May be called from childclass.
+        """Constructor for Vibration  class. May be called from childclass.
         :param str model: specific model of sensor hardware. Ex. GPS (Air530)
-        :param ReadingType type: Type of reading this sensor produces. Ex. 'PITCH'
+        :param ReadingType type: Type of reading this sensor produces. Ex. 'VIBRATION'
         """
 
         # Initialize object variables
         self._acceleration_device = rt.get_acceleration_device()
-
         self._sensor_model = model or "LIS3DHTR"
         self.reading_type = type or AReading.Type.ROLL_ANGLE
 
@@ -29,6 +29,24 @@ class Vibration(ISensor):
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
+
+        # Get the vibration value
+        vibration = self._calculate_value()
+
+        print(f"Vibration: {vibration}")
+
+        return AReading(AReading.Type.VIBRATION,
+                        AReading.Unit.VIBRATION, {
+                            'value': vibration
+                        })
+    
+    def _calculate_value(self) -> float:
+        """Calculates the vibration from the reTerminal accelerometer.
+
+        Returns:
+            float: The vibration from the reTerminal accelerometer.
+        """
+
         x_values = []
         y_values = []
         z_values = []
@@ -56,22 +74,15 @@ class Vibration(ISensor):
                     az1 = z_values.pop()
                     az2 = z_values.pop()
                     
-                    
                     vibration = math.sqrt(
                           math.pow((ax2 - ax1), 2)
                         + math.pow((ay2 - ay1), 2)
                         + math.pow((az2 - az1), 2)
                     )
 
-                    print(f"Vibration: {vibration}")
+                    return vibration
+        return 0
 
-                    return AReading(AReading.Type.VIBRATION,
-                                 AReading.Unit.VIBRATION, {
-                                    'value': vibration
-                                 })
-                
-        return AReading(AReading.Type.ROLL_ANGLE,
-                     AReading.Unit.ROLL_ANGLE, {})
 
 
 if __name__ == "__main__":

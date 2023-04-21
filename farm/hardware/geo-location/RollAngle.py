@@ -3,14 +3,15 @@ import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
 
-from sensors import ISensor, AReading
+from sensors import ISensor, AReading, IAccelerometerCalculate
 
 
-class RollAngle(ISensor):
+class RollAngle(ISensor, IAccelerometerCalculate):
     """The pitch of the reTerminal accelerometer in the Geo-Location subsytem.
 
     Args:
         ISensor (ISensor): Implements the interface.
+        IAccelerometerCalculate (IAccelerometerCalculate): Implements the interface.
     """
 
     def __init__(self, model: str, type: AReading.Type):
@@ -21,7 +22,6 @@ class RollAngle(ISensor):
 
         # Initialize object variables
         self._acceleration_device = rt.get_acceleration_device()
-
         self._sensor_model = model or "LIS3DHTR"
         self.reading_type = type or AReading.Type.ROLL_ANGLE
 
@@ -29,6 +29,24 @@ class RollAngle(ISensor):
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
+        
+        # Get the roll angle value
+        roll_angle = self._calculate_value()
+
+        print(f"Roll Angle: {roll_angle}")
+                
+        return AReading(AReading.Type.ROLL_ANGLE,
+                     AReading.Unit.ROLL_ANGLE, {
+                        'value': roll_angle
+                     })
+    
+    def _calculate_value(self) -> float:
+        """Calculates the rolling angle from the reTerminal accelerometer.
+
+        Returns:
+            float: The rolling angle from the reTerminal accelerometer.
+        """
+
         x_values = []
         y_values = []
         z_values = []
@@ -53,15 +71,9 @@ class RollAngle(ISensor):
                     
                     roll_angle =  180 * math.atan(ax / math.sqrt(ay * ay + az * az)) / math.pi
 
-                    print(f"Roll Angle: {roll_angle}")
+                    return roll_angle
+        return 0
 
-                    return AReading(AReading.Type.ROLL_ANGLE,
-                                 AReading.Unit.ROLL_ANGLE, {
-                                    'value': roll_angle
-                                 })
-                
-        return AReading(AReading.Type.ROLL_ANGLE,
-                     AReading.Unit.ROLL_ANGLE, {})
 
 
 if __name__ == "__main__":

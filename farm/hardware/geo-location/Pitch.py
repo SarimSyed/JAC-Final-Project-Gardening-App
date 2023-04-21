@@ -3,14 +3,15 @@ import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
 
-from sensors import ISensor, AReading
+from sensors import ISensor, AReading, IAccelerometerCalculate
 
 
-class Pitch(ISensor):
+class Pitch(ISensor, IAccelerometerCalculate):
     """The pitch of the reTerminal accelerometer in the Geo-Location subsytem.
 
     Args:
         ISensor (ISensor): Implements the interface.
+        IAccelerometerCalculate (IAccelerometerCalculate): Implements the interface.
     """
 
     def __init__(self, model: str, type: AReading.Type):
@@ -21,7 +22,6 @@ class Pitch(ISensor):
 
         # Initialize object variables
         self._acceleration_device = rt.get_acceleration_device()
-
         self._sensor_model = model or "LIS3DHTR"
         self.reading_type = type or AReading.Type.PITCH
 
@@ -29,6 +29,24 @@ class Pitch(ISensor):
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
+        
+        # Get the pitch value
+        pitch = self._calculate_value()
+
+        print(f"Pitch: {pitch}")
+                
+        return AReading(AReading.Type.PITCH,
+                     AReading.Unit.PITCH, {
+                        'value': pitch
+                     })
+    
+    def _calculate_value(self) -> float:
+        """Calculates the pitch from the reTerminal accelerometer.
+
+        Returns:
+            float: The pitch from the reTerminal accelerometer.
+        """
+
         x_values = []
         y_values = []
         z_values = []
@@ -53,15 +71,9 @@ class Pitch(ISensor):
 
                     pitch = 180 * math.atan(ay / math.sqrt(ax * ax + az * az)) / math.pi
 
-                    print(f"Pitch: {pitch}")
+                    return pitch
+        return 0
 
-                    return AReading(AReading.Type.PITCH,
-                                 AReading.Unit.PITCH, {
-                                    'value': pitch
-                                 })
-                
-        return AReading(AReading.Type.PITCH,
-                     AReading.Unit.PITCH, {})
 
 
 if __name__ == "__main__":

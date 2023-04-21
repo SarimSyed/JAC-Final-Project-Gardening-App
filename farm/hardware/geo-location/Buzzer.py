@@ -39,15 +39,14 @@ class Buzzer(IActuator):
         # Get the value from the dictionnary
         data_value = data["value"]
 
-        # Turn on fan
+        # Turn on buzzer
         if data_value == "on":
             rt.buzzer = True
-        # Turn off fan
+        # Turn off buzzer
         elif data_value == "off":
             rt.buzzer = False
 
         return rt.buzzer 
-
 
 
 
@@ -70,6 +69,7 @@ if __name__ == "__main__":
         fake_fan_command = ACommand(
             ACommand.Type.BUZZER, fake_fan_message_body)
 
+        # Turn on the buzzer
         if buzzer.validate_command(fake_fan_command):
             buzzer.control_actuator({'value': 'on'})
 
@@ -79,6 +79,7 @@ if __name__ == "__main__":
         fake_fan_command_off = ACommand(
             ACommand.Type.BUZZER, fake_fan_message_body_off)
 
+        # Turn off the buzzer
         if buzzer.validate_command(fake_fan_command_off):
             buzzer.control_actuator({'value': 'off'})
 
