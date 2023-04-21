@@ -13,6 +13,8 @@ class AReading:
         TEMPERATURE = 'temperature'
         HUMIDITY = 'humidity'
         GPSLOCATION = 'gps-location'
+        PITCH = 'pitch'
+        ROLL_ANGLE = 'roll-angle'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.

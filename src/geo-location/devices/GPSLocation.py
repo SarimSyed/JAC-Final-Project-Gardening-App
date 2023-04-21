@@ -1,7 +1,8 @@
 import time
-from serial import Serial
+from serial import Serial 
 import pynmea2
 from geopy.geocoders import Nominatim
+
 from sensors import ISensor, AReading
 
 """
@@ -33,7 +34,7 @@ class GPSLocation(ISensor):
         # Initialize object variables
         self._serial = Serial('/dev/ttyAMA0', 9600, timeout=5)
         self._geolocator = Nominatim(user_agent="geo-location")
-        
+
         self._sensor_model = model or "GPS (Air530)"
         self.reading_type = type or AReading.Type.GPSLOCATION 
 
@@ -76,7 +77,7 @@ class GPSLocation(ISensor):
 
                         # Print the coordinates with the number of satellites
                         print(
-                            f'{latitude},{longitude} - from {gps_data.num_sats}satellites')
+                            f'{latitude},{longitude} - from {gps_data.num_sats} satellites')
 
                         # Get the full address location
                         full_address_location = self._geolocator.reverse(
@@ -102,6 +103,9 @@ class GPSLocation(ISensor):
                 ]
         
 
+# serial = Serial('/dev/ttyAMA0', 9600, timeout=1)
+# serial.reset_input_buffer()
+# serial.flush()
 
 if __name__ == "__main__":
 
@@ -118,11 +122,41 @@ if __name__ == "__main__":
         #     line = serial.readline().decode('utf-8')
 
         #     while len(line) > 0:
-        #         print_gps_data()
+        #         # Parses the data line from the UART serial port into gpsdata
+        #             gps_data = pynmea2.parse(line)
 
-        #         # print(f"lat:{lat}, long:{long}")
+        #             # If the parsed data is a position fix message, and isprocessed
+        #             if gps_data.sentence_type == GPSLocation.VALID_MESSAGE_TYPE:
+        #                 # raise Exception(
+        #                 #     f"The sentence type does not match the correcttype ({GPSLocation.VALID_MESSAGE_TYPE}):{gps_data.sentence_type}")
 
-        #         line = serial.readline().decode('utf-8')
+        #                 # Get the latitude value from the gps data
+        #                 latitude = pynmea2.dm_to_sd(gps_data.lat)
+        #                 # Get the longitude value from the gps data
+        #                 longitude = pynmea2.dm_to_sd(gps_data.lon)
+
+        #                 # Correct invalid latitude value
+        #                 if gps_data.lat_dir == 'S':
+        #                     latitude = latitude * -1
+        #                 # Correct invalid longitude value
+        #                 if gps_data.lon_dir == 'W':
+        #                     longitude = longitude * -1
+
+        #                 # Print the coordinates with the number of satellites
+        #                 print(
+        #                     f'{latitude},{longitude} - from {gps_data.num_sats}satellites')
+
+        #                 geolocator = Nominatim(user_agent="my_app")
+
+        #                 # Get the full address location
+        #                 full_address_location = geolocator.reverse(
+        #                     f"{45.40485108245714}, {-74.0238518054506}")
+        #                 # full_address_location = geolocator.reverse(
+        #                 #     f"{latitude}, {longitude}")
+
+        #                 print(full_address_location)
+
+        #             line = serial.readline().decode('utf-8')
 
         #         # time.sleep(1)
 
