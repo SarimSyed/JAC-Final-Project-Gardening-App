@@ -17,6 +17,9 @@ class Noise(ISensor):
     """
 
     ADDRESS = 0x04
+    LOW_VALUES = [80,220]
+    MED_VALUES = [100,180]
+    HIGH_VALUES = [135,155]
 
     def __init__(self, type: AReading.Type = AReading.Type.NOISE, model: str = "Grove-Loudness Sensor V0.9b"):
         """Constructor for the Noise class. Defines the interface's properties. 
@@ -26,49 +29,42 @@ class Noise(ISensor):
         self._sensor_model = model
         self.reading_type = type
 
+        #Sensitivity
+        self._sensitivity = AReading.Sensitivity.MEDIUM.value
+
         #Inizialize adc
         self.noise_adc = ADC(Noise.ADDRESS)
 
-    def read_sensor(self) -> list[AReading]:
+    def read_sensor(self) -> AReading:
         """Takes a reading from the noise sensor
         :return list[AReading]: List of readings measured by the sensor. Most sensors return a list with a single item.
         """
 
-        #Get the sensor reading and returns value
-
+        #Get the sensor reading
         noise_value = self.noise_adc.read(0)
-        return [AReading(AReading.Type.NOISE, 
-                         AReading.Unit.NOISE, noise_value)]
+        #Low sensitivity
+        if(self._sensitivity == AReading.Sensitivity.LOW.value):
+            if(noise_value < Noise.LOW_VALUES[0] or noise_value > Noise.LOW_VALUES[1]):
+                return AReading(AReading.Type.NOISE, {"value": AReading.Response.DETECTED.value})
+            else:
+                return AReading(AReading.Type.NOISE, {"value": AReading.Response.NOT_DETECTED.value})
+        
+        #Medium sensitivity
+        elif(self._sensitivity == AReading.Sensitivity.MEDIUM.value):
+            if(noise_value < Noise.MED_VALUES[0] or noise_value > Noise.MED_VALUES[1]):
+                return AReading(AReading.Type.NOISE, {"value": AReading.Response.DETECTED.value})
+            else:
+                return AReading(AReading.Type.NOISE, {"value": AReading.Response.NOT_DETECTED.value})
+        
+        #High sensitivity
+        else:
+            if(noise_value < Noise.HIGH_VALUES[0] or noise_value > Noise.HIGH_VALUES[1]):
+                return AReading(AReading.Type.NOISE, {"value": AReading.Response.DETECTED.value})
+            else:
+                return AReading(AReading.Type.NOISE, {"value": AReading.Response.NOT_DETECTED.value})
         
 if __name__ == "__main__":
     noise = Noise()
     while True:
         print(noise.read_sensor())
         sleep(1)
-
-
-# class GroveLoudnessSensor:
-
-#     def __init__(self):
-#         self.adc = ADC(0x04)
-
-#     @property
-#     def value(self):
-#         return self.adc.read(0)
-
-# Grove = GroveLoudnessSensor
-
-
-# def main():
-
-#     sensor = GroveLoudnessSensor()
-
-#     print('Detecting loud...')
-#     while True:
-#         value = sensor.value
-#         if value > 10:
-#             print("Loud value {}, Loud Detected.".format(value))
-#             time.sleep(.5)
-
-# if __name__ == '__main__':
-#     main()

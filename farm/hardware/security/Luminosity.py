@@ -17,8 +17,9 @@ class Luminosity(ISensor):
 
         self._sensor_model = model
         self.reading_type = type
+        self._dangervalue = 30
 
-    def read_sensor(self) -> list[AReading]:
+    def read_sensor(self) -> AReading:
         """Takes a reading from the reterminal luminosity sensor
         :return list[AReading]: List of readings measured by the sensor. Most sensors return a list with a single item.
         """
@@ -26,8 +27,11 @@ class Luminosity(ISensor):
         #Get the sensor reading and returns value
 
         light_value = rt.illuminance
-        return [AReading(AReading.Type.LUMINOSITY, 
-                         AReading.Unit.LUMINOSITY, light_value)]
+        if(light_value >= self._dangervalue):
+            return AReading(AReading.Type.LUMINOSITY, {"value": AReading.Response.DETECTED.value})
+        else:
+            return AReading(AReading.Type.LUMINOSITY, {"value": AReading.Response.NOT_DETECTED.value})
+
         
 if __name__ == "__main__":
     light = Luminosity()

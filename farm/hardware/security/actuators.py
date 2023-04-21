@@ -10,8 +10,6 @@ class ACommand:
     class Type(str, Enum):
         """Enum defining types of actuators that can be targets for a command
         """
-        FAN = 'fan'
-        LIGHT_PULSE = 'light-pulse'
         BUZZER = 'buzzer'
         DOORLOCK = 'doorlock'
 

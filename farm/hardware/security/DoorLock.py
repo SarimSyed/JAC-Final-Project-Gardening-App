@@ -1,6 +1,5 @@
 from gpiozero import Servo
 from time import sleep
-import seeed_python_reterminal.core as rt
 from time import sleep
 from actuators import IActuator, ACommand
 
@@ -23,7 +22,7 @@ class DoorLock(IActuator):
         self._current_state = initial_state
 
         #Inizialize actuator
-        self._doorlock_servo = Servo(gpio)
+        self.doorlock_servo = Servo(gpio)
 
     def validate_command(self, command: ACommand) -> bool:
         """Validates that a command can be used with the specific actuator.
@@ -47,14 +46,14 @@ class DoorLock(IActuator):
         isChanged = self._current_state != data_value
 
         #Change current state
-        self._current_state = data_value
+        self._current_state = data
 
         # Unlock door
         if data_value == DoorLock.UNLOCK:
-            self._doorlock_servo.min()
+            self.doorlock_servo.min()
         # lock door
         elif data_value == DoorLock.LOCK:
-            self._doorlock_servo.max()
+            self.doorlock_servo.max()
 
         return isChanged
 
@@ -62,7 +61,7 @@ class DoorLock(IActuator):
 
 
 if __name__ == "__main__":
-    doorLock = DoorLock(12, {})
+    doorLock = DoorLock(12, {"value": "lock"})
 
     while True:
         fake_unlock_message_body = '{"value": "unlock"}'
@@ -82,22 +81,3 @@ if __name__ == "__main__":
             doorLock.control_actuator({'value': 'off'})
 
         sleep(5)
-
-# servo = Servo(12)
-
-# print(servo.value) #0
-# print("Start in the middle")
-# servo.mid()
-# sleep(5)
-# print("Go to min")
-# servo.min() #close -1
-# print(servo.value)
-# sleep(5)
-# print("Go to max")
-# servo.max() #open 1
-# print(servo.value)
-# sleep(5)
-# print("And back to middle")
-# servo.mid()
-# sleep(5)
-# servo.value = None;
