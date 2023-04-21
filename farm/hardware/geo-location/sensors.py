@@ -20,10 +20,11 @@ class AReading:
         """Enum defining all possible units for sensor measuremens.
         """
         # Add new reading units here.
-        CELCIUS = 'C'
+        CELCIUS = '°C'
         HUMIDITY = '% HR'
         LOCATION = 'loc'
         PITCH = 'Hz'
+        ROLL_ANGLE = '°'
 
     def __init__(self, type: Type, unit: Unit, value: dict) -> None:
         """Create new AReading based on a type of reading its units and value

@@ -10,7 +10,7 @@ from geopy.geocoders import Nominatim
 from sensors import ISensor, AReading
 
 
-class Pitch(ISensor):
+class RollAngle(ISensor):
     """The pitch of the reTerminal accelerometer in the Geo-Location subsytem.
 
     Args:
@@ -27,7 +27,7 @@ class Pitch(ISensor):
         self._acceleration_device = rt.get_acceleration_device()
 
         self._sensor_model = model or "LIS3DHTR"
-        self.reading_type = type or AReading.Type.PITCH
+        self.reading_type = type or AReading.Type.ROLL_ANGLE
 
     def read_sensor(self) -> list[AReading]:
         """Takes a reading form the sensor
@@ -54,30 +54,30 @@ class Pitch(ISensor):
                     ax = x_values.pop()
                     ay = y_values.pop()
                     az = z_values.pop()
-
-                    pitch = 180 * math.atan(ay / math.sqrt(ax * ax + az * az)) / math.pi
-
-                    print(f"Pitch: {pitch}")
+                    
+                    roll_angle =  180 * math.atan(ax / math.sqrt(ay * ay + az * az)) / math.pi
+                    
+                    print(f"Pitch: {roll_angle}")
 
                     return [
-                        AReading(AReading.Type.PITCH,
-                                 AReading.Unit.PITCH, {
-                                    'value': pitch
+                        AReading(AReading.Type.ROLL_ANGLE,
+                                 AReading.Unit.ROLL_ANGLE, {
+                                    'value': roll_angle
                                  })
                     ]
                 
         return [
-            AReading(AReading.Type.PITCH,
-                     AReading.Unit.PITCH, {})
+            AReading(AReading.Type.ROLL_ANGLE,
+                     AReading.Unit.ROLL_ANGLE, {})
         ]
 
 
 if __name__ == "__main__":
 
-    pitch_accelerometer = Pitch("LIS3DHTR", AReading.Type.PITCH)
+    roll_angle_accelerometer = RollAngle("LIS3DHTR", AReading.Type.ROLL_ANGLE)
 
     while True:
-        readings = pitch_accelerometer.read_sensor()
+        readings = roll_angle_accelerometer.read_sensor()
 
         for reading in readings:
             print(f"{reading}\n")
