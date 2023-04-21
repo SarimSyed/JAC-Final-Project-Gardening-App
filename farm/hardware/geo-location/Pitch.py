@@ -29,7 +29,7 @@ class Pitch(ISensor):
         self._sensor_model = model or "LIS3DHTR"
         self.reading_type = type or AReading.Type.PITCH
 
-    def read_sensor(self) -> list[AReading]:
+    def read_sensor(self) -> AReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
@@ -59,17 +59,13 @@ class Pitch(ISensor):
 
                     print(f"Pitch: {pitch}")
 
-                    return [
-                        AReading(AReading.Type.PITCH,
+                    return AReading(AReading.Type.PITCH,
                                  AReading.Unit.PITCH, {
                                     'value': pitch
                                  })
-                    ]
                 
-        return [
-            AReading(AReading.Type.PITCH,
+        return AReading(AReading.Type.PITCH,
                      AReading.Unit.PITCH, {})
-        ]
 
 
 if __name__ == "__main__":
@@ -77,11 +73,9 @@ if __name__ == "__main__":
     pitch_accelerometer = Pitch("LIS3DHTR", AReading.Type.PITCH)
 
     while True:
-        readings = pitch_accelerometer.read_sensor()
-
-        for reading in readings:
-            print(f"{reading}\n")
-            sleep(1)
+        reading = pitch_accelerometer.read_sensor()
+        print(f"{reading}\n")
+        sleep(1)
 
 # x_values = []
 # y_values = []

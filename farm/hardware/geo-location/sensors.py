@@ -65,7 +65,7 @@ class ISensor(ABC):
         """
 
     @abstractmethod
-    def read_sensor(self) -> list[AReading]:
+    def read_sensor(self) -> AReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """

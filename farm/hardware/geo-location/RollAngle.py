@@ -29,7 +29,7 @@ class RollAngle(ISensor):
         self._sensor_model = model or "LIS3DHTR"
         self.reading_type = type or AReading.Type.ROLL_ANGLE
 
-    def read_sensor(self) -> list[AReading]:
+    def read_sensor(self) -> AReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
@@ -56,20 +56,16 @@ class RollAngle(ISensor):
                     az = z_values.pop()
                     
                     roll_angle =  180 * math.atan(ax / math.sqrt(ay * ay + az * az)) / math.pi
-                    
+
                     print(f"Pitch: {roll_angle}")
 
-                    return [
-                        AReading(AReading.Type.ROLL_ANGLE,
+                    return AReading(AReading.Type.ROLL_ANGLE,
                                  AReading.Unit.ROLL_ANGLE, {
                                     'value': roll_angle
                                  })
-                    ]
                 
-        return [
-            AReading(AReading.Type.ROLL_ANGLE,
+        return AReading(AReading.Type.ROLL_ANGLE,
                      AReading.Unit.ROLL_ANGLE, {})
-        ]
 
 
 if __name__ == "__main__":
@@ -77,11 +73,9 @@ if __name__ == "__main__":
     roll_angle_accelerometer = RollAngle("LIS3DHTR", AReading.Type.ROLL_ANGLE)
 
     while True:
-        readings = roll_angle_accelerometer.read_sensor()
-
-        for reading in readings:
-            print(f"{reading}\n")
-            sleep(1)
+        reading = roll_angle_accelerometer.read_sensor()
+        print(f"{reading}\n")
+        sleep(1)
 
 # x_values = []
 # y_values = []

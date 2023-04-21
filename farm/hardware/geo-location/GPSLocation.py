@@ -1,4 +1,4 @@
-import time
+from time import sleep
 from serial import Serial 
 import pynmea2
 from geopy.geocoders import Nominatim
@@ -41,7 +41,7 @@ class GPSLocation(ISensor):
         self._serial.reset_input_buffer()
         self._serial.flush()     
 
-    def read_sensor(self) -> list[AReading]:
+    def read_sensor(self) -> AReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
@@ -86,13 +86,11 @@ class GPSLocation(ISensor):
                         print(full_address_location)
 
                         # Return a new reading
-                        return [
-                            AReading(AReading.Type.GPSLOCATION,
+                        return AReading(AReading.Type.GPSLOCATION,
                                     AReading.Unit.LOCATION, 
                                     {
                                         'value': f'({latitude}, {longitude})'
                                     })
-                        ]
 
                     # Read the data line from the GPS
                     data_line = self._serial.readline().decode('utf-8')
@@ -100,10 +98,11 @@ class GPSLocation(ISensor):
             except UnicodeDecodeError:
                 data_line = self._serial.readline().decode('utf-8')
                 
-            return [
-                    AReading(AReading.Type.GPSLOCATION,
-                            AReading.Unit.LOCATION, {})
-                ]
+            return AReading(AReading.Type.GPSLOCATION,
+                                    AReading.Unit.LOCATION, 
+                                    {
+                                        'value': f'(,)'
+                                    })
         
 
 
@@ -112,11 +111,9 @@ if __name__ == "__main__":
     gps_location = GPSLocation("GPS (Air530)", AReading.Type.GPSLOCATION)
 
     while True:
-        readings = gps_location.read_sensor()
-
-        for reading in readings:
-            print(f"Address: {reading}")
-            time.sleep(1)
+        reading = gps_location.read_sensor()
+        print(f"Address: {reading}")
+        sleep(1)
 
         # try:
         #     line = serial.readline().decode('utf-8')
