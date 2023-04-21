@@ -15,22 +15,25 @@ I used this a resource to convert the coordinates into an actual address:
 https://www.geeksforgeeks.org/get-the-city-state-and-country-names-from-latitude-and-longitude-using-python/
 """
 class GPSLocation(ISensor):
-    """Humidity class for a humidity sensor.
-    :args ISensor (Interface): Implements the ISensor interface.
+    """A GPS to track an address location in the Geo-Location subsytem.
+
+    Args:
+        ISensor (ISensor): Implements the interface.
     """
 
     VALID_MESSAGE_TYPE = 'GGA'
 
     # gpio: int, 
     def __init__(self, model: str, type: AReading.Type):
-        """Constructor for Sensor  class. May be called from childclass.
-        :param str model: specific model of sensor hardware. Ex. AHT20 or LTR-303ALS-01
-        :param ReadingType type: Type of reading this sensor produces. Ex. 'TEMPERATURE'
+        """Constructor for GPSLocation  class. May be called from childclass.
+        :param str model: specific model of sensor hardware. Ex. GPS (Air530)
+        :param ReadingType type: Type of reading this sensor produces. Ex. 'GPSLOCATION'
         """
 
         # Initialize object variables
         self._serial = Serial('/dev/ttyAMA0', 9600, timeout=5)
         self._geolocator = Nominatim(user_agent="geo-location")
+        
         self._sensor_model = model or "GPS (Air530)"
         self.reading_type = type or AReading.Type.GPSLOCATION 
 
