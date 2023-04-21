@@ -23,7 +23,7 @@ class DoorLock(IActuator):
         self._current_state = initial_state
 
         #Inizialize actuator
-        self.doorlock_servo = Servo(gpio)
+        self._doorlock_servo = Servo(gpio)
 
     def validate_command(self, command: ACommand) -> bool:
         """Validates that a command can be used with the specific actuator.
@@ -51,10 +51,10 @@ class DoorLock(IActuator):
 
         # Unlock door
         if data_value == DoorLock.UNLOCK:
-            self.doorlock_servo.min()
+            self._doorlock_servo.min()
         # lock door
         elif data_value == DoorLock.LOCK:
-            self.doorlock_servo.max()
+            self._doorlock_servo.max()
 
         return isChanged
 

@@ -19,7 +19,7 @@ class Door(ISensor):
         """
 
         #Inizialize button
-        self.button = Button(gpio)
+        self._button = Button(gpio)
 
         self._sensor_model = model
         self.reading_type = type
@@ -30,7 +30,7 @@ class Door(ISensor):
         """
 
         #Get the sensor reading and returns appropriate value
-        if(self.button.is_held == True):
+        if(self._button.is_held == True):
                door_value = Door.CLOSED
                return [AReading(AReading.Type.DOOR, 
                                 AReading.Unit.NONE, door_value)]

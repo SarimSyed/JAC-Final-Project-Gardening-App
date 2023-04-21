@@ -25,7 +25,7 @@ class Motion(ISensor):
       self.reading_type = type
 
       #Inizialize sensor
-      self.motion_sensor = grove_mini_pir_motion_sensor.GroveMiniPIRMotionSensor(gpio)
+      self._motion_sensor = grove_mini_pir_motion_sensor.GroveMiniPIRMotionSensor(gpio)
 
    def read_sensor(self) -> list[AReading]:
       """Takes a reading from the motion sensor
@@ -33,7 +33,7 @@ class Motion(ISensor):
       """
 
       # Get the sensor reading and returns value
-      if (self.motion_sensor.read() == 0):
+      if (self._motion_sensor.read() == 0):
          return [AReading(AReading.Type.MOTION,
                            AReading.Unit.NONE, Motion.NOT_DETECTED)]
       else:
