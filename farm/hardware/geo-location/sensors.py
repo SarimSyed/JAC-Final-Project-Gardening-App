@@ -22,9 +22,10 @@ class AReading:
         # Add new reading units here.
         CELCIUS = 'C'
         HUMIDITY = '% HR'
-        LOCATION = ''
+        LOCATION = 'loc'
+        PITCH = 'Hz'
 
-    def __init__(self, type: Type, unit: Unit, value: str) -> None:
+    def __init__(self, type: Type, unit: Unit, value: dict) -> None:
         """Create new AReading based on a type of reading its units and value
         :param Type type: Type of reading taken from Type enum.
         :param Unit unit: Readings units taken from Unit enum.

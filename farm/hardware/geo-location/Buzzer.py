@@ -63,7 +63,7 @@ if __name__ == "__main__":
 
     #     sleep(2)
 
-    buzzer = Buzzer(ACommand.Type.BUZZER, {})
+    buzzer = Buzzer(ACommand.Type.BUZZER, {'value': 'off'})
 
     while True:
         fake_fan_message_body = '{"value": "on"}'

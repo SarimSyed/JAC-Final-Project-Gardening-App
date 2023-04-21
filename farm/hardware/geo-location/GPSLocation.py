@@ -83,12 +83,15 @@ class GPSLocation(ISensor):
                         full_address_location = self._geolocator.reverse(
                             f"{latitude}, {longitude}")
 
-                        # print(full_address_location)
+                        print(full_address_location)
 
                         # Return a new reading
                         return [
                             AReading(AReading.Type.GPSLOCATION,
-                                    AReading.Unit.LOCATION, str(full_address_location))
+                                    AReading.Unit.LOCATION, 
+                                    {
+                                        'value': f'({latitude}, {longitude})'
+                                    })
                         ]
 
                     # Read the data line from the GPS
@@ -99,13 +102,10 @@ class GPSLocation(ISensor):
                 
             return [
                     AReading(AReading.Type.GPSLOCATION,
-                            AReading.Unit.LOCATION, str(full_address_location))
+                            AReading.Unit.LOCATION, {})
                 ]
         
 
-# serial = Serial('/dev/ttyAMA0', 9600, timeout=1)
-# serial.reset_input_buffer()
-# serial.flush()
 
 if __name__ == "__main__":
 
