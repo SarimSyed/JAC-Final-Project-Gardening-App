@@ -14,6 +14,8 @@ class Vibration(ISensor, IAccelerometerCalculate):
         IAccelerometerCalculate (IAccelerometerCalculate): Implements the interface.
     """
 
+    VALUE_COUNT = 2
+
     def __init__(self, model: str, type: AReading.Type):
         """Constructor for Vibration  class. May be called from childclass.
         :param str model: specific model of sensor hardware. Ex. GPS (Air530)
@@ -47,33 +49,45 @@ class Vibration(ISensor, IAccelerometerCalculate):
             float: The vibration from the reTerminal accelerometer.
         """
 
+        # Initialize acceleration value arrays
         x_values = []
         y_values = []
         z_values = []
 
+        # Loop through the acceleration readings
         for event in self._acceleration_device.read_loop():
+
+            # Get the current accelerometer reading
             accelEvent = rt_accel.AccelerationEvent(event)
 
             if accelEvent.name != None:
                 # print(f"name={str(accelEvent.name)} value={accelEvent.value}")
 
+                # Add the 'X' acceleration value
                 if accelEvent.name == rt_accel.AccelerationName.X:
                     x_values.append(accelEvent.value)
+                # Add the 'Y' acceleration value
                 elif accelEvent.name == rt_accel.AccelerationName.Y:
                     y_values.append(accelEvent.value)
+                # Add the 'Z' acceleration value
                 elif accelEvent.name == rt_accel.AccelerationName.Z:
                     z_values.append(accelEvent.value)
 
-                if len(x_values) >= 2 and len(y_values) >= 2 and len(z_values) >= 2:
-                    ax1 = x_values.pop()
+                # Only calculate vibration if minimum of 2 X,Y,Z acceleration values to compare absolute acceleration
+                if len(x_values) >= Vibration.VALUE_COUNT and len(y_values) >= Vibration.VALUE_COUNT and len(z_values) >= Vibration.VALUE_COUNT:
+                    # Get 2 'X' values
                     ax2 = x_values.pop()
+                    ax1 = x_values.pop()
 
-                    ay1 = y_values.pop()
+                    # Get 2 'Y' values
                     ay2 = y_values.pop()
+                    ay1 = y_values.pop()
 
-                    az1 = z_values.pop()
+                    # Get 2 'Z' values
                     az2 = z_values.pop()
+                    az1 = z_values.pop()
                     
+                    # Calculate the vibration value
                     vibration = math.sqrt(
                           math.pow((ax2 - ax1), 2)
                         + math.pow((ay2 - ay1), 2)
