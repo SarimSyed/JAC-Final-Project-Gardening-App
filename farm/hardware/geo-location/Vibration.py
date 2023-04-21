@@ -4,62 +4,81 @@ from time import sleep
 import math
 import evdev
 
-# from smbus2 import SMBus, i2c_msg
+from sensors import ISensor, AReading
 
-# # Open i2c bus 1 and read one byte from address 80, offset 0
-# with SMBus(1) as bus:
-#     msg = i2c_msg.read(0x19, 80)
-#     bus.i2c_rdwr(msg)
+class Vibration(ISensor):
+    """The pitch of the reTerminal accelerometer in the Geo-Location subsytem.
 
-# import smbus
-# import time
-# import adafruit_lis3dh
+    Args:
+        ISensor (ISensor): Implements the interface.
+    """
 
-# # Initialize I2C bus
-# i2c = smbus.SMBus(1)
+    def __init__(self, model: str, type: AReading.Type):
+        """Constructor for Pitch  class. May be called from childclass.
+        :param str model: specific model of sensor hardware. Ex. GPS (Air530)
+        :param ReadingType type: Type of reading this sensor produces. Ex. 'PITCH'
+        """
 
-# Initialize LIS3DH sensor object
-# lis3dh = adafruit_lis3dh.LIS3DH_I2C(i2c)
+        # Initialize object variables
+        self._acceleration_device = rt.get_acceleration_device()
 
-# # Set the range of the accelerometer (optional)
-# # lis3dh.range = adafruit_lis3dh.RANGE_4_G
+        self._sensor_model = model or "LIS3DHTR"
+        self.reading_type = type or AReading.Type.ROLL_ANGLE
 
-# # Main loop
-# while True:
-#     # Read the acceleration values
-#     accel_x, accel_y, accel_z = lis3dh.acceleration
+    def read_sensor(self) -> AReading:
+        """Takes a reading form the sensor
+        :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
+        """
+        x_values = []
+        y_values = []
+        z_values = []
 
-#     # Print the acceleration values
-#     print("Acceleration (m/s^2): X={0:.2f}, Y={1:.2f}, Z={2:.2f}".format(accel_x, accel_y, accel_z))
+        for event in self._acceleration_device.read_loop():
+            accelEvent = rt_accel.AccelerationEvent(event)
 
-#     # Wait for some time before reading again
-#     time.sleep(0.1)
+            if accelEvent.name != None:
+                # print(f"name={str(accelEvent.name)} value={accelEvent.value}")
+
+                if accelEvent.name == rt_accel.AccelerationName.X:
+                    x_values.append(accelEvent.value)
+                elif accelEvent.name == rt_accel.AccelerationName.Y:
+                    y_values.append(accelEvent.value)
+                elif accelEvent.name == rt_accel.AccelerationName.Z:
+                    z_values.append(accelEvent.value)
+
+                if len(x_values) >= 2 and len(y_values) >= 2 and len(z_values) >= 2:
+                    ax1 = x_values.pop()
+                    ax2 = x_values.pop()
+
+                    ay1 = y_values.pop()
+                    ay2 = y_values.pop()
+
+                    az1 = z_values.pop()
+                    az2 = z_values.pop()
+                    
+                    
+                    vibration = math.sqrt(
+                          math.pow((ax2 - ax1), 2)
+                        + math.pow((ay2 - ay1), 2)
+                        + math.pow((az2 - az1), 2)
+                    )
+
+                    print(f"Vibration: {vibration}")
+
+                    return AReading(AReading.Type.VIBRATION,
+                                 AReading.Unit.VIBRATION, {
+                                    'value': vibration
+                                 })
+                
+        return AReading(AReading.Type.ROLL_ANGLE,
+                     AReading.Unit.ROLL_ANGLE, {})
 
 
-device = rt.get_acceleration_device() 
+if __name__ == "__main__":
 
+    vibration_accelerometer = Vibration("LIS3DHTR", AReading.Type.VIBRATION)
 
-while True:
-    for event in device.read_loop():
-        accelEvent = rt_accel.AccelerationEvent(event)
-
-        if accelEvent.name != None:
-            print(f"name={str(accelEvent.name)} value={accelEvent.value}")
-
-        # pitch = math.atan2(accelEvent.value)
-
-        # sleep(0.5)
-
-    
-
-    g: float = 9.81
-    roll = math.atan2(11,-1161)
-    srqt = math.sqrt(math.pow(11, 2) + math.pow(-1161, 2))
-    pitch = math.atan2(-(-42), srqt)
-    vibration = math.sqrt(math.pow(-42, 2) + math.pow(11, 2) + math.pow(-1161, 2))
-
-    print(f"roll: {roll}  |  pitch: {pitch}  |  vibration: {vibration}")
-
-    # sleep(0.5)
-
-
+    while True:
+        reading = vibration_accelerometer.read_sensor()
+        print(f"{reading}\n")
+        sleep(1)

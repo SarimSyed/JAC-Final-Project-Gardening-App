@@ -15,6 +15,7 @@ class AReading:
         GPSLOCATION = 'gps-location'
         PITCH = 'pitch'
         ROLL_ANGLE = 'roll-angle'
+        VIBRATION = 'vibration'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
@@ -25,6 +26,7 @@ class AReading:
         LOCATION = 'loc'
         PITCH = 'Hz'
         ROLL_ANGLE = '°'
+        VIBRATION = 'm/s2'
 
     def __init__(self, type: Type, unit: Unit, value: dict) -> None:
         """Create new AReading based on a type of reading its units and value

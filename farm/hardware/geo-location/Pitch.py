@@ -2,10 +2,6 @@ import seeed_python_reterminal.core as rt
 import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
-import asyncio
-from serial import Serial
-import pynmea2
-from geopy.geocoders import Nominatim
 
 from sensors import ISensor, AReading
 

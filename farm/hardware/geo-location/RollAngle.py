@@ -2,10 +2,6 @@ import seeed_python_reterminal.core as rt
 import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
-import asyncio
-from serial import Serial
-import pynmea2
-from geopy.geocoders import Nominatim
 
 from sensors import ISensor, AReading
 
@@ -57,7 +53,7 @@ class RollAngle(ISensor):
                     
                     roll_angle =  180 * math.atan(ax / math.sqrt(ay * ay + az * az)) / math.pi
 
-                    print(f"Pitch: {roll_angle}")
+                    print(f"Roll Angle: {roll_angle}")
 
                     return AReading(AReading.Type.ROLL_ANGLE,
                                  AReading.Unit.ROLL_ANGLE, {
