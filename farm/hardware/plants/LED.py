@@ -28,6 +28,12 @@ class Led(IActuator):
 
     def control_actuator(self, data: dict) -> bool:
         
+        test = str(data)
+        test = test.replace("\'", "\"")
+        if self.validate_command(ACommand(ACommand.Type.LED, test)) == False:
+            #invalid command so we exit
+            return False
+        
         data_value = data["value"]
 
         if(self._current_state["value"] == data_value):
