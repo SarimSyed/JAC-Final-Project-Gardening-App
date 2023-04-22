@@ -11,8 +11,10 @@ class ACommand:
         """Enum defining types of actuators that can be targets for a command
         """
         FAN = 'fan'
-        LIGHT_PULSE = 'light-pulse'
+        LIGHT_PULSE = 'light-pulse' #I dont see a use for pulsing lights for use with plants
         BUZZER = 'buzzer'
+        LED = 'light'
+
 
 
     def __init__(self, target: Type, raw_message_body: str) -> None:
