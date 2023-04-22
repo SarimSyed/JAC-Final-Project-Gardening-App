@@ -60,9 +60,7 @@ class GPSLocation(ISensor):
 
                     # If the parsed data is a position fix message, and isprocessed
                     if gps_data.sentence_type == GPSLocation.VALID_MESSAGE_TYPE:
-                        # raise Exception(
-                        #     f"The sentence type does not match the correcttype ({GPSLocation.VALID_MESSAGE_TYPE}):{gps_data.sentence_type}")
-
+                        
                         # Get the latitude value from the gps data
                         latitude = pynmea2.dm_to_sd(gps_data.lat)
                         # Get the longitude value from the gps data

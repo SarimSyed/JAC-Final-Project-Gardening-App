@@ -61,7 +61,6 @@ class Vibration(ISensor, IAccelerometerCalculate):
             accelEvent = rt_accel.AccelerationEvent(event)
 
             if accelEvent.name != None:
-                # print(f"name={str(accelEvent.name)} value={accelEvent.value}")
 
                 # Add the 'X' acceleration value
                 if accelEvent.name == rt_accel.AccelerationName.X:
