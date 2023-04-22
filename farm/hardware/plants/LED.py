@@ -21,6 +21,7 @@ class Led(IActuator):
         self.set_max_brightness()
         #self.led.show()
         self.brightness = Led.LIGHT_BRIGHT
+        print(self.validate_command(initial_state))
 
         if initial_state == Led.LIGHT_ON: 
             self.set_max_brightness()
@@ -61,7 +62,7 @@ class Led(IActuator):
     
     def validate_command(self, command: ACommand) -> bool:
         
-        cmd = str(command.data.get("value")).lower()
+        cmd = str(command.get("value")).lower()
         
         return command.target_type == self.type and (cmd == Led.LIGHT_BRIGHT or cmd == Led.LIGHT_MEDIUM or cmd == Led.LIGHT_OFF or cmd == Led.LIGHT_ON)
 
