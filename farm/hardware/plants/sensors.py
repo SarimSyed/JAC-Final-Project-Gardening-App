@@ -13,6 +13,7 @@ class AReading:
         TEMPERATURE = 'temperature'
         HUMIDITY = 'humidity'
         WATER_LEVEL = 'water'
+        SOIL_WATER_MOISTURE = 'soil-water-moisture'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
