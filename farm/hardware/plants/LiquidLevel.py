@@ -4,12 +4,12 @@ from grove.gpio import GPIO
 from time import sleep
 
 
-class WaterSensor(ISensor):
+class LiquidLevelSensor(ISensor):
     def __init__(self, gpio: int, model: str, type: AReading.Type.WATER_LEVEL):
         super().__init__(gpio, model, type)
 
         #self.gpio = GPIO(gpio)
-        self.adc = ADC(0x03)
+        self.adc = ADC(0x04)
         self._sensor_model = model or "Liquid-Level-Sensor"
         self.reading_type = type or AReading.Type.WATER_LEVEL
         
@@ -20,7 +20,7 @@ class WaterSensor(ISensor):
 
 
 if __name__ == "__main__":
-    temp = WaterSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
+    temp = LiquidLevelSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
     while True:
         print(temp.read_sensor().value)
         sleep(0.5)

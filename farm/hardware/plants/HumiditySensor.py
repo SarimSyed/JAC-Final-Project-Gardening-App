@@ -1,6 +1,6 @@
 from sensors import ISensor, AReading
 from grove.grove_temperature_humidity_aht20 import GroveTemperatureHumidityAHT20 as Sensor
-
+from time import sleep
 
 
 
@@ -33,3 +33,4 @@ if __name__ == "__main__":
     temp = HumiditySensor(6, "AHT20", AReading.Type.HUMIDITY )
     while True:
         print(temp.read_sensor().value)
+        sleep(1)
