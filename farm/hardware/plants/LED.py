@@ -1,6 +1,7 @@
 from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip
 from actuators import IActuator, ACommand
 from time import sleep
+from grove import i2c
 
 class Led(IActuator):
 
@@ -21,18 +22,14 @@ class Led(IActuator):
         self.set_max_brightness()
         #self.led.show()
         self.brightness = Led.LIGHT_BRIGHT
-        print(self.validate_command(initial_state))
+        
 
         if initial_state == Led.LIGHT_ON: 
             self.set_max_brightness()
 
     def control_actuator(self, data: dict) -> bool:
         
-        test = str(data)
-        test = test.replace("\'", "\"")
-        if self.validate_command(ACommand(ACommand.Type.LED, test)) == False:
-            #invalid command so we exit
-            return False
+
         
         data_value = data["value"]
 
@@ -68,7 +65,7 @@ class Led(IActuator):
     
     def validate_command(self, command: ACommand) -> bool:
         
-        cmd = str(command.get("value")).lower()
+        cmd = str(command.data.get("value")).lower()
         
         return command.target_type == self.type and (cmd == Led.LIGHT_BRIGHT or cmd == Led.LIGHT_MEDIUM or cmd == Led.LIGHT_OFF or cmd == Led.LIGHT_ON)
 
@@ -103,16 +100,20 @@ class Led(IActuator):
 
 if __name__ == "__main__":
     led = Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
-
+    fake_msg = '{"value": "light-off"}'
+    test_off_cmd = ACommand(ACommand.Type.LED, fake_msg)
+    fake_msg = '{"value": "light-on"}'
+    test_on_cmd = ACommand(ACommand.Type.LED, fake_msg)
     while True:
-
-        led.control_actuator({"value": Led.LIGHT_OFF})
+        test = led.validate_command(test_off_cmd)
+        if test:
+            led.control_actuator({"value": Led.LIGHT_OFF})
         sleep(2)
-        led.control_actuator({'value':Led.LIGHT_BRIGHT})
-
-        led.control_actuator({"value": Led.LIGHT_ON})
-        sleep(2)
-        led.control_actuator({'value': Led.LIGHT_MEDIUM})
+        # led.control_actuator({'value':Led.LIGHT_BRIGHT})
+        if led.validate_command(test_on_cmd):
+            led.control_actuator({"value": Led.LIGHT_ON})
+        # sleep(2)
+        # led.control_actuator({'value': Led.LIGHT_MEDIUM})
         sleep(2)
 
         

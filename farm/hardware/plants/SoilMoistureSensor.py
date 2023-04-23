@@ -7,6 +7,8 @@ from time import sleep
 
 
 class SoilMoistureSensor(ISensor):
+    #readings on the sensor seem to be flipped so will subtract from this value instead of just taking the raw reading
+    SENSOR_CORRECTION_VAL = 2200
     def __init__(self, gpio: int, model: str, type: AReading.Type):
         """SoilMoistureSensor handles the moisture sensor and allows user to read its value.
 
@@ -30,7 +32,7 @@ class SoilMoistureSensor(ISensor):
             AReading: Type MOISTURE, returns an AReading object with the information about the moisture as well as the current value that was read.
         """
         #Currently returning the voltage reading from the 
-        self.value = self.sensor.moisture
+        self.value = SoilMoistureSensor.SENSOR_CORRECTION_VAL - self.sensor.moisture
         temp = AReading(AReading.Type.MOISTURE, AReading.Unit.MOISTURE, self.value)
         return temp
 

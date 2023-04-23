@@ -24,11 +24,7 @@ class Fan(IActuator):
             self.relay.off()
 
     def control_actuator(self, data: dict) -> bool:
-        test = str(data)
-        test = test.replace("\'", "\"")
-        if self.validate_command(ACommand(ACommand.Type.FAN, test)) == False:
-            #invalid command so we exit
-            return False
+
         
         data_value = data["value"]
         # state unchanged so we just return right away
