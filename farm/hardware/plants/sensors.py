@@ -22,6 +22,7 @@ class AReading:
         CELCIUS = 'C'
         HUMIDITY = '% HR'
         WATER_LEVEL = "V"
+        MOISTURE = "mV"
 
     def __init__(self, type: Type, unit: Unit, value: str) -> None:
         """Create new AReading based on a type of reading its units and value
