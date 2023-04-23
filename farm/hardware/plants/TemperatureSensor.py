@@ -17,11 +17,11 @@ class TemperatureSensor(ISensor):
 
     def read_sensor(self) -> AReading:
         (temp, humid) = self.sensor.read()
-        self.value = temp
-        return AReading(AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, temp)
+        self.value = round(temp, 2)
+        return AReading(AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, self.value)
         
     
 if __name__ == "__main__":
     temp = TemperatureSensor(100, "AHT20", AReading.Type.HUMIDITY )
     while True:
-        print(temp.read_sensor().value)
+        print(temp.read_sensor())

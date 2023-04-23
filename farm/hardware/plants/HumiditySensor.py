@@ -23,13 +23,13 @@ class HumiditySensor(ISensor) :
         
         #Return humidity
         (temp, humid) = self.sensor.read()
-        self.value = humid                                                                                    
+        self.value = round(humid, 2)                                                                                    
 
-        return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, humid)
+        return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, self.value)
 
     
 if __name__ == "__main__":
     temp = HumiditySensor(6, "AHT20", AReading.Type.HUMIDITY )
     while True:
-        print(temp.read_sensor().value)
+        print(temp.read_sensor())
         sleep(1)
