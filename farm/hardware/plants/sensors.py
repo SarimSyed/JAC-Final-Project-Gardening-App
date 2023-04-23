@@ -12,8 +12,8 @@ class AReading:
         # Add new reading types here.
         TEMPERATURE = 'temperature'
         HUMIDITY = 'humidity'
-        WATER_LEVEL = 'water'
-        SOIL_WATER_MOISTURE = 'soil-water-moisture'
+        WATER_LEVEL = 'water-level-sensor'
+        MOISTURE = 'soil-moisture'
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
@@ -21,7 +21,7 @@ class AReading:
         # Add new reading units here.
         CELCIUS = 'C'
         HUMIDITY = '% HR'
-        WATER_LEVEL = "V"
+        WATER_LEVEL = "% submerged"
         MOISTURE = "mV"
 
     def __init__(self, type: Type, unit: Unit, value: str) -> None:

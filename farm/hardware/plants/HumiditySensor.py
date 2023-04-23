@@ -7,7 +7,6 @@ from time import sleep
 
 class HumiditySensor(ISensor) :
 
-
     SENSOR_BUS = 4
     SENSOR_ADDRESS = 0x38
     def __init__(self, gpio: int, model: str, type: AReading.Type) -> None:

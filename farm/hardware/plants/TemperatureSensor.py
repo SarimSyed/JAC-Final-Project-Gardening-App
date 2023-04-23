@@ -22,6 +22,6 @@ class TemperatureSensor(ISensor):
         
     
 if __name__ == "__main__":
-    temp = TemperatureSensor(6, "AHT20", AReading.Type.HUMIDITY )
+    temp = TemperatureSensor(100, "AHT20", AReading.Type.HUMIDITY )
     while True:
         print(temp.read_sensor().value)
