@@ -8,9 +8,24 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models
 {
+    /// <summary>
+    /// This class stores information related to the plants inside a container. It stores the 
+    /// temperature and humidity of the container and water level and soil level of the plants. 
+    /// It also keeps track of the status of the fan and light inside the container.
+    /// </summary>
     public class Plant : INotifyPropertyChanged
     {
+        //Private data members
         private double temperature;
+        private double humidity;
+        private double soilLevel;
+        private double waterLevel;
+        private bool light;
+        private bool fan;
+
+        /// <summary>
+        /// The temperature value inside the container.
+        /// </summary>
         public double Temperature
         {
             get { return temperature; }
@@ -20,7 +35,9 @@ namespace ContainerFarm.Models
                 }
         }
 
-        private double humidity;
+        /// <summary>
+        /// The humidity percentage inside the container.
+        /// </summary>
         public double Humidity
         {
             get { return humidity; }
@@ -31,7 +48,9 @@ namespace ContainerFarm.Models
             }
         }
 
-        private double soilLevel;
+        /// <summary>
+        /// The soil level of the plants inside the container.
+        /// </summary>
         public double SoilLevel
         {
             get { return soilLevel; }
@@ -42,7 +61,9 @@ namespace ContainerFarm.Models
             }
         }
 
-        private double waterLevel;
+        /// <summary>
+        /// The water level of the plants inside the container.
+        /// </summary>
         public double WaterLevel
         {
             get { return waterLevel; }
@@ -52,7 +73,10 @@ namespace ContainerFarm.Models
                 OnPropertyChanged();
             }
         }
-        private bool light;
+
+        /// <summary>
+        /// The status of the light (if the light is on) inside the container.
+        /// </summary>
         public bool Light
         {
             get { return light; }
@@ -63,8 +87,28 @@ namespace ContainerFarm.Models
             }
         }
 
+        /// <summary>
+        /// The status of the fan (if the fan is on) inside the container.
+        /// </summary>
+        public bool Fan
+        {
+            get { return fan; }
+            set
+            {
+                fan = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Invokes property changed event for a property whose value changed.
+        /// </summary>
+        /// <param name="name">The name of the property that changed.</param>
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

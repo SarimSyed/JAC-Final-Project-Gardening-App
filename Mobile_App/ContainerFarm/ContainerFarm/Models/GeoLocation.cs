@@ -8,9 +8,23 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models
 {
+    /// <summary>
+    /// This class stores information related to the geo-location of a container. It stores the 
+    /// address, pitch angle, roll angle and vibration levels of the container. It also keeps track of the 
+    /// status of the buzzer inside the container.
+    /// </summary>
     public class GeoLocation : INotifyPropertyChanged
     {
+        //Private data members
         private string address;
+        private double pitchAngle;
+        private double rollAngle;
+        private double vibrationLevel;
+        private bool buzzer;
+
+        /// <summary>
+        /// The location(address) of the container.
+        /// </summary>
         public string Address
         {
             get { return address; }
@@ -21,7 +35,9 @@ namespace ContainerFarm.Models
             }
         }
 
-        private double pitchAngle;
+        /// <summary>
+        /// The pitch angle of the container.
+        /// </summary>
         public double PitchAngle
         {
             get { return pitchAngle; }
@@ -32,7 +48,9 @@ namespace ContainerFarm.Models
             }
         }
 
-        private double rollAngle;
+        /// <summary>
+        /// The roll angle of the container.
+        /// </summary>
         public double RollAngle
         {
             get { return rollAngle; }
@@ -43,7 +61,9 @@ namespace ContainerFarm.Models
             }
         }
 
-        private double vibrationLevel;
+        /// <summary>
+        /// The vibration levels of the container.
+        /// </summary>
         public double VibrationLevel
         {
             get { return vibrationLevel; }
@@ -54,7 +74,9 @@ namespace ContainerFarm.Models
             }
         }
 
-        private bool buzzer;
+        /// <summary>
+        /// The status of the buzzer (if the buzzer is on) inside the container.
+        /// </summary>
         public bool Buzzer
         {
             get { return buzzer; }
@@ -65,8 +87,15 @@ namespace ContainerFarm.Models
             }
         }
 
+        /// <summary>
+        /// Property changed event handler
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Invokes property changed event for a property whose value changed.
+        /// </summary>
+        /// <param name="name">The name of the property that changed.</param>
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
