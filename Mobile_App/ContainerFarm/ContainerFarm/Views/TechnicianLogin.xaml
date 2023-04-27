@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.TechnicianLogin"
+             Title="Technician Login">
+    <VerticalStackLayout>
+
+        <Label 
+            Text="Login: Technician"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <Frame BackgroundColor="LightPink"
+               Margin="10">
+            <VerticalStackLayout Margin="5">
+                <HorizontalStackLayout>
+                  
+                </HorizontalStackLayout>
+                <Label Text="Username" FontAttributes="Bold"/>
+                <Border Stroke="Black" StrokeThickness="3" 
+                        StrokeShape="RoundRectangle 5,5,5,5">
+                <Entry Placeholder="Username" BackgroundColor="White"
+                       x:Name="usernameEntry"/>
+                </Border>
+                <Label Text="Password" FontAttributes="Bold"/>
+                <Border Stroke="Black" StrokeThickness="3" 
+                        StrokeShape="RoundRectangle 5,5,5,5">
+                    <Entry IsPassword="True" Placeholder="Password" BackgroundColor="White"
+                           x:Name="passwordEntry"/>
+
+                </Border>
+                <Button Text="Sign In" Margin="10" Clicked="SignInBtn_Clicked"/> 
+            </VerticalStackLayout>
+        </Frame>
+    </VerticalStackLayout>
+</ContentPage>

@@ -4,11 +4,59 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ContainerFarm"
+    xmlns:views="clr-namespace:ContainerFarm.Views"
+    xmlns:technician="clr-namespace:ContainerFarm.Views.Technician"
+    
+    
     Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <TabBar Route="Login"
+            >
+        <Tab
+            >
+            
+        <ShellContent
+            Title="Fleet"
+        ContentTemplate="{DataTemplate views:FleetOwnerLogin}"
+         />
+        <ShellContent 
+            Title="Tech"
+            ContentTemplate="{DataTemplate views:TechnicianLogin}"/>
+        </Tab>
+    </TabBar>
+    
+
+    <TabBar
+        Route="Technician" 
+        FlyoutDisplayOptions="AsMultipleItems">
+
+        <Tab Title="Devices">
+            
+            <ShellContent Title="My Container"
+                      ContentTemplate="{DataTemplate technician:DeviceView}"/>
+            <ShellContent Title="Temperature/Humidity"
+                          ContentTemplate="{DataTemplate technician:TemperatureHumidityView}" />
+            <ShellContent Title="Soil/Water" 
+                          ContentTemplate="{DataTemplate technician:SoilWaterView}"/>
+
+        </Tab>
+        <Tab Title="Graphs">
+            <ShellContent Title="GraphView"
+                      ContentTemplate="{DataTemplate technician:GraphView}"
+                          IsVisible="False"/>
+            <ShellContent Title="Temperature/Humidity"
+                          ContentTemplate="{DataTemplate technician:TemperatureHumidityView}" />
+            <ShellContent Title="Soil/Water" 
+                          ContentTemplate="{DataTemplate technician:SoilWaterView}"/>
+
+        </Tab>
+        <!--<Tab Title="Test">
+            <ShellContent Title="Temperature/Humidity"
+                          ContentTemplate="{DataTemplate technician:TemperatureHumidityView}" />
+            <ShellContent Title="Soil/Water" 
+                          ContentTemplate="{DataTemplate technician:SoilWaterView}"/>
+        </Tab>-->
+
+    </TabBar>
 
 </Shell>
