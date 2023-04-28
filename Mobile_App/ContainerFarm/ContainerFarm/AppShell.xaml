@@ -31,13 +31,9 @@
         FlyoutDisplayOptions="AsMultipleItems">
 
         <Tab Title="Devices">
-            
+
             <ShellContent Title="My Container"
                       ContentTemplate="{DataTemplate technician:DeviceView}"/>
-            <ShellContent Title="Temperature/Humidity"
-                          ContentTemplate="{DataTemplate technician:TemperatureHumidityView}" />
-            <ShellContent Title="Soil/Water" 
-                          ContentTemplate="{DataTemplate technician:SoilWaterView}"/>
 
         </Tab>
         <Tab Title="Graphs">
