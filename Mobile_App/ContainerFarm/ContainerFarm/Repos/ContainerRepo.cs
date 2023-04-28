@@ -8,14 +8,24 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Repos
 {
-    internal static class ContainerRepo
+    internal class ContainerRepo
     {
-        static private ObservableCollection<Container> _containers;
+         private ObservableCollection<Container> _containers;
 
-        
+        public ContainerRepo()
+        {
+            InitializeRepo();
+        }
 
+        public ObservableCollection<Container> Containers
+        {
+            get
+            {
+                return _containers;
+            }
+        }
 
-        static public ObservableCollection<Container> InitializeRepo()
+        public void InitializeRepo()
         {
             _containers = new ObservableCollection<Container>();
 
@@ -25,7 +35,7 @@ namespace ContainerFarm.Repos
                 SecurityDetails = new Models.Security() { Buzzer = false, Door = false, DoorLock = false, Luminosity = false, Motion = false, Noise = false }
             });
 
-            return _containers;
+           
         }
 
     }

@@ -50,6 +50,7 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\addbtn.png" />
+	  <None Remove="Resources\Images\container.png" />
 	</ItemGroup>
 
 	<ItemGroup>
