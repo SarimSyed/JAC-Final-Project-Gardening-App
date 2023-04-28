@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContainerFarm.Views.FleetOwner.ContainerViewLocation"
              xmlns:models="clr-namespace:ContainerFarm.Models"
-             Title="ContainerViewLocation">
+             Title="Container Locations">
     <VerticalStackLayout>
         <CollectionView
             Margin="10"
@@ -36,6 +36,8 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
+                                
+                                <!--Containers-->
                                 <Image x:Name="containerNameLbl"
                                        Grid.RowSpan="2"
                                        Source="container"

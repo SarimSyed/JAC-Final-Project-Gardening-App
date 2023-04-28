@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContainerFarm.Views.FleetOwner.ContainerViewSecurity"
              xmlns:models="clr-namespace:ContainerFarm.Models"
-             
-             Title="Security">
+             Title="Container Security">
     <VerticalStackLayout>
         <ScrollView>
             <CollectionView
@@ -24,10 +23,13 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
+                            
+                            <!--Containers-->
                                 <Image Source="container.png" Grid.RowSpan="2" WidthRequest="80" Margin="0,0,20,0"/>
                                 <Button Grid.Column="1" Text="{Binding Name}" Clicked="ContainerButton_Clicked" BackgroundColor="LightSeaGreen" TextColor="Black" 
                                         FontSize="Medium" FontAttributes="Bold"/>
                                 <Label Text="0 Issues" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0"/>
+                            
                             </Grid>
                         </Frame>
                     </DataTemplate>
