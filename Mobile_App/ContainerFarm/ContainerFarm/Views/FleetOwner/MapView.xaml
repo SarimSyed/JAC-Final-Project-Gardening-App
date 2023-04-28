@@ -4,5 +4,8 @@
              x:Class="ContainerFarm.Views.FleetOwner.MapView"
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              Title="MapView">
-    <maps:Map x:Name="map" MapType="Hybrid" />
+    <!--<maps:Map x:Name="map" MapType="Hybrid" />-->
+    <Grid ColumnDefinitions="1*">
+        <Image Source="map_image.png"/>
+    </Grid>
 </ContentPage>

@@ -8,7 +8,7 @@ public partial class MapView : ContentPage
 	{
 		InitializeComponent();
 
-        Map map = new Map();
-        Content = map;
+        //Map map = new Map();
+        //Content = map;
     }
 }
