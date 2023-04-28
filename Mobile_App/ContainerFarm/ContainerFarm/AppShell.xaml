@@ -11,21 +11,24 @@
     
     Shell.FlyoutBehavior="Disabled">
 
-    <TabBar Route="Login"
+    <!--<TabBar Route="Login"
             >
-        <Tab
-            >
+        --><!--<Tab
+            >--><!--
             
         <ShellContent
             Title="Fleet"
         ContentTemplate="{DataTemplate views:FleetOwnerLogin}"
          />
-        <ShellContent 
+        --><!--<ShellContent 
             Title="Tech"
             ContentTemplate="{DataTemplate views:TechnicianLogin}"/>
-        </Tab>
-    </TabBar>
-    
+        </Tab>--><!--
+    </TabBar>-->
+    <ShellContent Route="Login"
+            Title="Login"
+        ContentTemplate="{DataTemplate views:FleetOwnerLogin}"
+         />
 
     <TabBar
         Route="Technician" 

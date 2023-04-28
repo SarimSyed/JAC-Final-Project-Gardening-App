@@ -4,6 +4,7 @@
              x:Class="ContainerFarm.Views.Technician.HumidityView"
              xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              xmlns:models="clr-namespace:ContainerFarm.Models"
+             xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
              Title="HumidityView">
     <Grid RowDefinitions="auto,1*,1*"
           Padding="10">
@@ -28,6 +29,7 @@
             <Frame
                 HeightRequest="250"
                 CornerRadius="20">
+                
                 <Image Source="wireframe_chart.png"/>
             </Frame>
         </VerticalStackLayout>
@@ -56,6 +58,19 @@
                             <models:Plant 
                                 Temperature="24"
                                />
+                            <models:Plant 
+                                Temperature="24"
+                               />
+                            <models:Plant 
+                                Temperature="24"
+                               />
+                            <models:Plant 
+                                Temperature="24"
+                               />
+                            <models:Plant 
+                                Temperature="24"
+                               />
+                            
                         </x:Array>
                     </CollectionView.ItemsSource>
                     <CollectionView.ItemTemplate>
