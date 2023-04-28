@@ -12,7 +12,7 @@
                 <DataTemplate x:DataType="models:Container">
                     <SwipeView>
                         <SwipeView.LeftItems>
-                            
+
                             <SwipeItem Text="Edit"
                                        BackgroundColor="CornflowerBlue"
                                        CommandParameter="{Binding .}"
@@ -25,28 +25,31 @@
                                        BackgroundColor="Red"
                                        Invoked="SwipeItem_Invoked" />
                         </SwipeView.RightItems>
-                    <Frame Margin="10">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.RowSpan="2"
+                        <Frame Margin="10">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image x:Name="containerNameLbl"
+                                   Grid.RowSpan="2"
                                    Source="container"/>
-                            <Label Grid.Column="1"
+                                <Button Grid.Column="1"
+                                    x:Name="nameBtn"
                                    Text="{Binding Name}"
+                                    Clicked="View_Clicked"
                                    FontAttributes="Bold"/>
-                            <Label Grid.Column="1"
+                                <Label Grid.Column="1"
                                    Grid.Row="1"
                                    Text="{Binding GeoLocationDetails.Address}"/>
+                            </Grid>
 
-                        </Grid>
-                        
-                    </Frame>
+                        </Frame>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

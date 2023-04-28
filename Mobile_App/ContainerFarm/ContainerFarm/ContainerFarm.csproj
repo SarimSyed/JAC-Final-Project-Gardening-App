@@ -79,6 +79,12 @@
 	  <MauiXaml Update="Views\FleetOwnerLogin.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\FleetOwner\ContainerLocationInfo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\FleetOwner\ContainerSecurityInfo.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\FleetOwner\ContainerViewLocation.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

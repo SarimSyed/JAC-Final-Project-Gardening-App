@@ -25,7 +25,7 @@
                                     <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                                 <Image Source="container.png" Grid.RowSpan="2"/>
-                                <Label Grid.Column="1" Text="{Binding Name}"/>
+                                <Button Grid.Column="1" Text="{Binding Name}" Clicked="ContainerButton_Clicked"/>
                                 <Label Text="2 Issues" Grid.Column="1" Grid.Row="1"/>
                                 <Button Grid.Column="3" Grid.Row="1" Text="O" HorizontalOptions="End"/>
 

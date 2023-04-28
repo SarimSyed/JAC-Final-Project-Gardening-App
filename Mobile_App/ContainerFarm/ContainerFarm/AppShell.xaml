@@ -78,8 +78,8 @@
         <ShellContent Title="Geo-Location"
                       ContentTemplate="{DataTemplate fleetowner:ContainerViewLocation}"
                       Icon="container.png"/>
-        <ShellContent Title="Test" 
-                      ContentTemplate="{DataTemplate fleetowner:MapView}"
+        <ShellContent Title="Security" 
+                      ContentTemplate="{DataTemplate fleetowner:ContainerViewSecurity}"
                        Icon="marker.png"/>
             
         </Tab>

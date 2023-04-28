@@ -13,20 +13,33 @@ namespace ContainerFarm.Models
     /// noise, motion and luminosity detection (detected or not detected) and the status of the door (open or closed).
     /// It also keeps track of the status of the buzzer and door lock of the container
     /// </summary>
-    public class Security :INotifyPropertyChanged
+    public class Security : INotifyPropertyChanged
     {
+        //Enum
+        public enum Detection
+        {
+            Detected,
+            NotDetected
+        };
+
+        public enum OpenClosed
+        {
+            Open,
+            Closed
+        };
+
         //Private data members
-        private bool noise;
-        private bool luminosity;
-        private bool motion;
-        private bool door;
+        private Detection noise;
+        private Detection luminosity;
+        private Detection motion;
+        private OpenClosed door;
         private bool doorLock;
         private bool buzzer;
-        
+
         /// <summary>
         /// Noise detection inside the container (if noise is detected).
         /// </summary>
-        public bool Noise
+        public Detection Noise
         {
             get { return noise; }
             set
@@ -39,7 +52,7 @@ namespace ContainerFarm.Models
         /// <summary>
         /// Luminosity detection inside the container (if light is detected).
         /// </summary>
-        public bool Luminosity
+        public Detection Luminosity
         {
             get { return luminosity; }
             set
@@ -52,7 +65,7 @@ namespace ContainerFarm.Models
         /// <summary>
         /// Motion detection inside the container (if movement is detected).
         /// </summary>
-        public bool Motion
+        public Detection Motion
         {
             get { return motion; }
             set
@@ -65,7 +78,7 @@ namespace ContainerFarm.Models
         /// <summary>
         /// The status of the door of the container (if the door is open).
         /// </summary>
-        public bool Door
+        public OpenClosed Door
         {
             get { return door; }
             set
@@ -81,9 +94,10 @@ namespace ContainerFarm.Models
         public bool DoorLock
         {
             get { return doorLock; }
-            set { 
-                    doorLock = value;
-                    OnPropertyChanged();
+            set
+            {
+                doorLock = value;
+                OnPropertyChanged();
             }
         }
 
