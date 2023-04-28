@@ -28,7 +28,7 @@
             <Frame
                 HeightRequest="250"
                 CornerRadius="20">
-                
+                <Image Source="wireframe_chart.png"/>
             </Frame>
         </VerticalStackLayout>
             <!--Series="{Binding Series}"-->

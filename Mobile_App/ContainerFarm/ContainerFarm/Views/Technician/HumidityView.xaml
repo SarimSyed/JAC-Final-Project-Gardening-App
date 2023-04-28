@@ -28,7 +28,7 @@
             <Frame
                 HeightRequest="250"
                 CornerRadius="20">
-                
+                <Image Source="wireframe_chart.png"/>
             </Frame>
         </VerticalStackLayout>
             <!--Series="{Binding Series}"-->
@@ -43,7 +43,10 @@
             />-->
             <Frame
                 HeightRequest="250"
-                CornerRadius="20">
+                CornerRadius="20" 
+                Padding="0"
+                Margin="0"
+                BorderColor="{StaticResource Primary}">
                 <CollectionView>
                     <CollectionView.ItemsSource>
                         <x:Array Type="{x:Type models:Plant}">
@@ -57,20 +60,30 @@
                     </CollectionView.ItemsSource>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <HorizontalStackLayout
-                                Spacing="100">
-                                <HorizontalStackLayout HorizontalOptions="Start">
-                                    <Label
+                            <!--<Border Padding="15,10"
+                                    Margin="0"
+                                    >-->
+                            <VerticalStackLayout>
+                                <VerticalStackLayout Padding="15,10">
+                                    <HorizontalStackLayout
+                                Spacing="115">
+                                        <HorizontalStackLayout HorizontalOptions="Start">
+                                            <Label
                                         Text="Temp: "/>
-                                    <Label
+                                            <Label
                                         Text="24 %"/>
-                                </HorizontalStackLayout>
+                                        </HorizontalStackLayout>
 
-                                <HorizontalStackLayout HorizontalOptions="End">
-                                    <Label
+                                        <HorizontalStackLayout HorizontalOptions="End">
+                                            <Label
                                         Text="April 2, 2023 12:23 PM"/>
-                                </HorizontalStackLayout>
-                            </HorizontalStackLayout>
+                                        </HorizontalStackLayout>
+                                    </HorizontalStackLayout>
+
+                                </VerticalStackLayout>
+                                    <Line HeightRequest="1" BackgroundColor="Black"/>
+                            </VerticalStackLayout>
+                            <!--</Border>-->
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
