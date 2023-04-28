@@ -25,7 +25,7 @@ public partial class ContainerSecurityInfo : ContentPage
         }
     }
 
-    private void BuzzerSwitch_PropertyChanged_1(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void BuzzerSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         Switch buzzerSwitch = sender as Switch;
         if (buzzerSwitch.IsToggled)

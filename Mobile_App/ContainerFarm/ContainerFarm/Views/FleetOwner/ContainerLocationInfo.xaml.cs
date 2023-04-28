@@ -7,25 +7,10 @@ public partial class ContainerLocationInfo : ContentPage
     public ContainerLocationInfo(Container container)
     {
         InitializeComponent();
-        BindingContext = container.SecurityDetails;
+        BindingContext = container.GeoLocationDetails;
     }
 
-    private void DoorLockSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-    {
-        Switch doorLockSwitch = sender as Switch;
-        if (doorLockSwitch.IsToggled)
-        {
-            doorLockStatus.Text = "ON";
-            doorLockStatus.TextColor = Colors.DarkGreen;
-        }
-        else
-        {
-            doorLockStatus.Text = "OFF";
-            doorLockStatus.TextColor = Colors.Red;
-        }
-    }
-
-    private void BuzzerSwitch_PropertyChanged_1(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void BuzzerSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         Switch buzzerSwitch = sender as Switch;
         if (buzzerSwitch.IsToggled)

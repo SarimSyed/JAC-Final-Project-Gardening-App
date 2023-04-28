@@ -49,7 +49,7 @@
 
         <!--Buzzer-->
         <Label Text="Buzzer" Grid.Row="5" Grid.Column="0" Margin="25,0" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
-        <Switch IsToggled="{Binding Buzzer}" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="1" PropertyChanged="BuzzerSwitch_PropertyChanged_1"/>
+        <Switch IsToggled="{Binding Buzzer}" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="1" PropertyChanged="BuzzerSwitch_PropertyChanged"/>
         <Label x:Name="buzzerStatus" Grid.Row="5" Grid.Column="1" Margin="20,0,0,0" VerticalOptions="Center"/>
 
 
