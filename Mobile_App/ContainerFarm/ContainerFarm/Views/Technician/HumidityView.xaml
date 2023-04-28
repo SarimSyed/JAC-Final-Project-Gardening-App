@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.Technician.HumidityView"
+             xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             xmlns:models="clr-namespace:ContainerFarm.Models"
+             Title="HumidityView">
+    <Grid RowDefinitions="auto,1*,1*"
+          Padding="10">
+        <!--<Picker 
+                Grid.Row="0"
+            x:Name="charts_pc"
+            SelectedIndexChanged="charts_pc_SelectedIndexChanged">
+            <Picker.Items>
+                <x:String>Pie Chart</x:String>
+                <x:String>Gauge Chart</x:String>
+            </Picker.Items>
+        </Picker>-->
+
+        <VerticalStackLayout Grid.Row="1">
+            <Label
+                Text="Data over the last x days"/>
+
+            <!--<charts:PieChart
+            x:Name="pie_chart"
+            TooltipTextSize="40"
+            />-->
+            <Frame
+                HeightRequest="250"
+                CornerRadius="20">
+                
+            </Frame>
+        </VerticalStackLayout>
+            <!--Series="{Binding Series}"-->
+
+        <VerticalStackLayout Grid.Row="2">
+            <Label
+                Text="More data over the last x days"/>
+
+            <!--<charts:PieChart
+            x:Name="pie_chart"
+            TooltipTextSize="40"
+            />-->
+            <Frame
+                HeightRequest="250"
+                CornerRadius="20">
+                <CollectionView>
+                    <CollectionView.ItemsSource>
+                        <x:Array Type="{x:Type models:Plant}">
+                            <models:Plant 
+                                Temperature="14"
+                               />
+                            <models:Plant 
+                                Temperature="24"
+                               />
+                        </x:Array>
+                    </CollectionView.ItemsSource>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout
+                                Spacing="100">
+                                <HorizontalStackLayout HorizontalOptions="Start">
+                                    <Label
+                                        Text="Temp: "/>
+                                    <Label
+                                        Text="24 %"/>
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout HorizontalOptions="End">
+                                    <Label
+                                        Text="April 2, 2023 12:23 PM"/>
+                                </HorizontalStackLayout>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
