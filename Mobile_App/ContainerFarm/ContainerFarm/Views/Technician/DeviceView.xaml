@@ -3,10 +3,68 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContainerFarm.Views.Technician.DeviceView"
              Title="DeviceView">
-    <VerticalStackLayout>
-        <Label 
-            Text="All the device info will be displayed here"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+    <VerticalStackLayout Padding="8">
+        <Label Text="Container Devices" FontSize="Large" FontAttributes="Bold" Margin="0,0,0,10"/>
+
+        <!--Temperature-->
+        <Frame CornerRadius="15" Padding="10" BackgroundColor="LightGreen" Margin="0,8">
+            <HorizontalStackLayout>
+                <Image Source="temperature.png" WidthRequest="45"/>
+                <Label Text="Temperature" VerticalOptions="Center" WidthRequest="150" Margin="10,0,0,0"/>
+                <Label Text="{Binding Temperature, StringFormat='{0:F2} C'}" VerticalOptions="Center" Margin="80,0,0,0"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!--Humidity-->
+        <Frame CornerRadius="15" Padding="10" BackgroundColor="LightGreen" Margin="0,8">
+            <HorizontalStackLayout>
+                <Image Source="humidity.png" WidthRequest="45"/>
+                <Label Text="Humidity" VerticalOptions="Center" WidthRequest="150" Margin="10,0,0,0"/>
+                <Label Text="{Binding Humidity, StringFormat='{0:F2} %'}" VerticalOptions="Center" Margin="80,0,0,0" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!--Soil-->
+        <Frame CornerRadius="15" Padding="10" BackgroundColor="LightGreen" Margin="0,8">
+            <HorizontalStackLayout>
+                <Image Source="soil.png" WidthRequest="45"/>
+                <Label Text="Soil" VerticalOptions="Center" WidthRequest="150" Margin="10,0,0,0"/>
+                <Label Text="{Binding SoilLevel, StringFormat='{0:F2} mV'}" VerticalOptions="Center" Margin="80,0,0,0" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!--Water-->
+        <Frame CornerRadius="15" Padding="10" BackgroundColor="LightGreen" Margin="0,8">
+            <HorizontalStackLayout>
+                <Image Source="water.png" WidthRequest="45"/>
+                <Label Text="Water" VerticalOptions="Center" WidthRequest="150" Margin="10,0,0,0"/>
+                <Label Text="{Binding WaterLevel, StringFormat='{0:F2} %'}" VerticalOptions="Center" Margin="80,0,0,0" />
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!--Light-->
+        <Frame CornerRadius="15" Padding="10" BackgroundColor="LightGreen" Margin="0,8">
+            <HorizontalStackLayout>
+                <Image Source="light.png" WidthRequest="45"/>
+                <Label Text="Light" VerticalOptions="Center" WidthRequest="150" Margin="10,0,0,0"/>
+                <VerticalStackLayout>
+                    <Switch IsToggled="{Binding Light}" Margin="80,0,0,0" PropertyChanged="LightSwitch_PropertyChanged"/>
+                    <Label x:Name="lightStatus" HorizontalOptions="End"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!--Fan-->
+        <Frame CornerRadius="15" Padding="10" BackgroundColor="LightGreen" Margin="0,8">
+            <HorizontalStackLayout>
+                <Image Source="fan.png" WidthRequest="45"/>
+                <Label Text="Fan" VerticalOptions="Center" WidthRequest="150" Margin="10,0,0,0"/>
+                <VerticalStackLayout>
+                    <Switch IsToggled="{Binding Fan}" Margin="80,0,0,0" PropertyChanged="FanSwitch_PropertyChanged"/>
+                    <Label x:Name="fanStatus" HorizontalOptions="End"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </Frame>
+
     </VerticalStackLayout>
 </ContentPage>
