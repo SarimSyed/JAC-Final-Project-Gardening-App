@@ -5,7 +5,7 @@
              Title="MapView">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="MAP"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
     </VerticalStackLayout>

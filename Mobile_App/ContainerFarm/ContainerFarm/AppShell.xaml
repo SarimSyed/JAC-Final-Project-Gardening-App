@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:ContainerFarm"
     xmlns:views="clr-namespace:ContainerFarm.Views"
     xmlns:technician="clr-namespace:ContainerFarm.Views.Technician"
+    xmlns:fleetowner="clr-namespace:ContainerFarm.Views.FleetOwner"
     
     
     Shell.FlyoutBehavior="Disabled">
@@ -58,5 +59,21 @@
         </Tab>-->
 
     </TabBar>
+    <TabBar 
+        Route="FleetOwner"
+        FlyoutDisplayOptions="AsMultipleItems">
 
+        <Tab Title="Geo-Location">
+        <ShellContent Title="Geo-Location"
+                      ContentTemplate="{DataTemplate fleetowner:ContainerViewLocation}"/>
+        <ShellContent Title="Test" 
+                      ContentTemplate="{DataTemplate fleetowner:MapView}"/>
+            
+        </Tab>
+        <Tab Title="Map">
+            <ShellContent Title="Map" 
+                          ContentTemplate="{DataTemplate fleetowner:MapView}"/>
+        </Tab>
+
+    </TabBar>
 </Shell>

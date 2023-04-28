@@ -26,8 +26,9 @@
                         StrokeShape="RoundRectangle 5,5,5,5">
                     <Entry IsPassword="True" Placeholder="Password" BackgroundColor="White"
                            x:Name="password"/>
-
+                    
                 </Border>
+                <Label x:Name="errorLbl" Text="" TextColor="Red" Margin="5"/>
                 <Button Text="Sign In" Margin="10" Clicked="SignInBtn_Clicked"/>
             </VerticalStackLayout>
         </Frame>
