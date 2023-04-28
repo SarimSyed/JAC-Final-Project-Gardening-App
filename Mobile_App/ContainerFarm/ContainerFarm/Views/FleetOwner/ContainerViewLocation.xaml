@@ -12,6 +12,7 @@
                 <DataTemplate x:DataType="models:Container">
                     <SwipeView>
                         <SwipeView.LeftItems>
+                            
                             <SwipeItem Text="Edit"
                                        BackgroundColor="CornflowerBlue"
                                        CommandParameter="{Binding .}"

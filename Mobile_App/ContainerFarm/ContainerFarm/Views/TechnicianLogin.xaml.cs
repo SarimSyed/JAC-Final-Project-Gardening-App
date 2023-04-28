@@ -6,11 +6,12 @@ namespace ContainerFarm.Views;
 public partial class TechnicianLogin : ContentPage
 {
 	//Only using this to test the login page, login functionality will shortly be implemented
-	private const string USERNAME = "userT";
-	private const string PASSWORD = "passT";
+	private const string USERNAME = "user@email.com";
+	private const string PASSWORD = "password";
 	public TechnicianLogin()
 	{
 		InitializeComponent();
+        Debug_Options();
 	}
 
     private async void SignInBtn_Clicked(object sender, EventArgs e)
@@ -56,5 +57,10 @@ public partial class TechnicianLogin : ContentPage
 		}
 
 
+    }
+    private void Debug_Options()
+    {
+        usernameEntry.Text = USERNAME; 
+        passwordEntry.Text = PASSWORD;
     }
 }

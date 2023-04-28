@@ -6,11 +6,12 @@ namespace ContainerFarm.Views;
 
 public partial class FleetOwnerLogin : ContentPage
 {
-    private const string USERNAME = "userF";
-    private const string PASSWORD = "passF";
+    private const string USERNAME = "user@email.com";
+    private const string PASSWORD = "password";
     public FleetOwnerLogin()
 	{
 		InitializeComponent();
+        Debug_Options();
 	}
     private async void SignInBtn_Clicked(object sender, EventArgs e)
     {
@@ -65,6 +66,14 @@ public partial class FleetOwnerLogin : ContentPage
             await DisplayAlert("Exception Thrown", $"{ex.Message}", "OK");
         }
 
+
+    }
+
+    private void Debug_Options()
+    {
+
+        username.Text = USERNAME; 
+        password.Text = PASSWORD;
 
     }
 
