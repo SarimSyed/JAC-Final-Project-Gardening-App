@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:ContainerFarm"
     xmlns:views="clr-namespace:ContainerFarm.Views"
     xmlns:technician="clr-namespace:ContainerFarm.Views.Technician"
+    xmlns:fleetowner="clr-namespace:ContainerFarm.Views.FleetOwner"
     
     
     Shell.FlyoutBehavior="Disabled">
@@ -30,22 +31,33 @@
         Route="Technician" 
         FlyoutDisplayOptions="AsMultipleItems">
 
-        <Tab Title="Devices">
+        <Tab Title="Devices"
+             Icon="temperature_control.png">
 
             <ShellContent Title="My Container"
                       ContentTemplate="{DataTemplate technician:DeviceView}"/>
 
         </Tab>
-        <Tab Title="Graphs">
+        <Tab Title="Graphs"
+             Icon="line_chart.png">
             <ShellContent Title="GraphView"
                       ContentTemplate="{DataTemplate technician:GraphView}"
                           IsVisible="False"/>
-            <ShellContent Title="Temperature/Humidity"
-                          ContentTemplate="{DataTemplate technician:TemperatureHumidityView}" />
-            <ShellContent Title="Soil/Water" 
-                          ContentTemplate="{DataTemplate technician:SoilWaterView}"/>
+            <ShellContent Title="Temperature"
+                          ContentTemplate="{DataTemplate technician:TemperatureView}"
+                          Icon="temperature.png" />
 
+            <ShellContent Title="Humidity"
+                          ContentTemplate="{DataTemplate technician:HumidityView}" 
+                          Icon="humidity.png"/>
+            <ShellContent Title="Soil" 
+                          ContentTemplate="{DataTemplate technician:SoilWaterView}"
+                          Icon="soil.png" />
+            <ShellContent Title="Water" 
+                          ContentTemplate="{DataTemplate technician:SoilWaterView}"
+                          Icon="water.png"/>
         </Tab>
+        
         <!--<Tab Title="Test">
             <ShellContent Title="Temperature/Humidity"
                           ContentTemplate="{DataTemplate technician:TemperatureHumidityView}" />
@@ -54,5 +66,25 @@
         </Tab>-->
 
     </TabBar>
+    <TabBar 
+        Route="FleetOwner"
+        FlyoutDisplayOptions="AsMultipleItems">
 
+        <Tab Title="Geo-Location"
+             Icon="container.png">
+        <ShellContent Title="Geo-Location"
+                      ContentTemplate="{DataTemplate fleetowner:ContainerViewLocation}"
+                      Icon="container.png"/>
+        <ShellContent Title="Test" 
+                      ContentTemplate="{DataTemplate fleetowner:MapView}"
+                       Icon="marker.png"/>
+            
+        </Tab>
+        <Tab Title="Map"
+             Icon="marker.png">
+            <ShellContent Title="Map" 
+                          ContentTemplate="{DataTemplate fleetowner:MapView}"/>
+        </Tab>
+
+    </TabBar>
 </Shell>

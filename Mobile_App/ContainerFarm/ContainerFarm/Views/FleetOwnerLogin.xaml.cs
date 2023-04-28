@@ -1,3 +1,7 @@
+using ContainerFarm.Services;
+using Firebase.Auth;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace ContainerFarm.Views;
 
 public partial class FleetOwnerLogin : ContentPage
@@ -14,14 +18,45 @@ public partial class FleetOwnerLogin : ContentPage
 
         try
         {
-            if (password.Text == PASSWORD && username.Text == USERNAME)
+
+            //Check internet connection
+            NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
+
+            if (networkAccess != NetworkAccess.Internet)
             {
-                await Shell.Current.GoToAsync("//Technician");
+                throw new Exception("No Internet connection.");
+            }
+            var client = AuthService.Client;
+            var result = await client.FetchSignInMethodsForEmailAsync(username.Text);
+            if (result.UserExists && result.AllProviders.Contains(FirebaseProviderType.EmailAndPassword))
+            {
+                AuthService.UserCreds = await client.SignInWithEmailAndPasswordAsync(username.Text, password.Text);
+                await Shell.Current.GoToAsync("//FleetOwner");
+
             }
             else
             {
-                await DisplayAlert("Error", "Username or Password incorrect", "Ok");
+                errorLbl.Text = "Email and/or password incorrect";
             }
+
+
+
+            //login using hardcoded value
+            //if (password.Text == PASSWORD && username.Text == USERNAME)
+            //{
+            //    await Shell.Current.GoToAsync("//Technician");
+
+            //}
+            //else
+            //{
+            //    await DisplayAlert("Error", "Username or Password incorrect", "Ok");
+            //}
+
+        }
+        catch(FirebaseAuthException ex)
+        {
+            await DisplayAlert("Error", $"{ex.Reason}", "Ok");
+
 
         }
         catch (Exception ex)
@@ -32,4 +67,5 @@ public partial class FleetOwnerLogin : ContentPage
 
 
     }
+
 }

@@ -49,6 +49,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\addbtn.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FirebaseAuthentication.net" Version="4.0.2" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-beta.701" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 		<PackageReference Include="Microsoft.Maui.Controls.Maps" Version="7.0.81" />
 		<PackageReference Include="PropertyChanged.Fody" Version="4.1.0" />
@@ -57,6 +63,12 @@
 	<ItemGroup>
 	  <Compile Update="Views\TechnicianLogin.xaml.cs">
 	    <DependentUpon>TechnicianLogin.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Technician\HumidityView.xaml.cs">
+	    <DependentUpon>HumidityView.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Technician\TemperatureView.xaml.cs">
+	    <DependentUpon>TemperatureView.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
@@ -94,7 +106,10 @@
 	  <MauiXaml Update="Views\Technician\SoilWaterView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Technician\TemperatureHumidityView.xaml">
+	  <MauiXaml Update="Views\Technician\HumidityView.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Technician\TemperatureView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

@@ -29,6 +29,7 @@
                            x:Name="passwordEntry"/>
 
                 </Border>
+                <Label x:Name="errorLbl" Text="" TextColor="Red" Margin="5" />
                 <Button Text="Sign In" Margin="10" Clicked="SignInBtn_Clicked"/> 
             </VerticalStackLayout>
         </Frame>
