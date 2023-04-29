@@ -12,7 +12,7 @@ public partial class ContainerLocationInfo : ContentPage
     public ContainerLocationInfo(Container container)
     {
         InitializeComponent();
-        BindingContext = container.GeoLocationDetails;
+        BindingContext = container.Location;
         Title = "Geo-Location: " + container.Name;
     }
 

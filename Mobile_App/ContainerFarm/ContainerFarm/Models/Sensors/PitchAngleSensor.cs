@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ContainerFarm.Models.Sensors
 {
-    class PitchAngleSensor : ISensor
+    public class PitchAngleSensor : ISensor
     {
         public string Name
         {

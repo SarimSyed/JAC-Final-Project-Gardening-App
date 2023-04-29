@@ -51,23 +51,23 @@
                 BorderColor="{StaticResource Primary}">
                 <CollectionView>
                     <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type models:Plant}">
-                            <models:Plant 
+                        <x:Array Type="{x:Type models:PlantOld}">
+                            <models:PlantOld 
                                 Temperature="14"
                                />
-                            <models:Plant 
+                            <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:Plant 
+                            <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:Plant 
+                            <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:Plant 
+                            <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:Plant 
+                            <models:PlantOld 
                                 Temperature="24"
                                />
                             

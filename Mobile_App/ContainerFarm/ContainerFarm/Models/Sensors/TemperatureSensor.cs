@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ContainerFarm.Models.Sensors
 {
-    class TemperatureSensor : ISensor
+    public class TemperatureSensor : ISensor
     {
         public string Name
         {

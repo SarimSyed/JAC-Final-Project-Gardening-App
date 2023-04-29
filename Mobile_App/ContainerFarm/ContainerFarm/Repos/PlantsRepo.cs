@@ -9,7 +9,7 @@ namespace ContainerFarm.Repos
 {
     class PlantsRepo
     {
-        public Plant plant = new Plant()
+        public PlantOld plant = new PlantOld()
         {
             Temperature = 15.158,
             Humidity = 25,

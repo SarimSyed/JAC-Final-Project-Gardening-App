@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models.Sensors
 {
-    class WaterLevelSensor : ISensor
+    public class WaterLevelSensor : Sensor
     {
-        public string Name { get; set; }
-        public float Value { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

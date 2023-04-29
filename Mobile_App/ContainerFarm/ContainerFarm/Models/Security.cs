@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace ContainerFarm.Models
 {
-    class Security : INotifyPropertyChanged
+    public class Security : INotifyPropertyChanged
     {
         //Enum
         public enum Detection
@@ -38,12 +38,30 @@ namespace ContainerFarm.Models
             buzzerActuator = new BuzzerActuator();
         }
 
-        public NoiseSensor NoiseSensor { get { return noiseSensor; } }
-        public LuminositySensor LuminositySensor { get { return luminositySensor; } }
-        public MotionSensor MotionSensor { get { return motionSensor; } }
-        public DoorSensor DoorSensor { get { return doorSensor; } }
-        public DoorlockActuator DoorlockActuator { get { return doorlockActuator; } }
-        public BuzzerActuator BuzzerActuator { get { { return buzzerActuator; } } }
+        public NoiseSensor NoiseSensor { get { return noiseSensor; } set { noiseSensor = value; } }
+        public LuminositySensor LuminositySensor { get { return luminositySensor; }
+            set
+            {
+                luminositySensor = value;
+            } }
+        public MotionSensor MotionSensor { get { return motionSensor; }
+            set
+            {
+                motionSensor = value;
+            } }
+        public DoorSensor DoorSensor { get { return doorSensor; }
+            set
+            {
+                doorSensor = value;
+            } }
+        public DoorlockActuator DoorlockActuator { get { return doorlockActuator; }
+            set
+            {
+                doorlockActuator = value;
+            } }
+        public BuzzerActuator BuzzerActuator { get { { return buzzerActuator; } } set { buzzerActuator = value; } }
+
+
 
 
     }

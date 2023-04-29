@@ -8,10 +8,33 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models.Sensors
 {
-    class DoorSensor : ISensor
+    public class DoorSensor : ISensor
     {
+        public enum OpenClosed
+        {
+            Open,
+            Closed
+        };
         public string Name { get; set; }
         public float Value { get; set; }
+
+        public string Detected
+        {
+            get
+            {
+                if (Value == 1)
+                {
+                    return OpenClosed.Closed.ToString();
+                }
+                else
+                {
+                    return OpenClosed.Open.ToString();
+                }
+            }
+
+        }
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

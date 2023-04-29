@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models.Actuators
 {
-    class DoorlockActuator : IActuator
+    public class DoorlockActuator : IActuator
     {
         public string Name { get; set; }
         public bool IsOn { get; set; }

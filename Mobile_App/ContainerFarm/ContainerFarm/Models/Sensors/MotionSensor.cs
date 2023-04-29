@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace ContainerFarm.Models.Sensors
 {
-    class MotionSensor : ISensor
+    public class MotionSensor : ISensor
     {
         public enum Detection
         {
@@ -13,7 +13,7 @@ namespace ContainerFarm.Models.Sensors
 
         public string Name { get; set; }
         public float Value { get; set; }
-        public string Motion
+        public string Detected
         {
             get
             {

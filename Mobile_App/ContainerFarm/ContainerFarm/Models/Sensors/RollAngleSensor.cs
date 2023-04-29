@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ContainerFarm.Models.Sensors
 {
-    class RollAngleSensor : ISensor
+    public class RollAngleSensor : ISensor
     {
         public string Name
         {

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ContainerFarm.Models.Sensors
 {
-    class VibrationSensor : ISensor
+    public class VibrationSensor : ISensor
     {
         public string Name
         {

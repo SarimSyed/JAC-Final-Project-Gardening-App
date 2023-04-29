@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ContainerFarm.Models.Actuators
 {
-    class LightActuator : IActuator
+    public class LightActuator : IActuator
     {
         public string Name
         {
