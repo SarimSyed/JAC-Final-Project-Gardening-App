@@ -1,6 +1,7 @@
 namespace ContainerFarm.Views.FleetOwner;
 
-using Microsoft.Maui.ApplicationModel;
+//using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 
