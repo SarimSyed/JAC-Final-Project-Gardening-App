@@ -2,6 +2,9 @@ using ContainerFarm.Repos;
 
 namespace ContainerFarm.Views.Technician;
 
+/// Connected Tractors (Team #5)
+/// Winter 2023 - April 28th
+/// AppDev III
 /// <summary>
 /// This class initializes and manages the plant devices for a container. 
 /// The user can view the readings of the sensors (temperature, humidity, water level and soil level, and they can

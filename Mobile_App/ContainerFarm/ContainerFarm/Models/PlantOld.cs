@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
     /// <summary>
     /// This class stores information related to the plants inside a container. It stores the 
     /// temperature and humidity of the container and water level and soil level of the plants. 

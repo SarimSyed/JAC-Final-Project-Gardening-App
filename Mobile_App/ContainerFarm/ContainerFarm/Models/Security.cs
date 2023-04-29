@@ -4,6 +4,14 @@ using System.ComponentModel;
 
 namespace ContainerFarm.Models
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
+    /// <summary>
+    /// This class stores information related to the security of a container. It stores the 
+    /// noise, motion and luminosity detection (detected or not detected) and the status of the door (open or closed).
+    /// It also keeps track of the status of the buzzer and door lock of the container
+    /// </summary>
     public class Security : INotifyPropertyChanged
     {
         //Enum

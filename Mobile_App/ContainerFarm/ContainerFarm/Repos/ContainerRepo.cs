@@ -10,6 +10,12 @@ using ContainerFarm.Models.Actuators;
 
 namespace ContainerFarm.Repos
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
+    /// <summary>
+    /// This class contains a test repository for the containers used in the fleet owner views.
+    /// </summary>
     internal class ContainerRepo
     {
          private ObservableCollection<Container> _containers;

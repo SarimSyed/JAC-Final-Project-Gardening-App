@@ -8,6 +8,13 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models.Sensors
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
+    /// <summary>
+    /// This class stores the Humidity sensor information
+    /// It has a name property for the name of the sensor and value property.
+    /// </summary>
     public class HumiditySensor : ISensor
     {
         public string Name { get; set; }

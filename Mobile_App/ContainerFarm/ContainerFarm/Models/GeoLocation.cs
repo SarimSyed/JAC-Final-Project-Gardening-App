@@ -9,6 +9,14 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
+    /// <summary>
+    /// This class stores information related to the geo-location of a container. It stores the 
+    /// address, pitch angle, roll angle and vibration levels of the container. It also keeps track of the 
+    /// status of the buzzer inside the container.
+    /// </summary>
     public class GeoLocation : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

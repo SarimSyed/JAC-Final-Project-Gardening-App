@@ -2,6 +2,14 @@
 using ContainerFarm.Models.Sensors;
 using System.ComponentModel;
 
+/// Connected Tractors (Team #5)
+/// Winter 2023 - April 28th
+/// AppDev III
+/// <summary>
+/// This class stores information related to the plants inside a container. It stores the 
+/// temperature and humidity of the container and water level and soil level of the plants. 
+/// It also keeps track of the status of the fan and light inside the container.
+/// </summary>
 namespace ContainerFarm.Models
 {
     public class Plant : INotifyPropertyChanged

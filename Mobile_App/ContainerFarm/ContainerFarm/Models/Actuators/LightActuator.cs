@@ -7,6 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 namespace ContainerFarm.Models.Actuators
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
+    /// <summary>
+    /// This class stores the light actuator information
+    /// It has a name property for the actuator name and IsOn porperty for the status of the actuator
+    /// </summary>
     public class LightActuator : IActuator
     {
         public string Name

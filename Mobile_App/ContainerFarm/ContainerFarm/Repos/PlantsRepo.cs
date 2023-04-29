@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Repos
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III 
+    /// <summary>
+    /// This class contains the plant test repository used in the farm technician page
+    /// </summary>
     public class PlantsRepo
     {
         public PlantOld plant = new PlantOld()

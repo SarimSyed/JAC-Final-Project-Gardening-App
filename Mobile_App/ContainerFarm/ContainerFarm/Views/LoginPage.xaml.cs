@@ -5,6 +5,13 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContainerFarm.Views;
 
+/// Connected Tractors (Team #5)
+/// Winter 2023 - April 28th
+/// AppDev III 
+/// <summary>
+/// THis class is used for login in to the app with a fleet owner or farm technician access.
+/// It uses an authentication api to verify if the user enters the correct username and password.
+/// </summary>
 public partial class LoginPage : ContentPage
 {
     private const string USERNAME = "user@email.com";

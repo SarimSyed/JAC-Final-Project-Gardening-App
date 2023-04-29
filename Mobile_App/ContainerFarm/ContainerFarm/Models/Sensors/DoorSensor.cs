@@ -8,6 +8,14 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Models.Sensors
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
+    /// <summary>
+    /// This class stores the Door sensor information
+    /// It has an OPenClosed enum, name property for the name of the sensor and value property.
+    /// It also contains a property for detected to get the value if the door is open or not
+    /// </summary>
     public class DoorSensor : ISensor
     {
         public enum OpenClosed

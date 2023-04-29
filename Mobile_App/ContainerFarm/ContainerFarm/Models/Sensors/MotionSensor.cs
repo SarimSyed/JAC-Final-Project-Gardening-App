@@ -3,6 +3,14 @@ using System.ComponentModel;
 
 namespace ContainerFarm.Models.Sensors
 {
+    /// Connected Tractors (Team #5)
+    /// Winter 2023 - April 28th
+    /// AppDev III
+    /// <summary>
+    /// This class stores the Motion sensor information
+    /// It has a name property for the name of the sensor and value property.
+    /// It also contains a detected property that returns if motion has been detected or not
+    /// </summary>
     public class MotionSensor : ISensor
     {
         public enum Detection
