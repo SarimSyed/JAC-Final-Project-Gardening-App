@@ -12,8 +12,10 @@
                FontSize="20"
                Margin="10,10"/>
         
-        <Image Source="map_image.png"
+        <!--<Image Source="map_image.png"
                Grid.Row="1"
-               HorizontalOptions="FillAndExpand"/>
+               HorizontalOptions="FillAndExpand"/>-->
+
+        <maps:Map x:Name="map_app" MapType="Satellite" Grid.Row="1"  />
     </Grid>
 </ContentPage>
