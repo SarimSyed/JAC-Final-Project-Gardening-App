@@ -1,104 +1,57 @@
-﻿using System;
+﻿using ContainerFarm.Models.Actuators;
+using ContainerFarm.Models.Sensors;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ContainerFarm.Models
 {
-    /// <summary>
-    /// This class stores information related to the geo-location of a container. It stores the 
-    /// address, pitch angle, roll angle and vibration levels of the container. It also keeps track of the 
-    /// status of the buzzer inside the container.
-    /// </summary>
     public class GeoLocation : INotifyPropertyChanged
     {
-        //Private data members
-        private string address;
-        private double pitchAngle;
-        private double rollAngle;
-        private double vibrationLevel;
-        private bool buzzer;
-
-        /// <summary>
-        /// The location(address) of the container.
-        /// </summary>
-        public string Address
-        {
-            get { return address; }
-            set
-            {
-                address = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// The pitch angle of the container.
-        /// </summary>
-        public double PitchAngle
-        {
-            get { return pitchAngle; }
-            set
-            {
-                pitchAngle = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// The roll angle of the container.
-        /// </summary>
-        public double RollAngle
-        {
-            get { return rollAngle; }
-            set
-            {
-                rollAngle = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// The vibration levels of the container.
-        /// </summary>
-        public double VibrationLevel
-        {
-            get { return vibrationLevel; }
-            set
-            {
-                vibrationLevel = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// The status of the buzzer (if the buzzer is on) inside the container.
-        /// </summary>
-        public bool Buzzer
-        {
-            get { return buzzer; }
-            set
-            {
-                buzzer = value;
-                OnPropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Property changed event handler
-        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+        private GpsSensor gpsSensor;
+        private PitchAngleSensor pitchAngleSensor;
+        private RollAngleSensor rollAngleSensor;
+        private VibrationSensor vibrationSensor;
+        private BuzzerActuator buzzerActuator;
 
-        /// <summary>
-        /// Invokes property changed event for a property whose value changed.
-        /// </summary>
-        /// <param name="name">The name of the property that changed.</param>
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public GeoLocation()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            gpsSensor = new GpsSensor();
+            pitchAngleSensor = new PitchAngleSensor();
+            rollAngleSensor = new RollAngleSensor();
+            vibrationSensor = new VibrationSensor();
+            buzzerActuator = new BuzzerActuator();
         }
+        public GpsSensor GpsSensor { get { return gpsSensor; }
+            set { gpsSensor = value; }
+        }
+        public PitchAngleSensor PitchAngleSensor { get { return pitchAngleSensor; }
+            set
+            {
+                pitchAngleSensor = value;
+            } }
+        public RollAngleSensor RollAngleSensor { get { return rollAngleSensor; }
+            set
+            {
+                rollAngleSensor = value;
+            } }
+        public VibrationSensor VibrationSensor { get { return vibrationSensor; }
+            set
+            {
+                vibrationSensor = value;
+            } }
+        public BuzzerActuator BuzzerActuator { get {  return buzzerActuator; }
+            set
+            {
+                buzzerActuator = value;
+            } }
+
+
+
+
     }
 }

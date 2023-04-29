@@ -12,7 +12,7 @@ public partial class ContainerSecurityInfo : ContentPage
     public ContainerSecurityInfo(Container container)
     {
         InitializeComponent();
-        BindingContext = container.SecurityDetails;
+        BindingContext = container.Security;
         Title = "Security: " + container.Name;
     }
 

@@ -21,35 +21,35 @@
         <!--Noise Level-->
         <Label Text="Noise" Grid.Column="0" Grid.Row="0" FontSize="Medium" Margin="0,15" HorizontalOptions="Center" FontAttributes="Bold"/>
         <Frame BorderColor="Black" CornerRadius="10" Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding Noise}" FontSize="Small" HorizontalOptions="Center"/>
+            <Label Text="{Binding NoiseSensor.Value}" FontSize="Small" HorizontalOptions="Center"/>
         </Frame>
 
         <!--Luminosity Level-->
         <Label Text="Luminosity" Grid.Column="1" Grid.Row="0" FontSize="Medium" HorizontalOptions="Center" Margin="0,15" FontAttributes="Bold"/>
         <Frame BorderColor="Black" CornerRadius="10" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding Luminosity}" FontSize="Small" HorizontalOptions="Center"/>
+            <Label Text="{Binding LuminositySensor.Value}" FontSize="Small" HorizontalOptions="Center"/>
         </Frame>
 
         <!--Motion-->
         <Label Text="Motion" Grid.Column="0" Grid.Row="2" FontSize="Medium" Margin="0,15" HorizontalOptions="Center" FontAttributes="Bold"/>
         <Frame BorderColor="Black" CornerRadius="10" Grid.Column="0" Grid.Row="3" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding Motion}" FontSize="Small" HorizontalOptions="Center"/>
+            <Label Text="{Binding MotionSensor.Detected}" FontSize="Small" HorizontalOptions="Center"/>
         </Frame>
 
         <!-- Door -->
         <Label Text="Door" Grid.Column="1" Grid.Row="2" FontSize="Medium" HorizontalOptions="Center" Margin="0,15" FontAttributes="Bold"/>
         <Frame BorderColor="Black" CornerRadius="10" Grid.Column="1" Grid.Row="3" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding Door}" FontSize="Small" HorizontalOptions="Center"/>
+            <Label Text="{Binding DoorSensor.Detected}" FontSize="Small" HorizontalOptions="Center"/>
         </Frame>
 
         <!--Door lock-->
         <Label Text="Door Lock" Grid.Row="4" Grid.Column="0" Margin="25,50,25,0" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
-        <Switch IsToggled="{Binding DoorLock}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" Margin="0,50,0,0" PropertyChanged="DoorLockSwitch_PropertyChanged"/>
+        <Switch IsToggled="{Binding DoorLockActuator.IsOn}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" Margin="0,50,0,0" PropertyChanged="DoorLockSwitch_PropertyChanged"/>
         <Label x:Name="doorLockStatus" Grid.Row="4" Grid.Column="1" Margin="20,50,0,0" VerticalOptions="Center"/>
 
         <!--Buzzer-->
         <Label Text="Buzzer" Grid.Row="5" Grid.Column="0" Margin="25,0" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
-        <Switch IsToggled="{Binding Buzzer}" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="1" PropertyChanged="BuzzerSwitch_PropertyChanged"/>
+        <Switch IsToggled="{Binding BuzzerActuator.IsOn}" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="1" PropertyChanged="BuzzerSwitch_PropertyChanged"/>
         <Label x:Name="buzzerStatus" Grid.Row="5" Grid.Column="1" Margin="20,0,0,0" VerticalOptions="Center"/>
 
 

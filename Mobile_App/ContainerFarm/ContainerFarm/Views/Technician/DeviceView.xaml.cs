@@ -13,7 +13,8 @@ public partial class DeviceView : ContentPage
     public DeviceView()
     {
         InitializeComponent();
-        BindingContext = repo.plant;
+        //Using the index 0 of the repo since technicians will only have access to one container
+        BindingContext = App.Repo.Containers[0].Plant;
     }
 
     private void FanSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
