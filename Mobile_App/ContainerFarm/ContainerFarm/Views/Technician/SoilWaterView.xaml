@@ -5,7 +5,7 @@
              Title="SoilWaterView">
     <VerticalStackLayout>
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Will implement if time permits"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
     </VerticalStackLayout>

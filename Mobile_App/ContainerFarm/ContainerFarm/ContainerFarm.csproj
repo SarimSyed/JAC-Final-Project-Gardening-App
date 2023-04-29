@@ -64,8 +64,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\TechnicianLogin.xaml.cs">
-	    <DependentUpon>TechnicianLogin.xaml</DependentUpon>
+	  <Compile Update="Views\LoginPage.xaml.cs">
+	    <DependentUpon>LoginPage.xaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\Technician\HumidityView.xaml.cs">
 	    <DependentUpon>HumidityView.xaml</DependentUpon>
@@ -76,7 +76,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Views\FleetOwnerLogin.xaml">
+	  <MauiXaml Update="Views\LoginPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FleetOwner\ContainerLocationInfo.xaml">
@@ -92,9 +92,6 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\FleetOwner\MapView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\TechnicianLogin.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Technician\DeviceView.xaml">

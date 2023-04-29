@@ -5,14 +5,14 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContainerFarm.Views;
 
-public partial class FleetOwnerLogin : ContentPage
+public partial class LoginPage : ContentPage
 {
     private const string USERNAME = "user@email.com";
     private const string PASSWORD = "password";
 
     private LoginOptions currentOption;
 
-    public FleetOwnerLogin()
+    public LoginPage()
 	{
 		InitializeComponent();
         Debug_Options();
@@ -50,20 +50,6 @@ public partial class FleetOwnerLogin : ContentPage
                         break;
                 }
             }
-
-
-
-            //login using hardcoded value
-            //if (password.Text == PASSWORD && username.Text == USERNAME)
-            //{
-            //    await Shell.Current.GoToAsync("//Technician");
-
-            //}
-            //else
-            //{
-            //    await DisplayAlert("Error", "Username or Password incorrect", "Ok");
-            //}
-
         }
         catch(FirebaseAuthException ex)
         {
@@ -75,24 +61,17 @@ public partial class FleetOwnerLogin : ContentPage
         }
     }
 
-    private void LoginFarmTechnician()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void LoginFleetOwner()
-    {
-        throw new NotImplementedException();
-    }
-
     private void Debug_Options()
     {
-
         username.Text = USERNAME; 
         password.Text = PASSWORD;
-
     }
 
+    /// <summary>
+    /// Select the fleet owner as the one to login.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Fleet_Owner_Clicked(object sender, EventArgs e)
     {
         login_image.Source = "containers.png";
@@ -106,6 +85,11 @@ public partial class FleetOwnerLogin : ContentPage
         currentOption = LoginOptions.FleetOwner;
     }
 
+    /// <summary>
+    /// Select the farm technician as the one to login.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Farm_Technician_Clicked(object sender, EventArgs e)
     {
         login_image.Source = "greenhouse.png";

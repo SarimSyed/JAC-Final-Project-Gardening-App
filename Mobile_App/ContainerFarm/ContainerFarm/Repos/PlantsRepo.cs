@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Repos
 {
-    class PlantsRepo
+    public class PlantsRepo
     {
         public Plant plant = new Plant()
         {

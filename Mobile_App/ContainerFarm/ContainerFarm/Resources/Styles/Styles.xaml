@@ -402,4 +402,24 @@
         <Setter Property="SelectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
     </Style>
 
+    <!--Graph views-->
+    <Style TargetType="Label" x:Key="GraphTitleText">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="19"/>
+    </Style>
+
+    <Style TargetType="VerticalStackLayout" x:Key="GraphTitleToFrame">
+        <Setter Property="Spacing" Value="7"/>
+    </Style>
+
+    <!--Container devices-->
+    <Style TargetType="Label" x:Key="DeviceTitle">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="19"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="DeviceValueText">
+        <!--<Setter Property="FontAttributes" Value="Bold"/>-->
+        <Setter Property="FontSize" Value="18"/>
+    </Style>
 </ResourceDictionary>

@@ -9,26 +9,16 @@
     xmlns:fleetowner="clr-namespace:ContainerFarm.Views.FleetOwner"
     
     
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Flyout">
 
-    <!--<TabBar Route="Login"
-            >
-        --><!--<Tab
-            >--><!--
-            
-        <ShellContent
-            Title="Fleet"
-        ContentTemplate="{DataTemplate views:FleetOwnerLogin}"
-         />
-        --><!--<ShellContent 
-            Title="Tech"
-            ContentTemplate="{DataTemplate views:TechnicianLogin}"/>
-        </Tab>--><!--
-    </TabBar>-->
-    <ShellContent Route="Login"
+    <MenuItem IconImageSource="logout.png" Clicked="Logout_MenuItem_Clicked" Text="Logout" />
+
+    <TabBar>
+        <ShellContent Route="Login"
             Title="Login"
-        ContentTemplate="{DataTemplate views:FleetOwnerLogin}"
+        ContentTemplate="{DataTemplate views:LoginPage}"
          />
+    </TabBar>
 
     <TabBar
         Route="Technician" 

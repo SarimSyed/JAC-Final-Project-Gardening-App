@@ -17,9 +17,11 @@
             </Picker.Items>
         </Picker>-->
 
-        <VerticalStackLayout Grid.Row="1">
+        <VerticalStackLayout Grid.Row="1"
+                             Style="{StaticResource GraphTitleToFrame}">
             <Label
-                Text="Data over the last x days"/>
+                Text="Data over the last x days"
+                 Style="{StaticResource GraphTitleText}"/>
 
             <!--<charts:PieChart
             x:Name="pie_chart"
@@ -33,9 +35,11 @@
         </VerticalStackLayout>
             <!--Series="{Binding Series}"-->
 
-        <VerticalStackLayout Grid.Row="2">
+        <VerticalStackLayout Grid.Row="2"
+                             Style="{StaticResource GraphTitleToFrame}">
             <Label
-                Text="More data over the last x days"/>
+                Text="More data over the last x days"
+                 Style="{StaticResource GraphTitleText}"/>
 
             <!--<charts:PieChart
             x:Name="pie_chart"

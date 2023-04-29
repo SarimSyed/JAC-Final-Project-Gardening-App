@@ -5,7 +5,15 @@
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              Title="MapView">
     <!--<maps:Map x:Name="map" MapType="Hybrid" />-->
-    <Grid ColumnDefinitions="1*">
-        <Image Source="map_image.png"/>
+    <Grid RowDefinitions="auto,1*">
+        <Label Text="All of your container locations"
+               Grid.Row="0"
+               FontAttributes="Bold"
+               FontSize="20"
+               Margin="10,10"/>
+        
+        <Image Source="map_image.png"
+               Grid.Row="1"
+               HorizontalOptions="FillAndExpand"/>
     </Grid>
 </ContentPage>
