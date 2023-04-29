@@ -10,6 +10,7 @@ namespace ContainerFarm.Views.Technician;
 public partial class DeviceView : ContentPage
 {
     PlantsRepo repo = new PlantsRepo();
+
     public DeviceView()
     {
         InitializeComponent();
