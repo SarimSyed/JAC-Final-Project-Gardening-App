@@ -10,7 +10,7 @@ from Motion import Motion
 from Noise import Noise
 
 
-class DeviceController:
+class Security:
 
     def __init__(self) -> None:
         self._sensors: list[ISensor] = self._initialize_sensors()
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     """This script is intented to be used as a module, however, code below can be used for testing.
     """
 
-    device_manager = DeviceController()
+    device_manager = Security()
 
     while True:
         #Read sensors
