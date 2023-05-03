@@ -1,7 +1,7 @@
 from gpiozero import Servo
 from time import sleep
 from time import sleep
-from actuators import IActuator, ACommand
+from farm.interfaces.actuators.actuators import IActuator, ACommand
 
 class DoorLock(IActuator):
     """A Door lock is a sensor in the security subsytem.

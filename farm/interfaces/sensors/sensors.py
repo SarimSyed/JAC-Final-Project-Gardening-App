@@ -27,6 +27,10 @@ class AReading:
         VIBRATION = 'vibration'
         WATER_LEVEL = 'water-level-sensor'
         MOISTURE = 'soil-moisture'
+        DOOR = "door"
+        LUMINOSITY = "luminosity"
+        MOTION = "motion"
+        NOISE = "noise"
 
     class Unit(str, Enum):
         """Enum defining all possible units for sensor measuremens.
@@ -40,10 +44,6 @@ class AReading:
         VIBRATION = 'm/s2'
         WATER_LEVEL = "% submerged"
         MOISTURE = "mV"
-        DOOR = "door"
-        LUMINOSITY = "luminosity"
-        MOTION = "motion"
-        NOISE = "noise"
 
     def __init__(self, type: Type, unit: Unit, value: dict) -> None:
         """Create new AReading based on a type of reading its units and value

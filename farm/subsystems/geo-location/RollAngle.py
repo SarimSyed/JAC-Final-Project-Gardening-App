@@ -3,7 +3,7 @@ import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
 
-from sensors import ISensor, AReading, IAccelerometerCalculate
+from farm.interfaces.sensors.sensors import ISensor, AReading, IAccelerometerCalculate
 
 
 class RollAngle(ISensor, IAccelerometerCalculate):

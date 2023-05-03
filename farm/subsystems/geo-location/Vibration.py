@@ -4,7 +4,8 @@ from time import sleep
 import math
 import evdev
 
-from sensors import ISensor, AReading, IAccelerometerCalculate
+from farm.interfaces.sensors.sensors import ISensor, AReading, IAccelerometerCalculate
+
 
 class Vibration(ISensor, IAccelerometerCalculate):
     """The vibration of the reTerminal accelerometer in the Geo-Location subsytem.

@@ -1,6 +1,6 @@
 from grove import grove_mini_pir_motion_sensor
 from time import sleep
-from sensors import ISensor, AReading
+from farm.interfaces.sensors.sensors import ISensor, AReading
 
 
 class Motion(ISensor):
