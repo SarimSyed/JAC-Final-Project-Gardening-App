@@ -3,7 +3,7 @@ from serial import Serial
 import pynmea2
 from geopy.geocoders import Nominatim
 
-from sensors import ISensor, AReading
+from farm import ISensor, AReading
 
 """
 I used this resource as a guide to connect & read the GPS (Air530) data with the Seeed reTerminal: 

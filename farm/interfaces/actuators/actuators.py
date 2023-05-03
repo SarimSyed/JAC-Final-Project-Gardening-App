@@ -13,6 +13,8 @@ class ACommand:
         FAN = 'fan'
         LIGHT_PULSE = 'light-pulse'
         BUZZER = 'buzzer'
+        LED = 'light'
+        DOORLOCK = 'doorlock'
 
 
     def __init__(self, target: Type, raw_message_body: str) -> None:
