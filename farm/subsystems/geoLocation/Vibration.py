@@ -2,9 +2,9 @@ import seeed_python_reterminal.core as rt
 import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
-import evdev
 
-from farm.interfaces.isensor import ISensor, AReading, IAccelerometerCalculate
+from farm.interfaces.geoLocation.geoLocationSensors import ISensor, GeoLocationReading
+from farm.interfaces.geoLocation.accelerometerCalculate import IAccelerometerCalculate
 
 
 class Vibration(ISensor, IAccelerometerCalculate):
@@ -17,7 +17,7 @@ class Vibration(ISensor, IAccelerometerCalculate):
 
     VALUE_COUNT = 2
 
-    def __init__(self, model: str, type: AReading.Type):
+    def __init__(self, model: str, type: GeoLocationReading.Type):
         """Constructor for Vibration  class. May be called from childclass.
         :param str model: specific model of sensor hardware. Ex. GPS (Air530)
         :param ReadingType type: Type of reading this sensor produces. Ex. 'VIBRATION'
@@ -26,9 +26,9 @@ class Vibration(ISensor, IAccelerometerCalculate):
         # Initialize object variables
         self._acceleration_device = rt.get_acceleration_device()
         self._sensor_model = model or "LIS3DHTR"
-        self.reading_type = type or AReading.Type.ROLL_ANGLE
+        self.reading_type = type or GeoLocationReading.Type.ROLL_ANGLE
 
-    def read_sensor(self) -> AReading:
+    def read_sensor(self) -> GeoLocationReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
@@ -38,8 +38,8 @@ class Vibration(ISensor, IAccelerometerCalculate):
 
         print(f"Vibration: {vibration}")
 
-        return AReading(AReading.Type.VIBRATION,
-                        AReading.Unit.VIBRATION, {
+        return GeoLocationReading(GeoLocationReading.Type.VIBRATION,
+                        GeoLocationReading.Unit.VIBRATION, {
                             'value': vibration
                         })
     
@@ -101,7 +101,7 @@ class Vibration(ISensor, IAccelerometerCalculate):
 
 if __name__ == "__main__":
 
-    vibration_accelerometer = Vibration("LIS3DHTR", AReading.Type.VIBRATION)
+    vibration_accelerometer = Vibration("LIS3DHTR", GeoLocationReading.Type.VIBRATION)
 
     while True:
         reading = vibration_accelerometer.read_sensor()

@@ -6,7 +6,7 @@ from RollAngle import RollAngle
 from Vibration import Vibration
 
 from farm.interfaces.actuators import ACommand
-from farm.interfaces.isensor import AReading
+from farm.interfaces.geoLocation.geoLocationSensors import GeoLocationReading
 
 class GeoLocation:
     """The Geo-Location subsystem of the container farm.
@@ -14,11 +14,11 @@ class GeoLocation:
     def __init__(self) -> None:
         """Initalizes the sensors and actuators in the Geo-Location subsystem.
         """
-        self.gps_location = GPSLocation("GPS (Air530)", AReading.Type.GPSLOCATION)
+        self.gps_location = GPSLocation("GPS (Air530)", GeoLocationReading.Type.GPSLOCATION)
         self.buzzer = Buzzer(ACommand.Type.BUZZER, {'value': 'off'})
-        self.pitch_accelerometer = Pitch("LIS3DHTR", AReading.Type.PITCH)
-        self.roll_angle_accelerometer = RollAngle("LIS3DHTR", AReading.Type.ROLL_ANGLE)
-        self.vibration_accelerometer = Vibration("LIS3DHTR", AReading.Type.VIBRATION)
+        self.pitch_accelerometer = Pitch("LIS3DHTR", GeoLocationReading.Type.PITCH)
+        self.roll_angle_accelerometer = RollAngle("LIS3DHTR", GeoLocationReading.Type.ROLL_ANGLE)
+        self.vibration_accelerometer = Vibration("LIS3DHTR", GeoLocationReading.Type.VIBRATION)
 
     def read_sensors(self) -> None:     
         """Reads all the sensors inside the Geo-Location subsystem.

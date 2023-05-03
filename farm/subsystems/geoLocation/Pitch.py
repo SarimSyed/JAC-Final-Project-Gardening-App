@@ -3,7 +3,8 @@ import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
 
-from farm.interfaces.isensor import ISensor, AReading, IAccelerometerCalculate
+from farm.interfaces.geoLocation.geoLocationSensors import ISensor, GeoLocationReading
+from farm.interfaces.geoLocation.accelerometerCalculate import IAccelerometerCalculate
 
 
 class Pitch(ISensor, IAccelerometerCalculate):
@@ -16,7 +17,7 @@ class Pitch(ISensor, IAccelerometerCalculate):
 
     VALUE_COUNT = 1
 
-    def __init__(self, model: str, type: AReading.Type):
+    def __init__(self, model: str, type: GeoLocationReading.Type):
         """Constructor for Pitch  class. May be called from childclass.
         :param str model: specific model of sensor hardware. Ex. GPS (Air530)
         :param ReadingType type: Type of reading this sensor produces. Ex. 'PITCH'
@@ -25,9 +26,9 @@ class Pitch(ISensor, IAccelerometerCalculate):
         # Initialize object variables
         self._acceleration_device = rt.get_acceleration_device()
         self._sensor_model = model or "LIS3DHTR"
-        self.reading_type = type or AReading.Type.PITCH
+        self.reading_type = type or GeoLocationReading.Type.PITCH
 
-    def read_sensor(self) -> AReading:
+    def read_sensor(self) -> GeoLocationReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
@@ -37,8 +38,8 @@ class Pitch(ISensor, IAccelerometerCalculate):
 
         print(f"Pitch: {pitch}")
                 
-        return AReading(AReading.Type.PITCH,
-                     AReading.Unit.PITCH, {
+        return GeoLocationReading(GeoLocationReading.Type.PITCH,
+                     GeoLocationReading.Unit.PITCH, {
                         'value': pitch
                      })
     
@@ -91,7 +92,7 @@ class Pitch(ISensor, IAccelerometerCalculate):
 
 if __name__ == "__main__":
 
-    pitch_accelerometer = Pitch("LIS3DHTR", AReading.Type.PITCH)
+    pitch_accelerometer = Pitch("LIS3DHTR", GeoLocationReading.Type.PITCH)
 
     while True:
         reading = pitch_accelerometer.read_sensor()

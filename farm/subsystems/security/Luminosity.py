@@ -1,6 +1,6 @@
 import seeed_python_reterminal.core as rt
 from time import sleep
-from farm.interfaces.isensor import ISensor, AReading
+from farm.interfaces.security.securitySensors import ISensor, SecurityReading
 
 
 class Luminosity(ISensor):
@@ -9,7 +9,7 @@ class Luminosity(ISensor):
         ISensor (_type_): Implements the ISensor interface.
     """
 
-    def __init__(self, type: AReading.Type = AReading.Type.LUMINOSITY, model: str = "ReTerminal"):
+    def __init__(self, type: SecurityReading.Type = SecurityReading.Type.LUMINOSITY, model: str = "ReTerminal"):
         """Constructor for the Luminosity class. Defines the interface's properties. 
         :param str model: specific model of sensor hardware. Ex. AHT20 or LTR-303ALS-01
         :param ReadingType type: Type of reading this sensor produces. Ex. 'TEMPERATURE'
@@ -19,7 +19,7 @@ class Luminosity(ISensor):
         self.reading_type = type
         self._dangervalue = 30
 
-    def read_sensor(self) -> AReading:
+    def read_sensor(self) -> SecurityReading:
         """Takes a reading from the reterminal luminosity sensor
         :return list[AReading]: List of readings measured by the sensor. Most sensors return a list with a single item.
         """
@@ -28,9 +28,9 @@ class Luminosity(ISensor):
 
         light_value = rt.illuminance
         if(light_value >= self._dangervalue):
-            return AReading(AReading.Type.LUMINOSITY, {"value": AReading.Response.DETECTED.value})
+            return SecurityReading(SecurityReading.Type.LUMINOSITY, {"value": SecurityReading.Response.DETECTED.value})
         else:
-            return AReading(AReading.Type.LUMINOSITY, {"value": AReading.Response.NOT_DETECTED.value})
+            return SecurityReading(SecurityReading.Type.LUMINOSITY, {"value": SecurityReading.Response.NOT_DETECTED.value})
 
         
 if __name__ == "__main__":
