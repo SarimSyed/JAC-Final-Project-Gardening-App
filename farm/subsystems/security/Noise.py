@@ -7,7 +7,7 @@ import sys
 
 import seeed_python_reterminal.core as rt
 from time import sleep
-from farm.interfaces.sensors.sensors import ISensor, AReading
+from farm.interfaces.isensor import ISensor, AReading
 
 
 class Noise(ISensor):

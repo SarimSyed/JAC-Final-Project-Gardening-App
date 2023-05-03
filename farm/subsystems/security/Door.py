@@ -1,6 +1,6 @@
 from time import sleep
 from gpiozero import Button
-from farm.interfaces.sensors.sensors import ISensor, AReading
+from farm.interfaces.isensor import ISensor, AReading
 
 
 class Door(ISensor):

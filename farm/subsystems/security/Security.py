@@ -1,7 +1,7 @@
 from time import sleep
 
-from farm.interfaces.sensors.sensors import ISensor, AReading
-from farm.interfaces.actuators.actuators import IActuator, ACommand
+from farm.interfaces.isensor import ISensor, AReading
+from farm.interfaces.actuators import IActuator, ACommand
 from Buzzer import Buzzer
 from Door import Door
 from DoorLock import DoorLock

@@ -5,8 +5,8 @@ from Pitch import Pitch
 from RollAngle import RollAngle
 from Vibration import Vibration
 
-from farm.interfaces.actuators.actuators import ACommand
-from farm.interfaces.sensors.sensors import AReading
+from farm.interfaces.actuators import ACommand
+from farm.interfaces.isensor import AReading
 
 class GeoLocation:
     """The Geo-Location subsystem of the container farm.

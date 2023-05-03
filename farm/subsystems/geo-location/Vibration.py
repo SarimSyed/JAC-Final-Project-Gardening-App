@@ -4,7 +4,7 @@ from time import sleep
 import math
 import evdev
 
-from farm.interfaces.sensors.sensors import ISensor, AReading, IAccelerometerCalculate
+from farm.interfaces.isensor import ISensor, AReading, IAccelerometerCalculate
 
 
 class Vibration(ISensor, IAccelerometerCalculate):
