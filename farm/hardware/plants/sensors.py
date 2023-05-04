@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 
+#Class provided by Mauricio for use with Assignments 1 -2
 
 class AReading:
     """Class for sensor readings. Defines possible types of readings and reading units using enums.
