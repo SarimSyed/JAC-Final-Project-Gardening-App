@@ -14,10 +14,19 @@ class Led(IActuator):
     NUM_OF_LEDS = 10
 
     def __init__(self, gpio: int, type: ACommand.Type, initial_state: dict) -> None:
+        """Create an instance of this class which will allow the LED to be manipulated
+
+        Args:
+            gpio (int): The gpio pin the LED is connected to ()
+            type (ACommand.Type): The ACommand object type that should be used
+            initial_state (dict): What state to the LED should be in from the start (defaults to off)
+        """
         super().__init__(gpio, type, initial_state)
 
         self.type :ACommand.Type.LED = type or ACommand.Type.LED
-        self._current_state :str = initial_state or Led.LIGHT_OFF
+        self._current_state :str =  Led.LIGHT_OFF
+        if initial_state:
+            self._current_state = initial_state
         self.led :GroveWS2813RgbStrip = GroveWS2813RgbStrip(gpio, count= Led.NUM_OF_LEDS)
         self.set_max_brightness()
         
