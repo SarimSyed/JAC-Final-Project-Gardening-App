@@ -2,6 +2,7 @@ from actuators import IActuator, ACommand
 from gpiozero import OutputDevice as Relay
 from time import sleep
 
+
 class Fan(IActuator):
 
     FAN_OFF = "off"
@@ -53,12 +54,7 @@ if __name__ == '__main__':
     err = '{"value" : "blink"}'
     
     fan = Fan(5, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
-    #testing validate_command
-    # print(fan.validate_command(ACommand(ACommand.Type.FAN, err)))
-    # sleep(1)
-    # print(fan.validate_command(ACommand(ACommand.Type.FAN, on)))
-    # sleep(1)
-    # print(fan.validate_command(ACommand(ACommand.Type.FAN, off)))
+
     while True:
         
         fan.control_actuator({"value": Fan.FAN_OFF})

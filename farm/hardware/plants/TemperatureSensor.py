@@ -3,6 +3,7 @@ from grove.grove_temperature_humidity_aht20 import GroveTemperatureHumidityAHT20
 
 
 
+
 class TemperatureSensor(ISensor):
     SENSOR_BUS = 4
     SENSOR_ADDRESS = 0x38

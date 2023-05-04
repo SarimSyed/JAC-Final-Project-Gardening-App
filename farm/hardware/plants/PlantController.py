@@ -18,8 +18,8 @@ if __name__ == "__main__":
     off = '{"value" : "off"}'
     err = '{"value" : "blink"}'
     
-    liqudSensor = LiquidLevelSensor(2, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
-    soilSensor = SoilMoistureSensor(0, "Soil-Moisture-Sensor",AReading.Type.MOISTURE)
+    liqudSensor = LiquidLevelSensor(1, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
+    soilSensor = SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE)
     
     #LED
     led = Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
@@ -39,11 +39,7 @@ if __name__ == "__main__":
     temperatureSensor = TemperatureSensor(1, "AHT20", AReading.Type.HUMIDITY )
     while True:
         sleep(1)
-        # print("Actuators:\n")
-        # sleep(1)
-        # fan.control_actuator({"value": Fan.FAN_OFF})
-        # sleep(1)
-        # fan.control_actuator({'value' : Fan.FAN_ON})
+
 
         test = led.validate_command(test_off_cmd)
         if test:
@@ -53,11 +49,11 @@ if __name__ == "__main__":
         if led.validate_command(test_on_cmd):
             led.control_actuator({"value": Led.LIGHT_ON})
 
-        if fan.validate_command(fan_off_msg):
+        if fan.validate_command(fan_off_cmd):
             fan.control_actuator({"value": Fan.FAN_OFF})
         sleep(2)
-        if fan.validate_command(fan_on_cmd)
-            fan.control_actuator({'value' : Fan.FAN_ON})
+        if fan.validate_command(fan_on_cmd):
+            fan.control_actuator({"value" : Fan.FAN_ON})
         sleep(2)
 
 

@@ -1,5 +1,5 @@
-from grove.grove_moisture_sensor import GroveMoistureSensor
-from grove.adc import ADC
+
+from library.grove_moisture_sensor import GroveMoistureSensor
 from sensors import ISensor, AReading
 from grove.i2c import i2c_msg
 import RPi.GPIO as gpio 
@@ -59,7 +59,7 @@ class SoilMoistureSensor(ISensor):
 
         
 if __name__ == "__main__":
-    temp = SoilMoistureSensor(1, "Soil-Moisture-Sensor",AReading.Type.MOISTURE)
+    temp = SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE)
     
     while True:
         temp.sensor.moisture

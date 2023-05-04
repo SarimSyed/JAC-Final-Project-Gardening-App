@@ -16,12 +16,12 @@ class Led(IActuator):
     def __init__(self, gpio: int, type: ACommand.Type, initial_state: dict) -> None:
         super().__init__(gpio, type, initial_state)
 
-        self.type = type or ACommand.Type.LED
-        self._current_state = initial_state or Led.LIGHT_OFF
-        self.led = GroveWS2813RgbStrip(gpio, count= Led.NUM_OF_LEDS)
+        self.type :ACommand.Type.LED = type or ACommand.Type.LED
+        self._current_state :str = initial_state or Led.LIGHT_OFF
+        self.led :GroveWS2813RgbStrip = GroveWS2813RgbStrip(gpio, count= Led.NUM_OF_LEDS)
         self.set_max_brightness()
-        #self.led.show()
-        self.brightness = Led.LIGHT_BRIGHT
+        
+        self.brightness : str = Led.LIGHT_BRIGHT
         
 
         if initial_state == Led.LIGHT_ON: 
@@ -88,32 +88,27 @@ class Led(IActuator):
 
 
 
-# # Connect the LED strip to a digital port, e.g. D18
-# led_strip = GroveWS2813RgbStrip(18, count=10)
 
-# # Set the color of all pixels to red
-# for i in range(led_strip.numPixels()):
-#     led_strip.setPixelColorRGB( red=0, blue=0, green=10, n=i)
-
-# # Update the LED strip with the new color values
-# led_strip.show()
 
 if __name__ == "__main__":
+    print("initialize")
     led = Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
+    print("values")
     fake_msg = '{"value": "light-off"}'
     test_off_cmd = ACommand(ACommand.Type.LED, fake_msg)
     fake_msg = '{"value": "light-on"}'
     test_on_cmd = ACommand(ACommand.Type.LED, fake_msg)
+    print("loop")
     while True:
+        print("loop")
         test = led.validate_command(test_off_cmd)
         if test:
             led.control_actuator({"value": Led.LIGHT_OFF})
         sleep(2)
-        # led.control_actuator({'value':Led.LIGHT_BRIGHT})
+
         if led.validate_command(test_on_cmd):
             led.control_actuator({"value": Led.LIGHT_ON})
-        # sleep(2)
-        # led.control_actuator({'value': Led.LIGHT_MEDIUM})
+
         sleep(2)
 
         

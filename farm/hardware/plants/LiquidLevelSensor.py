@@ -1,7 +1,7 @@
 from sensors import ISensor, AReading
 from grove.adc import ADC
 from grove.gpio import GPIO
-from grove.grove_water_sensor import GroveWaterSensor
+from library.grove_water_sensor import GroveWaterSensor
 from time import sleep
 
 
@@ -34,7 +34,8 @@ class LiquidLevelSensor(ISensor):
 
 
 if __name__ == "__main__":
-    temp = LiquidLevelSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
+    #A0 port = pin 1
+    temp = LiquidLevelSensor(1, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
     while True:
         print(temp.read_sensor())
         sleep(1)
