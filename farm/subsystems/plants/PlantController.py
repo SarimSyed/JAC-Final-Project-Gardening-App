@@ -4,7 +4,7 @@ from HumiditySensor import HumiditySensor
 from TemperatureSensor import TemperatureSensor
 from LiquidLevelSensor import LiquidLevelSensor
 from SoilMoistureSensor import SoilMoistureSensor
-from sensors import AReading
+from interfaces.sensors import AReading
 from actuators import ACommand
 from time import sleep
 

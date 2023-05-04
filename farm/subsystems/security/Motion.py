@@ -1,6 +1,6 @@
 from grove import grove_mini_pir_motion_sensor
 from time import sleep
-from farm.interfaces.security.securitySensors import ISensor, SecurityReading
+from farm.interfaces.sensors import ISensor, AReading
 
 
 class Motion(ISensor):
@@ -9,7 +9,7 @@ class Motion(ISensor):
       ISensor (_type_): Implements the ISensor interface.
    """
 
-   def __init__(self, gpio: int, type: SecurityReading.Type = SecurityReading.Type.MOTION, model: str = "PIR Motion Sensor"):
+   def __init__(self, gpio: int, type: AReading.Type = AReading.Type.MOTION, model: str = "PIR Motion Sensor"):
       """Constructor for the motion sensor class. Defines the interface's properties. 
       :param str model: specific model of sensor hardware. Ex. AHT20 or LTR-303ALS-01
       :param ReadingType type: Type of reading this sensor produces. Ex. 'TEMPERATURE'
@@ -21,16 +21,16 @@ class Motion(ISensor):
       #Inizialize sensor
       self.motion_sensor = grove_mini_pir_motion_sensor.GroveMiniPIRMotionSensor(gpio)
 
-   def read_sensor(self) -> SecurityReading:
+   def read_sensor(self) -> AReading:
       """Takes a reading from the motion sensor
       :return list[AReading]: List of readings measured by the sensor. Most sensors return a list with a single item.
       """
 
       # Get the sensor reading and returns value
       if (self.motion_sensor.read() == 0):
-         return SecurityReading(SecurityReading.Type.MOTION, {"value": SecurityReading.Response.NOT_DETECTED.value})
+         return AReading(AReading.Type.MOTION, {"value": AReading.Response.NOT_DETECTED.value})
       else:
-         return SecurityReading(SecurityReading.Type.MOTION, {"value": SecurityReading.Response.DETECTED.value})
+         return AReading(AReading.Type.MOTION, {"value": AReading.Response.DETECTED.value})
 
 if __name__ == "__main__":
    motion = Motion(16)

@@ -1,5 +1,5 @@
 from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip
-from actuators import IActuator, ACommand
+from interfaces.actuators import IActuator, ACommand
 from time import sleep
 from grove import i2c
 

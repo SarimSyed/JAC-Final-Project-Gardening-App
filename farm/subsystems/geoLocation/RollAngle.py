@@ -3,7 +3,7 @@ import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
 
-from farm.interfaces.geoLocation.geoLocationSensors import ISensor, GeoLocationReading
+from farm.interfaces.sensors import ISensor, AReading
 from farm.interfaces.geoLocation.accelerometerCalculate import IAccelerometerCalculate
 
 
@@ -17,7 +17,7 @@ class RollAngle(ISensor, IAccelerometerCalculate):
 
     VALUE_COUNT = 1
 
-    def __init__(self, model: str, type: GeoLocationReading.Type):
+    def __init__(self, model: str, type: AReading.Type):
         """Constructor for Pitch  class. May be called from childclass.
         :param str model: specific model of sensor hardware. Ex. GPS (Air530)
         :param ReadingType type: Type of reading this sensor produces. Ex. 'PITCH'
@@ -26,9 +26,9 @@ class RollAngle(ISensor, IAccelerometerCalculate):
         # Initialize object variables
         self._acceleration_device = rt.get_acceleration_device()
         self._sensor_model = model or "LIS3DHTR"
-        self.reading_type = type or GeoLocationReading.Type.ROLL_ANGLE
+        self.reading_type = type or AReading.Type.ROLL_ANGLE
 
-    def read_sensor(self) -> GeoLocationReading:
+    def read_sensor(self) -> AReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
@@ -38,8 +38,8 @@ class RollAngle(ISensor, IAccelerometerCalculate):
 
         print(f"Roll Angle: {roll_angle}")
                 
-        return GeoLocationReading(GeoLocationReading.Type.ROLL_ANGLE,
-                     GeoLocationReading.Unit.ROLL_ANGLE, {
+        return AReading(AReading.Type.ROLL_ANGLE,
+                     AReading.Unit.ROLL_ANGLE, {
                         'value': roll_angle
                      })
     
@@ -92,7 +92,7 @@ class RollAngle(ISensor, IAccelerometerCalculate):
 
 if __name__ == "__main__":
 
-    roll_angle_accelerometer = RollAngle("LIS3DHTR", GeoLocationReading.Type.ROLL_ANGLE)
+    roll_angle_accelerometer = RollAngle("LIS3DHTR", AReading.Type.ROLL_ANGLE)
 
     while True:
         reading = roll_angle_accelerometer.read_sensor()

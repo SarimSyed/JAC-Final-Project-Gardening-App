@@ -3,7 +3,7 @@ from serial import Serial
 import pynmea2
 from geopy.geocoders import Nominatim
 
-from farm.interfaces.geoLocation.geoLocationSensors import ISensor, GeoLocationReading
+from farm.interfaces.sensors import ISensor, AReading
 
 """
 I used this resource as a guide to connect & read the GPS (Air530) data with the Seeed reTerminal: 
@@ -25,7 +25,7 @@ class GPSLocation(ISensor):
     VALID_MESSAGE_TYPE = 'GGA'
 
     # gpio: int, 
-    def __init__(self, model: str, type: GeoLocationReading.Type):
+    def __init__(self, model: str, type: AReading.Type):
         """Constructor for GPSLocation  class. May be called from childclass.
         :param str model: specific model of sensor hardware. Ex. GPS (Air530)
         :param ReadingType type: Type of reading this sensor produces. Ex. 'GPSLOCATION'
@@ -36,12 +36,12 @@ class GPSLocation(ISensor):
         self._geolocator = Nominatim(user_agent="geo-location")
 
         self._sensor_model = model or "GPS (Air530)"
-        self.reading_type = type or GeoLocationReading.Type.GPSLOCATION 
+        self.reading_type = type or AReading.Type.GPSLOCATION 
 
         self._serial.reset_input_buffer()
         self._serial.flush()     
 
-    def read_sensor(self) -> GeoLocationReading:
+    def read_sensor(self) -> AReading:
         """Takes a reading form the sensor
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
@@ -84,8 +84,8 @@ class GPSLocation(ISensor):
                         print(full_address_location)
 
                         # Return a new reading
-                        return GeoLocationReading(GeoLocationReading.Type.GPSLOCATION,
-                                    GeoLocationReading.Unit.LOCATION, 
+                        return AReading(AReading.Type.GPSLOCATION,
+                                    AReading.Unit.LOCATION, 
                                     {
                                         'value': f'({latitude}, {longitude})'
                                     })
@@ -96,8 +96,8 @@ class GPSLocation(ISensor):
             except UnicodeDecodeError:
                 data_line = self._serial.readline().decode('utf-8')
                 
-            return GeoLocationReading(GeoLocationReading.Type.GPSLOCATION,
-                                    GeoLocationReading.Unit.LOCATION, 
+            return AReading(AReading.Type.GPSLOCATION,
+                                    AReading.Unit.LOCATION, 
                                     {
                                         'value': f'(,)'
                                     })
@@ -106,7 +106,7 @@ class GPSLocation(ISensor):
 
 if __name__ == "__main__":
 
-    gps_location = GPSLocation("GPS (Air530)", GeoLocationReading.Type.GPSLOCATION)
+    gps_location = GPSLocation("GPS (Air530)", AReading.Type.GPSLOCATION)
 
     while True:
         reading = gps_location.read_sensor()
