@@ -2,12 +2,12 @@ from time import sleep
 
 from interfaces.sensors import ISensor, AReading
 from interfaces.actuators import IActuator, ACommand
-from Buzzer import Buzzer
-from Door import Door
-from DoorLock import DoorLock
-from Luminosity import Luminosity
-from Motion import Motion
-from Noise import Noise
+from .Buzzer import Buzzer
+from .Door import Door
+from .DoorLock import DoorLock
+from .Luminosity import Luminosity
+from .Motion import Motion
+from .Noise import Noise
 
 
 class Security:
