@@ -8,7 +8,7 @@ from azure.iot.device.aio import IoTHubDeviceClient
 from azure.iot.device import Message
 from azure.iot.device import MethodResponse
 from dotenv import dotenv_values
-from os import path, environ
+import os
 from dotenv import dotenv_values
 import json
 
@@ -29,6 +29,8 @@ class ConnectionManager:
     Includes registering command and reading endpoints and sending and receiving data.
     """
 
+    TELEMETRY_INTERVAL_PROPERTY = "telemetryInterval"
+
     def __init__(self) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
         """
@@ -36,6 +38,7 @@ class ConnectionManager:
         self._config: ConnectionConfig = self._load_connection_config()
         self._client = IoTHubDeviceClient.create_from_connection_string(
             self._config._device_connection_str)
+        self.telemetry_interval = 5
 
     def _load_connection_config(self) -> ConnectionConfig:
         """Loads connection credentials from .env file in the project's top-level directory.
@@ -43,10 +46,10 @@ class ConnectionManager:
         """
         
         # The path to the .env file
-        env_path = '/farm/.env'
+        env_path = 'farm/.env'
         
         # Raise exception if the .env file is not present in the farm folder
-        if not path.exists(env_path):
+        if not os.path.exists(env_path):
             raise Exception(f"The file '${env_path}' is not present in the farm directory of the project.")
 
         # Load the .env values into a config object
@@ -61,7 +64,6 @@ class ConnectionManager:
         
         return ConnectionConfig(connection_string)
         
-
     async def connect(self) -> None:
         """Connects to cloud gateway using connection credentials and setups up a message handler
         """
@@ -72,6 +74,11 @@ class ConnectionManager:
         # Set the method request handler on the client
         self._client.on_method_request_received = self.method_request_handler
 
+        # Interval
+        await self.device_connected(self._client) 
+
+        # Set the twin patch handler on the client
+        self._client.on_twin_desired_properties_patch_received = self.twin_patch_handler
 
     def register_command_callback(self, command_callback: Callable[[ACommand], None]) -> None:
         """Registers an external callback function to handle newly received commands.
@@ -85,14 +92,37 @@ class ConnectionManager:
         # Determine how to respond to the method request based on the method name
         if method_request.name == "is_online":
             payload = None
-            status = 200  # set return status code
+            status = 200  
         else:
-            payload = {"details": "method name unknown"}  # set response payload
-            status = 400  # set return status code
+            payload = {"details": "method name unknown"}  
+            status = 400 
 
         # Send the response
         method_response = MethodResponse.create_from_method_request(method_request, status, payload)
         await self._client.send_method_response(method_response)
+
+    # Callback to receive twin data 
+    def twin_patch_handler(self, patch):
+        print("the data in the desired properties patch was: {}".format(patch))
+
+        if ConnectionManager.TELEMETRY_INTERVAL_PROPERTY in patch:
+            telemetry_property_value = patch[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]
+            print(f"New telemetry interval: {telemetry_property_value}")
+            self.telemetry_interval = telemetry_property_value
+
+    # Get Twin updates when device connected
+    async def device_connected(self, device_client):
+        # Get the twin
+        twin = await device_client.get_twin()
+        print("Twin document:")
+        print("{}".format(twin))
+
+        desired_properties = twin["desired"]
+
+        if ConnectionManager.TELEMETRY_INTERVAL_PROPERTY in desired_properties:
+            telemetry_property_value = desired_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]
+            print(f"New telemetry interval: {telemetry_property_value}")
+            self.telemetry_interval = telemetry_property_value
 
     async def send_readings(self, readings: list[AReading]) -> None:
         """Send a list of sensor readings as messages to the cloud gateway.

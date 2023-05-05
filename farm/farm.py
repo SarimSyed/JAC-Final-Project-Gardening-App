@@ -10,24 +10,27 @@ async def main():
     connection_manager = ConnectionManager()
     await connection_manager.connect()
 
+    while True:
+        # print(connection_manager.telemetry_interval)
+        await asyncio.sleep(connection_manager.telemetry_interval)
 
-    # Define behavior for halting the application
-    def stdin_listener():
-        while True:
-            selection = input("Press Q to quit\n")
-            if selection == "Q" or selection == "q":
-                print("Quitting...")
-                break
+    # # Define behavior for halting the application
+    # def stdin_listener():
+    #     while True:
+    #         selection = input("Press Q to quit\n")
+    #         if selection == "Q" or selection == "q":
+    #             print("Quitting...")
+    #             break
 
-    # Run the stdin listener in the event loop
-    loop = asyncio.get_running_loop()
-    user_finished = loop.run_in_executor(None, stdin_listener)
+    # # Run the stdin listener in the event loop
+    # loop = asyncio.get_running_loop()
+    # user_finished = loop.run_in_executor(None, stdin_listener)
 
-    # Wait for user to indicate they are done listening for method calls
-    await user_finished
+    # # Wait for user to indicate they are done listening for method calls
+    # await user_finished
 
     # Finally, shut down the client
-    await connection_manager._client.shutdown()
+    # await connection_manager._client.shutdown()
 
 
 if __name__ == "__main__":
