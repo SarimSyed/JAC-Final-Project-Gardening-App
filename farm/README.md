@@ -1,6 +1,13 @@
-# <div align='center'>(420-6A6-AB) APP DEV III <br>(420-6P3-AB) Connected Objects <br>Winter 2023</div>
+# Pi Hat Pins
 
-## <div align='center'>Final Project</div>
-## <div align='center'>Container-Farms</div>
+## Geo-Location
+GPS (Air530): UART
 
-Template repo for final year project
+## Plants
+HumiditySensor: 6
+LED: 18
+SoilMoistureSensor: 2
+LiquidLevelSensor: 1
+Fan: 5
+
+## Secuity
