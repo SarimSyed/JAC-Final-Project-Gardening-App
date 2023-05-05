@@ -6,7 +6,7 @@ from azure.iot.device import MethodResponse
 
 async def main():
     # Gets the connection string for the device from the .env file
-    conn_str = os.getenv("IOTHUB_DEVICE_CONNECTION_STRING")
+    conn_str = "HostName=IoTHub-Payal-Rathod.azure-devices.net;DeviceId=Farm;SharedAccessKey=EL63oRIXpCn3XbJjbK0VIgVqlgZurW/ODuLK9sQ02ag="
 
     # The client object is used to interact with your Azure IoT hub.
     device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
@@ -21,6 +21,7 @@ async def main():
 
         # Determine how to respond to the method request based on the method name
         if method_request.name == "is_online":
+            payload = None
             status = 200  # set return status code
         else:
             payload = {"details": "method name unknown"}  # set response payload
