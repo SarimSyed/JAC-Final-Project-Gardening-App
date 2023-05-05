@@ -9,6 +9,29 @@ from actuators import ACommand
 from time import sleep
 
 
+class PlantSystem:
+    def __init__(self) -> None:
+        self.liquidSensor = LiquidLevelSensor(1, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
+        self.soilSensor = SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE)
+        self.ledActuator =Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
+        self.fanActuator = Fan(5, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
+        self.tempSensor = HumiditySensor(6, "AHT20", AReading.Type.HUMIDITY )
+        self.humiditySensor = TemperatureSensor(1, "AHT20", AReading.Type.HUMIDITY )
+        self.sensorReadings : list[AReading] = []
+
+    def read_sensors(self) -> list[AReading]:
+        #reset list
+        self.sensorReadings = []
+        self.sensorReadings.append(self.humiditySensor.read_sensor())
+        self.sensorReadings.append(self.tempSensor.read_sensor())
+        self.sensorReadings.append(self.liquidSensor.read_sensor())
+        self.sensorReadings.append(self.soilSensor.read_sensor())
+
+        return self.sensorReadings
+
+        
+
+
 if __name__ == "__main__":
 
     #Might need to change the gpio pin numbers for some as my device has been wonky and ive had to use
