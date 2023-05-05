@@ -11,3 +11,8 @@ LiquidLevelSensor: 1
 Fan: 5
 
 ## Secuity
+
+| Sensor            | Actuator | Pin      | Subsystem |
+| ----------------- | ----------- |
+| GPS (Air530)      | Title       |
+| Paragraph   | Text        |
