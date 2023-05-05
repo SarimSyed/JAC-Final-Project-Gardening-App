@@ -15,10 +15,10 @@
 | Liquid Level  |           |                        |    Plants    |
 |               |    LED    |           18           |    Plants    |
 |               |    Fan    |                        |    Plants    |
-|  Luminosity   |           |                        |   Security   |
-|    Motion     |           |           16           |   Security   |
-|     Noise     |           |                        |   Security   |
-|     Door      |           |                        |   Security   |
-|               | Door Lock |                        |   Security   |
+|  Luminosity   |           | Built-in Rasberry Pi   |   Security   |
+|    Motion     |           |           D16          |   Security   |
+|     Noise     |           |           A0           |   Security   |
+|     Door      |           |           D5           |   Security   |
+|               | Door Lock |           PWM          |   Security   |
 |               |  Buzzer   | Built-in accelerometer |   Security   |
 
