@@ -7,10 +7,9 @@ from interfaces.actuators import ACommand
 from azure.iot.device.aio import IoTHubDeviceClient
 from azure.iot.device import Message
 from azure.iot.device import MethodResponse
-
-
-from dotenv import load_dotenv
-from os import environ
+from dotenv import dotenv_values
+from os import path, environ
+from dotenv import dotenv_values
 import json
 
 
@@ -19,7 +18,6 @@ class ConnectionConfig:
     """
 
     # Key names for configuration values inside .env file. See .env.example
-    # Constants included as static class property
     DEVICE_CONN_STR = "IOTHUB_DEVICE_CONNECTION_STRING"
 
     def __init__(self, device_str: str) -> None:
@@ -43,9 +41,25 @@ class ConnectionManager:
         """Loads connection credentials from .env file in the project's top-level directory.
         :return ConnectionConfig: object with configuration information loaded from .env file.
         """
-        load_dotenv()
-        connectionConfig = ConnectionConfig("HostName=IoTHub-Payal-Rathod.azure-devices.net;DeviceId=Farm;SharedAccessKey=EL63oRIXpCn3XbJjbK0VIgVqlgZurW/ODuLK9sQ02ag=")
-        return connectionConfig
+        
+        # The path to the .env file
+        env_path = '/farm/.env'
+        
+        # Raise exception if the .env file is not present in the farm folder
+        if not path.exists(env_path):
+            raise Exception(f"The file '${env_path}' is not present in the farm directory of the project.")
+
+        # Load the .env values into a config object
+        config_values = dotenv_values(dotenv_path=env_path)
+
+        # Raise exception if the user name is not in the .env file
+        if ConnectionConfig.DEVICE_CONN_STR not in config_values:
+            raise Exception(f"The expected key name '${ConnectionConfig.DEVICE_CONN_STR}' was not found in the '${env_path}' file.")
+
+        # Get the .env data
+        connection_string = str(config_values.get(ConnectionConfig.DEVICE_CONN_STR))
+        
+        return ConnectionConfig(connection_string)
         
 
     async def connect(self) -> None:
