@@ -5,8 +5,8 @@ from .Pitch import Pitch
 from .RollAngle import RollAngle
 from .Vibration import Vibration
 
-from ....farm.interfaces.actuators import ACommand, IActuator
-from ....farm.interfaces.sensors import AReading, ISensor
+from interfaces.actuators import ACommand, IActuator
+from interfaces.sensors import AReading, ISensor
 
 class GeoLocation:
     """The Geo-Location subsystem of the container farm.
@@ -47,13 +47,14 @@ class GeoLocation:
         readings: list[AReading] = []
 
         for sensor in self._sensors:
+            # Get the sensor reading
             reading_sensor_value = sensor.read_sensor()
 
             # GPS 
             if sensor.reading_type == AReading.Type.GPSLOCATION:
                 print(f"Address: {reading_sensor_value}\n")
             # Pitch
-            elif sensor.reading_type == AReading.Type.PITCH:
+            if sensor.reading_type == AReading.Type.PITCH:
                 print(f"Pitch: {reading_sensor_value}\n")
             # Roll angle
             elif sensor.reading_type == AReading.Type.ROLL_ANGLE:
@@ -62,6 +63,7 @@ class GeoLocation:
             elif sensor.reading_type == AReading.Type.VIBRATION:
                 print(f"Vibration: {reading_sensor_value}\n")
 
+            # Add the reading to the list of readings
             readings.append(reading_sensor_value)
 
         return readings
