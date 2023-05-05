@@ -1,9 +1,9 @@
 from time import sleep
-from Buzzer import Buzzer
-from GPSLocation import GPSLocation
-from Pitch import Pitch
-from RollAngle import RollAngle
-from Vibration import Vibration
+from .Buzzer import Buzzer
+from .GPSLocation import GPSLocation
+from .Pitch import Pitch
+from .RollAngle import RollAngle
+from .Vibration import Vibration
 
 from interfaces.actuators import ACommand
 from interfaces.sensors import AReading
