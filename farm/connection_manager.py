@@ -30,6 +30,8 @@ class ConnectionManager:
     """
 
     TELEMETRY_INTERVAL_PROPERTY = "telemetryInterval"
+    IS_ONLINE_DIRECT_METHOD = "is_online"
+    DESIRED_PROPERTY_NAME = "desired"
 
     def __init__(self) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
@@ -75,7 +77,7 @@ class ConnectionManager:
         self._client.on_method_request_received = self.method_request_handler
 
         # Interval
-        await self.device_connected(self._client) 
+        await self.device_connected_twin_handler(self._client) 
 
         # Set the twin patch handler on the client
         self._client.on_twin_desired_properties_patch_received = self.twin_patch_handler
@@ -90,7 +92,7 @@ class ConnectionManager:
     async def method_request_handler(self, method_request):
 
         # Determine how to respond to the method request based on the method name
-        if method_request.name == "is_online":
+        if method_request.name == ConnectionManager.IS_ONLINE_DIRECT_METHOD:
             payload = None
             status = 200  
         else:
@@ -103,26 +105,48 @@ class ConnectionManager:
 
     # Callback to receive twin data 
     def twin_patch_handler(self, patch):
+        """Handles the twin patch of the device received from the IoT Hub.
+
+        Args:
+            patch (Unknown): The twin patch of the device (desired properties).
+        """
+
+        # Can remove
         print("the data in the desired properties patch was: {}".format(patch))
 
-        if ConnectionManager.TELEMETRY_INTERVAL_PROPERTY in patch:
-            telemetry_property_value = patch[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]
+        self._telemetry_property_handler(patch)
+
+    def _telemetry_property_handler(self, desired_properties):
+        """Handles setting the telemetry interval value from the twin desired properties.
+           Sets the telemetry value to the new one if in desire properties.
+
+        Args:
+            desired_properties (Unknown): The twin desired properties.
+        """
+
+        # If the property is in the desired properties
+        if ConnectionManager.TELEMETRY_INTERVAL_PROPERTY in desired_properties:
+            # Get the new telemetry value
+            telemetry_property_value = desired_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]
             print(f"New telemetry interval: {telemetry_property_value}")
             self.telemetry_interval = telemetry_property_value
 
     # Get Twin updates when device connected
-    async def device_connected(self, device_client):
+    async def device_connected_twin_handler(self, device_client):
+        """Handles the twin patch upon device being connected.
+
+        Args:
+            device_client (Unknown): The device client.
+        """
+
         # Get the twin
         twin = await device_client.get_twin()
+
+        # Can remove
         print("Twin document:")
         print("{}".format(twin))
 
-        desired_properties = twin["desired"]
-
-        if ConnectionManager.TELEMETRY_INTERVAL_PROPERTY in desired_properties:
-            telemetry_property_value = desired_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]
-            print(f"New telemetry interval: {telemetry_property_value}")
-            self.telemetry_interval = telemetry_property_value
+        self._telemetry_property_handler(twin[ConnectionManager.DESIRED_PROPERTY_NAME])
 
     async def send_readings(self, readings: list[AReading]) -> None:
         """Send a list of sensor readings as messages to the cloud gateway.
