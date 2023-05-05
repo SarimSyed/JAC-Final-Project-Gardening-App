@@ -1,18 +1,24 @@
-# Pi Hat Pins
+# Grove Base Pi Hat Pins
 
-## Geo-Location
-GPS (Air530): UART
 
-## Plants
-HumiditySensor: 6
-LED: 18
-SoilMoistureSensor: 2
-LiquidLevelSensor: 1
-Fan: 5
 
-## Secuity
+|    Sensor     | Actuator  |     Grove Hat Pin      |  Subsystem   |
+| :-----------: | :-------: | :--------------------: | :----------: |
+| GPS (Air530)  |           |          UART          | Geo-Location |
+|     Pitch     |           | Built-in accelerometer | Geo-Location |
+|  Roll Angle   |           | Built-in accelerometer | Geo-Location |
+|   Vibration   |           | Built-in accelerometer | Geo-Location |
+|               |  Buzzer   | Built-in accelerometer | Geo-Location |
+|   Humidity    |           |                        |    Plants    |
+|  Temperature  |           |                        |    Plants    |
+| Soil Moisture |           |                        |    Plants    |
+| Liquid Level  |           |                        |    Plants    |
+|               |    LED    |           18           |    Plants    |
+|               |    Fan    |                        |    Plants    |
+|  Luminosity   |           |                        |   Security   |
+|    Motion     |           |           16           |   Security   |
+|     Noise     |           |                        |   Security   |
+|     Door      |           |                        |   Security   |
+|               | Door Lock |                        |   Security   |
+|               |  Buzzer   | Built-in accelerometer |   Security   |
 
-| Sensor            | Actuator    | Pin      | Subsystem         |
-| ----------------- | ----------- | -------- | ----------------- | 
-| GPS (Air530)      | Title       |
-| Paragraph   | Text        |
