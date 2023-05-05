@@ -84,3 +84,14 @@ class ConnectionManager:
         """Send a list of sensor readings as messages to the cloud gateway.
         :param list[AReading] readings: List of readings to be sent.
         """
+        msg_dict = {}
+
+        for x in range(len(readings)):
+            msg_dict.__setitem__('value', readings[x].value)
+
+            msg = Message(json.dumps(msg_dict))
+            msg.content_encoding = "utf-8"
+            msg.content_type = "application/json"
+
+            msg.custom_properties['reading-type'] = readings[x].reading_type
+            await self._client.send_message(msg)
