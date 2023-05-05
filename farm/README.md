@@ -12,7 +12,7 @@ Fan: 5
 
 ## Secuity
 
-| Sensor            | Actuator | Pin      | Subsystem |
-| ----------------- | ----------- |
+| Sensor            | Actuator    | Pin      | Subsystem         |
+| ----------------- | ----------- | -------- | ----------------- | 
 | GPS (Air530)      | Title       |
 | Paragraph   | Text        |
