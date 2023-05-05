@@ -1,6 +1,6 @@
 import seeed_python_reterminal.core as rt
 from time import sleep
-from farm.interfaces.actuators import IActuator, ACommand
+from interfaces.actuators import IActuator, ACommand
 
 class Buzzer(IActuator):
     """A Buzzer represents an alarm in the Geo-Location subsytem.

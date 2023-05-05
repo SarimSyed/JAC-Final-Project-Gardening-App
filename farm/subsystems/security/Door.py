@@ -1,6 +1,6 @@
 from time import sleep
 from gpiozero import Button
-from farm.interfaces.sensors import ISensor, AReading
+from interfaces.sensors import ISensor, AReading
 
 
 class Door(ISensor):
@@ -31,10 +31,10 @@ class Door(ISensor):
         #Get the sensor reading and returns appropriate value
         if(self.button.is_held == True):
                door_value = Door.CLOSED
-               return AReading(AReading.Type.DOOR, {"value": door_value})
+               return AReading(AReading.Type.DOOR, AReading.Unit.NONE, {"value": door_value})
         else:
                door_value = Door.OPEN
-               return AReading(AReading.Type.DOOR, {"value": door_value})
+               return AReading(AReading.Type.DOOR,  AReading.Unit.NONE, {"value": door_value})
         
 if __name__ == "__main__":
      

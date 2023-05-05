@@ -3,8 +3,8 @@ import seeed_python_reterminal.acceleration as rt_accel
 from time import sleep
 import math
 
-from farm.interfaces.sensors import ISensor, AReading
-from farm.interfaces.geoLocation.accelerometerCalculate import IAccelerometerCalculate
+from interfaces.sensors import ISensor, AReading
+from interfaces.geoLocation.accelerometerCalculate import IAccelerometerCalculate
 
 
 class Vibration(ISensor, IAccelerometerCalculate):

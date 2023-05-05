@@ -1,7 +1,7 @@
 from time import sleep
 
-from farm.interfaces.security.securitySensors import ISensor, SecurityReading
-from farm.interfaces.actuators import IActuator, ACommand
+from interfaces.sensors import ISensor, AReading
+from interfaces.actuators import IActuator, ACommand
 from Buzzer import Buzzer
 from Door import Door
 from DoorLock import DoorLock
@@ -42,12 +42,12 @@ class Security:
             DoorLock(12, {"value": "lock"})
         ]
 
-    def read_sensors(self) -> list[SecurityReading]:
+    def read_sensors(self) -> list[AReading]:
         """Reads data from all initialized sensors. 
 
         :return list[AReading]: a list containing all readings collected from sensors.
         """
-        readings: list[SecurityReading] = []
+        readings: list[AReading] = []
         for x in range(len(self._sensors)):
             print(self._sensors[x].read_sensor())
 

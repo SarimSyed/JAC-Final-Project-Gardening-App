@@ -1,13 +1,6 @@
-import time
 from grove.adc import ADC
-from grove import grove_loudness_sensor
-
-import math
-import sys
-
-import seeed_python_reterminal.core as rt
 from time import sleep
-from farm.interfaces.sensors import ISensor, AReading
+from interfaces.sensors import ISensor, AReading
 
 
 class Noise(ISensor):
@@ -45,23 +38,23 @@ class Noise(ISensor):
         #Low sensitivity
         if(self._sensitivity == AReading.Sensitivity.LOW.value):
             if(noise_value < Noise.LOW_VALUES[0] or noise_value > Noise.LOW_VALUES[1]):
-                return AReading(AReading.Type.NOISE, {"value": AReading.Response.DETECTED.value})
+                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
             else:
-                return AReading(AReading.Type.NOISE, {"value": AReading.Response.NOT_DETECTED.value})
+                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
         
         #Medium sensitivity
         elif(self._sensitivity == AReading.Sensitivity.MEDIUM.value):
             if(noise_value < Noise.MED_VALUES[0] or noise_value > Noise.MED_VALUES[1]):
-                return AReading(AReading.Type.NOISE, {"value": AReading.Response.DETECTED.value})
+                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
             else:
-                return AReading(AReading.Type.NOISE, {"value": AReading.Response.NOT_DETECTED.value})
+                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
         
         #High sensitivity
         else:
             if(noise_value < Noise.HIGH_VALUES[0] or noise_value > Noise.HIGH_VALUES[1]):
-                return AReading(AReading.Type.NOISE, {"value": AReading.Response.DETECTED.value})
+                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
             else:
-                return AReading(AReading.Type.NOISE, {"value": AReading.Response.NOT_DETECTED.value})
+                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
         
 if __name__ == "__main__":
     noise = Noise()

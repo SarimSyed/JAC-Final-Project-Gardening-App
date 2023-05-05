@@ -1,6 +1,6 @@
 import seeed_python_reterminal.core as rt
 from time import sleep
-from farm.interfaces.sensors import ISensor, AReading
+from interfaces.sensors import ISensor, AReading
 
 
 class Luminosity(ISensor):
@@ -28,9 +28,9 @@ class Luminosity(ISensor):
 
         light_value = rt.illuminance
         if(light_value >= self._dangervalue):
-            return AReading(AReading.Type.LUMINOSITY, {"value": AReading.Response.DETECTED.value})
+            return AReading(AReading.Type.LUMINOSITY,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
         else:
-            return AReading(AReading.Type.LUMINOSITY, {"value": AReading.Response.NOT_DETECTED.value})
+            return AReading(AReading.Type.LUMINOSITY,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
 
         
 if __name__ == "__main__":

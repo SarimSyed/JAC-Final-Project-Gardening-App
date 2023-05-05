@@ -54,6 +54,9 @@ class AReading:
         ROLL_ANGLE = '°'
         VIBRATION = 'm/s2'
 
+        #Security
+        NONE = ""
+
         
 
     def __init__(self, type: Type, unit: Unit, value: dict) -> None:

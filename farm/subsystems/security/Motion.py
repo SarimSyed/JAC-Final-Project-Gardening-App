@@ -1,6 +1,6 @@
 from grove import grove_mini_pir_motion_sensor
 from time import sleep
-from farm.interfaces.sensors import ISensor, AReading
+from interfaces.sensors import ISensor, AReading
 
 
 class Motion(ISensor):
@@ -28,9 +28,9 @@ class Motion(ISensor):
 
       # Get the sensor reading and returns value
       if (self.motion_sensor.read() == 0):
-         return AReading(AReading.Type.MOTION, {"value": AReading.Response.NOT_DETECTED.value})
+         return AReading(AReading.Type.MOTION,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
       else:
-         return AReading(AReading.Type.MOTION, {"value": AReading.Response.DETECTED.value})
+         return AReading(AReading.Type.MOTION,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
 
 if __name__ == "__main__":
    motion = Motion(16)
