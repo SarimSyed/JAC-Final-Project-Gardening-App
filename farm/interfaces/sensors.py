@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 from enum import Enum
 
-
+"""
+We are using the 'AReading' and 'ISensor' classes from Mauricio Andres Buschinelli: https://github.com/maujac.
+"""
 class AReading:
     """Class for sensor readings. Defines possible types of readings and reading units using enums.
     """
@@ -50,7 +52,7 @@ class AReading:
 
         #Geo-Location
         LOCATION = 'loc'
-        PITCH = 'Hz'
+        PITCH = '°'
         ROLL_ANGLE = '°'
         VIBRATION = 'm/s2'
 

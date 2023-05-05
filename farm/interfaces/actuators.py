@@ -2,7 +2,9 @@ from abc import ABC, abstractmethod
 from enum import Enum
 import json
 
-
+"""
+We are using the 'ACommand' and 'IActuator' classes from Mauricio Andres Buschinelli: https://github.com/maujac.
+"""
 class ACommand:
     """Class for actuator commands. Defines all possible command types via enums.
     """
