@@ -5,8 +5,8 @@ from .Pitch import Pitch
 from .RollAngle import RollAngle
 from .Vibration import Vibration
 
-from interfaces.actuators import ACommand
-from interfaces.sensors import AReading
+from ....farm.interfaces.actuators import ACommand, IActuator
+from ....farm.interfaces.sensors import AReading, ISensor
 
 class GeoLocation:
     """The Geo-Location subsystem of the container farm.
@@ -14,31 +14,57 @@ class GeoLocation:
     def __init__(self) -> None:
         """Initalizes the sensors and actuators in the Geo-Location subsystem.
         """
-        self.gps_location = GPSLocation("GPS (Air530)", AReading.Type.GPSLOCATION)
-        self.buzzer = Buzzer(ACommand.Type.BUZZER, {'value': 'off'})
-        self.pitch_accelerometer = Pitch("LIS3DHTR", AReading.Type.PITCH)
-        self.roll_angle_accelerometer = RollAngle("LIS3DHTR", AReading.Type.ROLL_ANGLE)
-        self.vibration_accelerometer = Vibration("LIS3DHTR", AReading.Type.VIBRATION)
+        self._sensors: list[ISensor] = self._initialize_sensors()
+        self._actuators: list[IActuator] = self._initialize_actuators()
 
-    def read_sensors(self) -> None:     
+    def _initialize_sensors(self) -> list[ISensor]:
+        """Initializes all sensors in the Geo-Location subsystem and returns them as a list. Intended to be used in class constructor.
+
+        :return List[ISensor]: List of initialized sensors.
+        """
+
+        return [
+            GPSLocation("GPS (Air530)", AReading.Type.GPSLOCATION),
+            Pitch("LIS3DHTR", AReading.Type.PITCH),
+            RollAngle("LIS3DHTR", AReading.Type.ROLL_ANGLE),
+            Vibration("LIS3DHTR", AReading.Type.VIBRATION)
+        ]
+        
+    def _initialize_actuators(self) -> list[IActuator]:
+        """Initializes all actuators in the Geo-Location subsystem and returns them as a list. Intended to be used in class constructor
+
+        :return list[IActuator]: List of initialized actuators.
+        """
+
+        return [
+            Buzzer(ACommand.Type.BUZZER, {'value': 'off'})
+        ]
+
+    def read_sensors(self) -> list[AReading]:     
         """Reads all the sensors inside the Geo-Location subsystem.
         """  
 
-        # GPS 
-        gps_reading = self.gps_location.read_sensor()
-        print(f"Address: {gps_reading}\n")
+        readings: list[AReading] = []
 
-        # Pitch
-        pitch_levels = self.pitch_accelerometer.read_sensor()
-        print(f"Pitch: {pitch_levels}\n")
+        for sensor in self._sensors:
+            reading_sensor_value = sensor.read_sensor()
 
-        # Roll angle
-        roll_angle = self.roll_angle_accelerometer.read_sensor()
-        print(f"Roll Angle: {roll_angle}\n")
+            # GPS 
+            if sensor.reading_type == AReading.Type.GPSLOCATION:
+                print(f"Address: {reading_sensor_value}\n")
+            # Pitch
+            elif sensor.reading_type == AReading.Type.PITCH:
+                print(f"Pitch: {reading_sensor_value}\n")
+            # Roll angle
+            elif sensor.reading_type == AReading.Type.ROLL_ANGLE:
+                print(f"Roll Angle: {reading_sensor_value}\n")
+            # Vibration
+            elif sensor.reading_type == AReading.Type.VIBRATION:
+                print(f"Vibration: {reading_sensor_value}\n")
 
-        # Vibration
-        vibration_levels = self.vibration_accelerometer.read_sensor()
-        print(f"Vibration: {vibration_levels}\n")
+            readings.append(reading_sensor_value)
+
+        return readings
 
     def control_actuators(self, command: ACommand) -> None:
         """Controls the actuators inside the Geo-Location subsystem.
@@ -47,10 +73,13 @@ class GeoLocation:
             command (ACommand): The command to control the actuator.
         """
         
-        # Buzzer
-        if self.buzzer.validate_command(command):
-            self.buzzer.control_actuator(command.data)
-
+        for actuator in self._actuators:
+            # If the actuator is an instance of the Buzzer
+            if command.target_type == ACommand.Type.BUZZER and actuator.type == ACommand.Type.BUZZER:
+                # Validate command
+                if actuator.validate_command(command):
+                    # Control actuator with command data
+                    actuator.control_actuator(command.data)
 
 
 if __name__ == "__main__":
