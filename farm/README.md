@@ -9,16 +9,16 @@
 |  Roll Angle   |           | Built-in accelerometer | Geo-Location |
 |   Vibration   |           | Built-in accelerometer | Geo-Location |
 |               |  Buzzer   | Built-in accelerometer | Geo-Location |
-|   Humidity    |           |                        |    Plants    |
-|  Temperature  |           |                        |    Plants    |
-| Soil Moisture |           |                        |    Plants    |
-| Liquid Level  |           |                        |    Plants    |
+|   Humidity    |           |           26           |    Plants    |
+|  Temperature  |           |           26           |    Plants    |
+| Soil Moisture |           |           A2           |    Plants    |
+| Liquid Level  |           |           A4           |    Plants    |
 |               |    LED    |           18           |    Plants    |
-|               |    Fan    |                        |    Plants    |
-|  Luminosity   |           | Built-in Rasberry Pi   |   Security   |
-|    Motion     |           |           D16          |   Security   |
+|               |    Fan    |           22           |    Plants    |
+|  Luminosity   |           |  Built-in Rasberry Pi  |   Security   |
+|    Motion     |           |          D16           |   Security   |
 |     Noise     |           |           A0           |   Security   |
 |     Door      |           |           D5           |   Security   |
-|               | Door Lock |           PWM          |   Security   |
+|               | Door Lock |          PWM           |   Security   |
 |               |  Buzzer   | Built-in accelerometer |   Security   |
 
