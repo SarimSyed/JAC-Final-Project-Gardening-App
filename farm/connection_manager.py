@@ -23,6 +23,9 @@ class ConnectionConfig:
     def __init__(self, device_str: str) -> None:
         self._device_connection_str = device_str
 
+class Sensor:
+    def __init__(self, readings : list[AReading]) -> None:
+        self.sensors : list[AReading] = readings
 
 class ConnectionManager:
     """Component of HVAC system responsible for communicating with cloud gateway.
@@ -147,19 +150,28 @@ class ConnectionManager:
         print("{}".format(twin))
 
         self._telemetry_property_handler(twin[ConnectionManager.DESIRED_PROPERTY_NAME])
+    
+
+    
 
     async def send_readings(self, readings: list[AReading]) -> None:
         """Send a list of sensor readings as messages to the cloud gateway.
         :param list[AReading] readings: List of readings to be sent.
         """
-        msg_dict = {}
 
+        
+        json_list : list = []
+    
         for x in range(len(readings)):
-            msg_dict.__setitem__('value', readings[x].value)
 
-            msg = Message(json.dumps(msg_dict))
+            for x in range(len(readings)):
+                json_list.append(readings[x].export_json())
+
+            sensors = Sensor(json_list)
+            message = json.dumps(sensors, default=lambda o: o.__dict__, indent=2)
+            msg = Message(message)
             msg.content_encoding = "utf-8"
             msg.content_type = "application/json"
 
-            msg.custom_properties['reading-type'] = readings[x].reading_type
+            
             await self._client.send_message(msg)

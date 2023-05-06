@@ -20,27 +20,28 @@ class PlantSystem:
         
         return [
         
-            LiquidLevelSensor(1, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
-            SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
+            LiquidLevelSensor(2, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
+            SoilMoistureSensor(5, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
 
-            HumiditySensor(6, "AHT20", AReading.Type.HUMIDITY ),
-            TemperatureSensor(1, "AHT20", AReading.Type.HUMIDITY )
+            HumiditySensor("AHT20", AReading.Type.HUMIDITY ),
+            TemperatureSensor( "AHT20", AReading.Type.HUMIDITY )
         
         ]
 
     def _initialize_actuators(self)-> list[IActuator]:
         return [
             Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON}),
-            Fan(5, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
+            Fan(22, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
         ]
 
     def read_sensors(self) -> list[AReading]:
         #reset list
-        self.sensorReadings = []
+        
         readings: list[AReading] = []
         for x in range(len(self._sensors)):
-            print(self._sensors[x].read_sensor())    
-
+            print(self._sensors[x].read_sensor())
+            readings.append(self._sensors[x].read_sensor())    
+        self.sensorReadings = readings
         return self.sensorReadings
     
     def control_actuators(self, command: ACommand)-> None:
@@ -116,11 +117,14 @@ if __name__ == "__main__":
         print(soilSensor.read_sensor())
         print(liqudSensor.read_sensor())
         temp : list[AReading] = []
-        temp.append(temperatureSensor.read_sensor().export_json())
-        temp.append(humid.read_sensor().export_json())
-        temp.append(soilSensor.read_sensor().export_json())
-        temp.append(liqudSensor.read_sensor().export_json())
-        print(temp[0])
+
+        plant = PlantSystem()
+        readings = plant.read_sensors()
+        for x in range(len(readings)):
+            temp.append(readings[x].export_json())
+            json_string = json.dumps(temp[x])
+            
+        
         sensors = Sensors(temp)
         json_string = json.dumps(sensors, default=lambda o: o.__dict__, indent=2)
         print(json_string)

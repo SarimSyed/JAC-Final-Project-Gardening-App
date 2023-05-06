@@ -4,14 +4,19 @@ from azure.iot.device.aio import IoTHubDeviceClient
 from azure.iot.device import MethodResponse
 from interfaces.sensors import AReading
 from connection_manager import ConnectionManager
+from subsystems.plants.PlantController import PlantSystem
 
 async def main():
 
     connection_manager = ConnectionManager()
     await connection_manager.connect()
+    #Get sensor readings and combine the lists you get by just adding them and send by passing it into the send_readings method
+    plants: PlantSystem = PlantSystem()
+    plant_sensors : list[AReading] = plants.read_sensors()
 
     while True:
         # print(connection_manager.telemetry_interval)
+        await connection_manager.send_readings(plant_sensors)
         await asyncio.sleep(connection_manager.telemetry_interval)
 
     # # Define behavior for halting the application
