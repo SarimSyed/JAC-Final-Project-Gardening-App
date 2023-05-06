@@ -12,7 +12,13 @@ import os
 import json
 
 
+class Sensor:
+    def __init__(self, readings : list[AReading]) -> None:
+        self.sensors : list[AReading] = readings
 
+"""
+We are using the 'ConnectionConfig' class from Mauricio Andres Buschinelli: https://github.com/maujac.
+"""
 class ConnectionConfig:
     """Represents all information required to successfully connect client to cloud gateway.
     """
@@ -23,10 +29,9 @@ class ConnectionConfig:
     def __init__(self, device_str: str) -> None:
         self._device_connection_str = device_str
 
-class Sensor:
-    def __init__(self, readings : list[AReading]) -> None:
-        self.sensors : list[AReading] = readings
-
+"""
+We are using the 'ConnectionManager' class from Mauricio Andres Buschinelli: https://github.com/maujac.
+"""
 class ConnectionManager:
     """Component of HVAC system responsible for communicating with cloud gateway.
     Includes registering command and reading endpoints and sending and receiving data.
@@ -150,16 +155,12 @@ class ConnectionManager:
         print("{}".format(twin))
 
         self._telemetry_property_handler(twin[ConnectionManager.DESIRED_PROPERTY_NAME])
-    
-
-    
 
     async def send_readings(self, readings: list[AReading]) -> None:
         """Send a list of sensor readings as messages to the cloud gateway.
         :param list[AReading] readings: List of readings to be sent.
         """
 
-        
         json_list : list = []
     
         for x in range(len(readings)):
