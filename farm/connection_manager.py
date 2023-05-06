@@ -13,6 +13,8 @@ import json
 
 
 class Sensor:
+    """Sensor class used only to store list of AReadings to aid with the json formatting in send_readings() method
+    """
     def __init__(self, readings : list[AReading]) -> None:
         self.sensors : list[AReading] = readings
 
@@ -170,6 +172,7 @@ class ConnectionManager:
                 json_list.append(readings[x].export_json())
 
             sensors = Sensor(json_list)
+            #json.dump use learned from : https://www.geeksforgeeks.org/serialize-and-deserialize-complex-json-in-python/
             message = json.dumps(sensors, default=lambda o: o.__dict__, indent=2)
             msg = Message(message)
             msg.content_encoding = "utf-8"
