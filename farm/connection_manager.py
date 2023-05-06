@@ -166,17 +166,17 @@ class ConnectionManager:
 
         json_list : list = []
     
-        for x in range(len(readings)):
+        
 
-            for x in range(len(readings)):
+        for x in range(len(readings)):
                 json_list.append(readings[x].export_json())
 
-            sensors = Sensor(json_list)
-            #json.dump use learned from : https://www.geeksforgeeks.org/serialize-and-deserialize-complex-json-in-python/
-            message = json.dumps(sensors, default=lambda o: o.__dict__, indent=2)
-            msg = Message(message)
-            msg.content_encoding = "utf-8"
-            msg.content_type = "application/json"
+        sensors = Sensor(json_list)
+        #json.dump use learned from : https://www.geeksforgeeks.org/serialize-and-deserialize-complex-json-in-python/
+        message = json.dumps(sensors, default=lambda o: o.__dict__, indent=2)
+        msg = Message(message)
+        msg.content_encoding = "utf-8"
+        msg.content_type = "application/json"
 
             
-            await self._client.send_message(msg)
+        await self._client.send_message(msg)
