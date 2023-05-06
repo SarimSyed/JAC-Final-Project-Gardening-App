@@ -45,7 +45,7 @@ class AReading:
         """Exports a reading as a json encoded string
         :return str: json string representation of the reading
         """
-        return {"value": self.value, "unit": self.reading_unit.value}.__str__()
+        return {"value": self.value, "unit": self.reading_unit.value}
 
 
 class ISensor(ABC):

@@ -5,14 +5,15 @@ from .TemperatureSensor import TemperatureSensor
 from .LiquidLevelSensor import LiquidLevelSensor
 from .SoilMoistureSensor import SoilMoistureSensor
 from interfaces.sensors import AReading, ISensor
-from actuators import ACommand, IActuator
+from interfaces.actuators import ACommand, IActuator
 from time import sleep
+import json
 
 
 class PlantSystem:
     def __init__(self) -> None:
         self._sensors: list[ISensor] = self._initialize_sensors()
-        self._actuators : list[IActuator] = self._initialize_actuators()
+        # self._actuators : list[IActuator] = self._initialize_actuators()
         self.sensorReadings : list[AReading] = []
 
     def _initialize_sensors(self)-> list[ISensor]:
@@ -56,6 +57,10 @@ class PlantSystem:
 
         
 
+class Sensors(object):
+    def __init__(self, sensors : list[AReading]) -> None:
+        self.sensors = sensors
+
 
 if __name__ == "__main__":
 
@@ -70,39 +75,39 @@ if __name__ == "__main__":
     soilSensor = SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE)
     
     #LED
-    led = Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
-    fake_msg = '{"value": "light-off"}'
-    test_off_cmd = ACommand(ACommand.Type.LED, fake_msg)
-    fake_msg = '{"value": "light-on"}'
-    test_on_cmd = ACommand(ACommand.Type.LED, fake_msg)
+    # led = Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
+    # fake_msg = '{"value": "light-off"}'
+    # test_off_cmd = ACommand(ACommand.Type.LED, fake_msg)
+    # fake_msg = '{"value": "light-on"}'
+    # test_on_cmd = ACommand(ACommand.Type.LED, fake_msg)
 
     #Fan
-    fan = Fan(5, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
-    fan_on_msg = '{"value": "on"}'
-    fan_off_msg = '{"value": "off"}'
-    fan_on_cmd = ACommand(ACommand.Type.FAN, fan_on_msg)
-    fan_off_cmd = ACommand(ACommand.Type.FAN, fan_off_msg)
+    # fan = Fan(5, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
+    # fan_on_msg = '{"value": "on"}'
+    # fan_off_msg = '{"value": "off"}'
+    # fan_on_cmd = ACommand(ACommand.Type.FAN, fan_on_msg)
+    # fan_off_cmd = ACommand(ACommand.Type.FAN, fan_off_msg)
     
     humid = HumiditySensor(6, "AHT20", AReading.Type.HUMIDITY )
     temperatureSensor = TemperatureSensor(1, "AHT20", AReading.Type.HUMIDITY )
     while True:
-        sleep(1)
+        sleep(2)
 
 
-        test = led.validate_command(test_off_cmd)
-        if test:
-            led.control_actuator({"value": Led.LIGHT_OFF})
-        sleep(2)
-        # led.control_actuator({'value':Led.LIGHT_BRIGHT})
-        if led.validate_command(test_on_cmd):
-            led.control_actuator({"value": Led.LIGHT_ON})
+        # test = led.validate_command(test_off_cmd)
+        # if test:
+        #     led.control_actuator({"value": Led.LIGHT_OFF})
+        # sleep(2)
+        # # led.control_actuator({'value':Led.LIGHT_BRIGHT})
+        # if led.validate_command(test_on_cmd):
+        #     led.control_actuator({"value": Led.LIGHT_ON})
 
-        if fan.validate_command(fan_off_cmd):
-            fan.control_actuator({"value": Fan.FAN_OFF})
-        sleep(2)
-        if fan.validate_command(fan_on_cmd):
-            fan.control_actuator({"value" : Fan.FAN_ON})
-        sleep(2)
+        # if fan.validate_command(fan_off_cmd):
+        #     fan.control_actuator({"value": Fan.FAN_OFF})
+        # sleep(2)
+        # if fan.validate_command(fan_on_cmd):
+        #     fan.control_actuator({"value" : Fan.FAN_ON})
+        # sleep(2)
 
 
         print("Sensors :\n")
@@ -110,4 +115,16 @@ if __name__ == "__main__":
         print(humid.read_sensor())
         print(soilSensor.read_sensor())
         print(liqudSensor.read_sensor())
+        temp : list[AReading] = []
+        temp.append(temperatureSensor.read_sensor().export_json())
+        temp.append(humid.read_sensor().export_json())
+        temp.append(soilSensor.read_sensor().export_json())
+        temp.append(liqudSensor.read_sensor().export_json())
+        print(temp[0])
+        sensors = Sensors(temp)
+        json_string = json.dumps(sensors, default=lambda o: o.__dict__, indent=2)
+        print(json_string)
+
+
+
         

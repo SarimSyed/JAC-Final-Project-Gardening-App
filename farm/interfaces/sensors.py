@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+import json
 
 """
 We are using the 'AReading' and 'ISensor' classes from Mauricio Andres Buschinelli: https://github.com/maujac.
@@ -81,8 +82,10 @@ class AReading:
         """Exports a reading as a json encoded string
         :return str: json string representation of the reading
         """
-        return {"value": self.value, "unit": self.reading_unit.value}.__str__()
+        return {self.reading_type:{"value": self.value, "unit": self.reading_unit.value}}
 
+    def export_dict(self)-> dict:
+        sensor : dict = {"name" : {self.reading_type}, "value" : {self.value}}
 
 class ISensor(ABC):
     """Interface for all sensors.
