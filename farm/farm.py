@@ -5,6 +5,8 @@ from azure.iot.device import MethodResponse
 from interfaces.sensors import AReading
 from connection_manager import ConnectionManager
 from subsystems.plants.PlantController import PlantSystem
+from subsystems.geoLocation.GeoLocation import GeoLocation
+from subsystems.security.Security import Security
 
 async def main():
 
@@ -12,11 +14,16 @@ async def main():
     await connection_manager.connect()
     #Get sensor readings and combine the lists you get by just adding them and send by passing it into the send_readings method
     plants: PlantSystem = PlantSystem()
-    plant_sensors : list[AReading] = plants.read_sensors()
+    security: Security = Security()
+    geolocation : GeoLocation = GeoLocation()
+
+    sensor_data : list[AReading] = plants.read_sensors() + security.read_sensors() + geolocation.read_sensors()
+
+    
 
     while True:
         # print(connection_manager.telemetry_interval)
-        await connection_manager.send_readings(plant_sensors)
+        await connection_manager.send_readings(sensor_data)
         await asyncio.sleep(connection_manager.telemetry_interval)
 
     # # Define behavior for halting the application
