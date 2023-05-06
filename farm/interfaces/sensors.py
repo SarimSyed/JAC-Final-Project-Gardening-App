@@ -78,14 +78,13 @@ class AReading:
         """
         return f"{self.reading_type}: {self.value} {self.reading_unit}"
 
-    def export_json(self) -> str:
+    def export_json(self) -> dict[Type, dict[str, dict[str, str]]]:
         """Exports a reading as a json encoded string
         :return str: json string representation of the reading
         """
         return {self.reading_type:{"value": self.value, "unit": self.reading_unit.value}}
 
-    def export_dict(self)-> dict:
-        sensor : dict = {"name" : {self.reading_type}, "value" : {self.value}}
+
 
 class ISensor(ABC):
     """Interface for all sensors.

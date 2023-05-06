@@ -23,8 +23,8 @@ class PlantSystem:
             LiquidLevelSensor(2, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
             SoilMoistureSensor(5, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
 
-            HumiditySensor("AHT20", AReading.Type.HUMIDITY ),
-            TemperatureSensor( "AHT20", AReading.Type.HUMIDITY )
+            HumiditySensor(26,"AHT20", AReading.Type.HUMIDITY ),
+            TemperatureSensor(26, "AHT20", AReading.Type.HUMIDITY )
         
         ]
 
@@ -116,7 +116,7 @@ if __name__ == "__main__":
         print(humid.read_sensor())
         print(soilSensor.read_sensor())
         print(liqudSensor.read_sensor())
-        temp : list[str] = []
+        temp : list = []
 
         plant = PlantSystem()
         readings = plant.read_sensors()
