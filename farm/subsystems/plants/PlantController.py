@@ -59,7 +59,7 @@ class PlantSystem:
         
 
 class Sensors(object):
-    def __init__(self, sensors : list[AReading]) -> None:
+    def __init__(self, sensors : list[str]) -> None:
         self.sensors = sensors
 
 
@@ -75,14 +75,14 @@ if __name__ == "__main__":
     liqudSensor = LiquidLevelSensor(1, "Water-Level-Sensor", AReading.Type.WATER_LEVEL )
     soilSensor = SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE)
     
-    LED
+    #LED
     led = Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
     fake_msg = '{"value": "light-off"}'
     test_off_cmd = ACommand(ACommand.Type.LED, fake_msg)
     fake_msg = '{"value": "light-on"}'
     test_on_cmd = ACommand(ACommand.Type.LED, fake_msg)
 
-    Fan
+    #Fan
     fan = Fan(5, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
     fan_on_msg = '{"value": "on"}'
     fan_off_msg = '{"value": "off"}'
@@ -116,7 +116,7 @@ if __name__ == "__main__":
         print(humid.read_sensor())
         print(soilSensor.read_sensor())
         print(liqudSensor.read_sensor())
-        temp : list[AReading] = []
+        temp : list[str] = []
 
         plant = PlantSystem()
         readings = plant.read_sensors()
