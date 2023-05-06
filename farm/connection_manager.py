@@ -12,7 +12,7 @@ import os
 import json
 
 
-
+#Most of this code was provided by Mauricio and from the azure-iot-device samples
 class ConnectionConfig:
     """Represents all information required to successfully connect client to cloud gateway.
     """
@@ -24,6 +24,8 @@ class ConnectionConfig:
         self._device_connection_str = device_str
 
 class Sensor:
+    """Class used to aid with formatting the json
+    """
     def __init__(self, readings : list[AReading]) -> None:
         self.sensors : list[AReading] = readings
 
