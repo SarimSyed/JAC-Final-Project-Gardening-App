@@ -1,4 +1,5 @@
 using ContainerFarm.Enums;
+using ContainerFarm.Helpers;
 using ContainerFarm.Services;
 using Firebase.Auth;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -31,39 +32,51 @@ public partial class LoginPage : ContentPage
     {
         try
         {
-            //Check internet connection
+            // Check internet connection
             NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
 
+            // Throw exception if no internet access
             if (networkAccess != NetworkAccess.Internet)
-            {
-                throw new Exception("No Internet connection.");
-            }
+                throw new AggregateException($"No internet connection. Please connect to the internet.");
 
             var client = AuthService.Client;
             var result = await client.FetchSignInMethodsForEmailAsync(username.Text);
-                        
-            if (result.UserExists && result.AllProviders.Contains(FirebaseProviderType.EmailAndPassword))
-            {
-                AuthService.UserCreds = await client.SignInWithEmailAndPasswordAsync(username.Text, password.Text);
-                //await Shell.Current.GoToAsync("//FleetOwner");
 
-                switch (currentOption)
-                {
-                    case LoginOptions.FleetOwner:
-                        await Shell.Current.GoToAsync("//FleetOwner");
-                        break;
-                    case LoginOptions.FarmTechnician:
-                        await Shell.Current.GoToAsync("//Technician");
-                        break;
-                }
+            // Validate email with Firebase
+            if (!result.UserExists || !result.AllProviders.Contains(FirebaseProviderType.EmailAndPassword))
+                throw new Exception("No email exists for that username.");
+
+            // Validate the password
+            AuthService.UserCreds = await client.SignInWithEmailAndPasswordAsync(username.Text, password.Text);
+
+            switch (currentOption)
+            {
+                // Login as Fleet Owner
+                case LoginOptions.FleetOwner:
+                    await Shell.Current.GoToAsync("//FleetOwner");
+                    break;
+                // Login as Farm Technician
+                case LoginOptions.FarmTechnician:
+                    await Shell.Current.GoToAsync("//Technician");
+                    break;
             }
+
+            // Display successful login
+            ShowSnackbar.NewSnackbar($"Logged in successfully!");
         }
-        catch(FirebaseAuthException ex)
+        catch (AggregateException ex)
         {
-            await DisplayAlert("Error", $"{ex.Reason}", "Ok");
+            // Display alert message
+            await DisplayAlert("No Internet Connection", $"{ex.Message}", "OK");
+        }
+        catch (FirebaseAuthException ex)
+        {
+            // Display alert message
+            await DisplayAlert("Invalid information", $"{ex.Reason}", "OK");
         }
         catch (Exception ex)
         {
+            // Display alert message
             await DisplayAlert("Exception Thrown", $"{ex.Message}", "OK");
         }
     }
