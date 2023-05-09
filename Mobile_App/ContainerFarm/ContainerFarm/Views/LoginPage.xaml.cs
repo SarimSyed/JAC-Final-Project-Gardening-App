@@ -1,7 +1,10 @@
+using ContainerFarm.Config;
 using ContainerFarm.Enums;
 using ContainerFarm.Helpers;
 using ContainerFarm.Services;
 using Firebase.Auth;
+using Java.Net;
+using Microsoft.Azure.Devices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContainerFarm.Views;
@@ -49,6 +52,31 @@ public partial class LoginPage : ContentPage
             // Validate the password
             AuthService.UserCreds = await client.SignInWithEmailAndPasswordAsync(username.Text, password.Text);
 
+            #region Service Client (IoT Hub) authentication
+
+            ServiceClient serviceClient;
+
+            try
+            {
+                // Instantiate the service client IoT Hub
+                serviceClient = ServiceClient.CreateFromConnectionString(ResourceStrings.IoT_Hub_Connection_String);
+            }
+            // Throw any errors with the IoT Hub connection string
+            catch (ArgumentNullException ex)
+            {
+                throw new ArgumentException("IoT Hub Service Connection String cannot be null.");
+            }
+            // Throw any errors wrong with the IoT Hub
+            catch (Exception ex)
+            {
+                throw new ArgumentException("Problem with IoT Hub. Can't connect to IoT Hub. Please verify all information is correct.");
+            }
+
+            #endregion
+
+            // Invoke Direct Methods
+            await InvokeMethodAsync(ResourceStrings.IoT_Hub_Farm_DeviceId, serviceClient, "lights-on");
+
             switch (currentOption)
             {
                 // Login as Fleet Owner
@@ -74,11 +102,48 @@ public partial class LoginPage : ContentPage
             // Display alert message
             await DisplayAlert("Invalid information", $"{ex.Reason}", "OK");
         }
+        catch (ArgumentException ex)
+        {
+            // Display alert message
+            await DisplayAlert("IoT Hub Error", $"{ex.Message}", "OK");
+        }
         catch (Exception ex)
         {
             // Display alert message
             await DisplayAlert("Exception Thrown", $"{ex.Message}", "OK");
         }
+    }
+
+    // Invoke the direct method on the device, passing the payload.
+    private static async Task InvokeMethodAsync(string deviceId, ServiceClient serviceClient, string directMethod)
+    {
+        var methodInvocation = new CloudToDeviceMethod(directMethod)
+        {
+            ResponseTimeout = TimeSpan.FromSeconds(30),
+        };
+
+        switch (directMethod)
+        {
+            case "lights-on":
+                methodInvocation.SetPayloadJson("{'status': 'completed'}");
+                break;
+            case "door-unlock":
+                methodInvocation.SetPayloadJson("{'status': 'completed'}");
+                break;
+            case "fan-on":
+                methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
+                break;
+            default:
+                methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
+                break;
+        }
+
+        Console.WriteLine($"Invoking direct method for device: {deviceId}");
+
+        // Invoke the direct method asynchronously and get the response from the simulated device.
+        CloudToDeviceMethodResult response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
+
+        Console.WriteLine($"Response status: {response.Status}, payload:\n\t{response.GetPayloadAsJson()}");
     }
 
     private void Debug_Options()
