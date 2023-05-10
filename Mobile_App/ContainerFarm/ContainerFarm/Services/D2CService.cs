@@ -9,6 +9,7 @@ using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 
+
 namespace ContainerFarm.Services
 {
     public static class D2CService

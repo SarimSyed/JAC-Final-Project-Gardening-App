@@ -60,7 +60,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Azure.Messaging.EventHubs" Version="5.9.1" />
-		<PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.9.1" />
 		<PackageReference Include="Azure.Storage.Blobs" Version="12.16.0" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.0.0" />
 		<PackageReference Include="FirebaseAuthentication.net" Version="4.0.2" />
