@@ -27,10 +27,11 @@ class Luminosity(ISensor):
         #Get the sensor reading and returns value
 
         light_value = rt.illuminance
-        if(light_value >= self._dangervalue):
-            return AReading(AReading.Type.LUMINOSITY,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
-        else:
-            return AReading(AReading.Type.LUMINOSITY,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
+        return AReading(AReading.Type.LUMINOSITY,  AReading.Unit.NONE, {"value": light_value})
+        # if(light_value >= self._dangervalue):
+        #     return AReading(AReading.Type.LUMINOSITY,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
+        # else:
+        #     return AReading(AReading.Type.LUMINOSITY,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
 
         
 if __name__ == "__main__":

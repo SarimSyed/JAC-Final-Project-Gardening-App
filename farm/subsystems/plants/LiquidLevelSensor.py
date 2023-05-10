@@ -1,12 +1,12 @@
 from interfaces.sensors import ISensor, AReading
 from grove.adc import ADC
 from grove.gpio import GPIO
-from library.grove_water_sensor import GroveWaterSensor
+from .library.grove_water_sensor import GroveWaterSensor
 from time import sleep
 
 
 class LiquidLevelSensor(ISensor):
-    def __init__(self, gpio: int, model: str, type: AReading.Type.WATER_LEVEL):
+    def __init__(self, gpio: int, model: str, type: AReading.Type):
         """Liquid level sensor detects the level of water detected by the sensor
 
         Args:
