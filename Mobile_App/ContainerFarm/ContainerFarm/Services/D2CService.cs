@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
+using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
@@ -49,8 +50,12 @@ namespace ContainerFarm.Services
                     byte[] eventBody = args.Data.EventBody.ToArray();
 
                     string eventBodyString = System.Text.Encoding.Default.GetString(eventBody);
+                    string eventBodyCleaned = eventBodyString.Replace("\n", "").Replace(@"\", "");
 
-                    Console.WriteLine(eventBodyString);
+                    JObject sensorJson = JObject.Parse(eventBodyCleaned);
+
+                    Console.WriteLine(sensorJson["sensors"]);
+
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
                         key: partition,
@@ -63,8 +68,9 @@ namespace ContainerFarm.Services
                         partitionEventCount[partition] = 0;
                     }
                 }
-                catch
+                catch(Exception e)
                 {
+                    Console.WriteLine(e);
                     // It is very important that you always guard against
                     // exceptions in your handler code; the processor does
                     // not have enough understanding of your code to
