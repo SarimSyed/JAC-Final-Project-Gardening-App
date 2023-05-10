@@ -164,8 +164,7 @@ class ConnectionManager:
         """
 
 
-        json_list : list = []
-    
+        json_list : list = []    
         
 
         for x in range(len(readings)):

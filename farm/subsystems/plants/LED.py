@@ -23,10 +23,10 @@ class Led(IActuator):
         """
         super().__init__(gpio, type, initial_state)
 
-        self.type :ACommand.Type.LED = type or ACommand.Type.LED
+        self.type :ACommand.Type = type or ACommand.Type.LED
         self._current_state :str =  Led.LIGHT_OFF
         if initial_state:
-            self._current_state = initial_state
+            self._current_state = initial_state["value"]
         self.led :GroveWS2813RgbStrip = GroveWS2813RgbStrip(gpio, count= Led.NUM_OF_LEDS)
         self.set_max_brightness()
         
@@ -42,32 +42,32 @@ class Led(IActuator):
         
         data_value = data["value"]
 
-        if(self._current_state["value"] == data_value):
+        if(self._current_state == data_value):
             return False
         
         if data_value == Led.LIGHT_OFF:
             self.turn_off()
-            self._current_state["value"] = data_value
+            self._current_state = data_value
             return True
         
-        if(data_value == Led.LIGHT_MEDIUM and self._current_state["value"] == Led.LIGHT_ON):
+        if(data_value == Led.LIGHT_MEDIUM and self._current_state == Led.LIGHT_ON):
             self.set_med_brightness()
-        elif(data_value == Led.LIGHT_MEDIUM and self._current_state["value"] != Led.LIGHT_ON):
+        elif(data_value == Led.LIGHT_MEDIUM and self._current_state != Led.LIGHT_ON):
             self.brightness = Led.LIGHT_MEDIUM
         
         if(data_value == Led.LIGHT_ON and self.brightness == Led.LIGHT_BRIGHT):
             self.set_max_brightness()
-            self._current_state["value"] = data_value
+            self._current_state = data_value
         elif(data_value == Led.LIGHT_ON and self.brightness != Led.LIGHT_BRIGHT):
             self.set_med_brightness()
-            self._current_state["value"] = data_value
+            self._current_state = data_value
 
-        if(data_value == Led.LIGHT_BRIGHT and self._current_state["value"] == Led.LIGHT_ON):
+        if(data_value == Led.LIGHT_BRIGHT and self._current_state == Led.LIGHT_ON):
             self.set_max_brightness()
             self.brightness = Led.LIGHT_BRIGHT
-        elif(data_value == Led.LIGHT_MEDIUM and self._current_state["value"] != Led.LIGHT_ON):
+        elif(data_value == Led.LIGHT_MEDIUM and self._current_state != Led.LIGHT_ON):
             self.brightness = Led.LIGHT_MEDIUM
-            self._current_state["value"] = data_value
+            self._current_state = data_value
 
         return True
 
