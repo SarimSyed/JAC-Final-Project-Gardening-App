@@ -1,4 +1,6 @@
-﻿using ContainerFarm.Repos;
+﻿using ContainerFarm.Config;
+using ContainerFarm.Repos;
+using Microsoft.Extensions.Configuration;
 
 namespace ContainerFarm;
 
@@ -22,4 +24,8 @@ public partial class App : Application
 	{
 		get { return _containerRepo; }
 	}
+
+    public static Settings Settings { get; private set; }
+	= MauiProgram.Services.GetService<IConfiguration>()
+	.GetRequiredSection(nameof(Settings)).Get<Settings>();
 }

@@ -3,7 +3,6 @@ using ContainerFarm.Enums;
 using ContainerFarm.Helpers;
 using ContainerFarm.Services;
 using Firebase.Auth;
-using Java.Net;
 using Microsoft.Azure.Devices;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -59,7 +58,7 @@ public partial class LoginPage : ContentPage
             try
             {
                 // Instantiate the service client IoT Hub
-                serviceClient = ServiceClient.CreateFromConnectionString(ResourceStrings.IoT_Hub_Connection_String);
+                serviceClient = ServiceClient.CreateFromConnectionString($"{App.Settings.HubConnectionString}");
             }
             // Throw any errors with the IoT Hub connection string
             catch (ArgumentNullException ex)
@@ -75,7 +74,7 @@ public partial class LoginPage : ContentPage
             #endregion
 
             // Invoke Direct Methods
-            await InvokeMethodAsync(ResourceStrings.IoT_Hub_Farm_DeviceId, serviceClient, "lights-on");
+            await InvokeMethodAsync($"{App.Settings.DeviceId}", serviceClient, "lights-on");
 
             switch (currentOption)
             {
