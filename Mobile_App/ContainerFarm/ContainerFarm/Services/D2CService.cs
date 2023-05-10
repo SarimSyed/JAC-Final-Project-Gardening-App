@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Messaging.EventHubs;
+﻿using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 
 
 namespace ContainerFarm.Services
 {
     public static class D2CService
     {
+        public static EventProcessorClient Processor { get; set; }
         public static async Task Initialize()
         {
             // Get the IoT Hub information
@@ -29,13 +25,16 @@ namespace ContainerFarm.Services
                 blobContainerName);
 
             // Create the processor
-            var processor = new EventProcessorClient(
+            Processor = new EventProcessorClient(
                 storageClient,
                 consumerGroup,
                 eventHubsConnectionString,
                 eventHubName);
 
             var partitionEventCount = new ConcurrentDictionary<string, int>();
+
+            Processor.ProcessEventAsync += processEventHandler;
+            Processor.ProcessErrorAsync += processErrorHandler;
 
             // Processes the events
             async Task processEventHandler(ProcessEventArgs args)
@@ -99,54 +98,7 @@ namespace ContainerFarm.Services
 
                 return Task.CompletedTask;
             }
-
-            try
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
-
-                processor.ProcessEventAsync += processEventHandler;
-                processor.ProcessErrorAsync += processErrorHandler;
-
-                try
-                {
-                    await processor.StartProcessingAsync(cancellationSource.Token);
-                    await Task.Delay(Timeout.Infinite, cancellationSource.Token);
-                }
-                catch (TaskCanceledException)
-                {
-                    // This is expected if the cancellation token is
-                    // signaled.
-                }
-                finally
-                {
-                    // This may take up to the length of time defined
-                    // as part of the configured TryTimeout of the processor;
-                    // by default, this is 60 seconds.
-
-                    await processor.StopProcessingAsync();
-                }
-            }
-            catch
-            {
-                // The processor will automatically attempt to recover from any
-                // failures, either transient or fatal, and continue processing.
-                // Errors in the processor's operation will be surfaced through
-                // its error handler.
-                //
-                // If this block is invoked, then something external to the
-                // processor was the source of the exception.
-            }
-            finally
-            {
-                // It is encouraged that you unregister your handlers when you have
-                // finished using the Event Processor to ensure proper cleanup.  This
-                // is especially important when using lambda expressions or handlers
-                // in any form that may contain closure scopes or hold other references.
-
-                processor.ProcessEventAsync -= processEventHandler;
-                processor.ProcessErrorAsync -= processErrorHandler;
-            }
         }
     }
+    
 }

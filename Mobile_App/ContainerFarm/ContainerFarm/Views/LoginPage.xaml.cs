@@ -73,8 +73,6 @@ public partial class LoginPage : ContentPage
 
             #endregion
 
-            await D2CService.Initialize();
-
             // Invoke Direct Methods
             await InvokeMethodAsync($"{App.Settings.DeviceId}", serviceClient, "lights-on");
 
@@ -92,6 +90,9 @@ public partial class LoginPage : ContentPage
 
             // Display successful login
             ShowSnackbar.NewSnackbar($"Logged in successfully!");
+
+            await D2CService.Initialize();
+            await D2CService.Processor.StartProcessingAsync();
         }
         catch (AggregateException ex)
         {
