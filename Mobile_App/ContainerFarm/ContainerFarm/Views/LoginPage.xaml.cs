@@ -74,7 +74,7 @@ public partial class LoginPage : ContentPage
             #endregion
 
             // Invoke Direct Methods
-            await InvokeMethodAsync($"{App.Settings.DeviceId}", serviceClient, "lights-on");
+            //await InvokeMethodAsync($"{App.Settings.DeviceId}", serviceClient, "lights-on");
 
             switch (currentOption)
             {

@@ -69,8 +69,8 @@ namespace ContainerFarm.Repos
                 {
                     string door_value = oneSensorObject[SecurityReadingTitle.DOOR][VALUE_KEY].ToString();
                     _containers[0].Security.DoorSensor.Value = door_value == SecurityReadingTitle.DOOR_OPEN
-                                                             ? 1
-                                                             : 0;
+                                                             ? 0
+                                                             : 1;
                 }
                 // Motion sensor
                 else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.MOTION))

@@ -13,7 +13,7 @@ namespace ContainerFarm.Enums
     {
         public const string DOOR = "door";
         public const string DOOR_OPEN = "open";
-        public const string DOOR_CLOSE = "close";
+        public const string DOOR_CLOSE = "closed";
         public const string MOTION = "motion";
         public const string MOTION_DETECTED = "detected";
         public const string NOISE = "noise";
