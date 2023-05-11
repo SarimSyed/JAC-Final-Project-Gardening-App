@@ -58,7 +58,7 @@ namespace ContainerFarm.Services
                     string eventBodyString = System.Text.Encoding.Default.GetString(eventBody);
                     string eventBodyCleaned = eventBodyString.Replace("\n", "");
 
-                    UpdateReadings(eventBodyCleaned);
+                    App.Repo.UpdateReadings(eventBodyCleaned);
 
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
@@ -107,58 +107,6 @@ namespace ContainerFarm.Services
                 }
 
                 return Task.CompletedTask;
-            }
-
-        }
-
-        private static void UpdateReadings(string readings)
-        {
-            JObject sensorJson = JObject.Parse(readings);
-            JArray jArray = (JArray)sensorJson["sensors"];
-
-
-
-            for (int i = 0; i < jArray.Count; i++)
-            {
-                JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
-                string door_value = "";
-                string motion_value = "";
-                string noise_value = "";
-                string luminosity_value = "";
-
-                if (oneSensorObject.ToString().Contains("door"))
-                {
-                    door_value = oneSensorObject["door"]["value"].ToString();
-
-                  if(door_value == "open")
-                        App.Repo.Containers[0].Security.DoorSensor.Value = 0;
-                    else
-                        App.Repo.Containers[0].Security.DoorSensor.Value = 1;  
-                }
-                else if (oneSensorObject.ToString().Contains("motion"))
-                {
-                    motion_value = oneSensorObject["motion"]["value"].ToString();
-                    if (motion_value == "open")
-                        App.Repo.Containers[0].Security.MotionSensor.Value = 0;
-                    else
-                        App.Repo.Containers[0].Security.MotionSensor.Value = 1;
-                }
-                else if (oneSensorObject.ToString().Contains("noise"))
-                {
-                    noise_value = oneSensorObject["noise"]["value"].ToString();
-                    if (Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180)
-                        App.Repo.Containers[0].Security.NoiseSensor.Value = 0;
-                    else
-                        App.Repo.Containers[0].Security.NoiseSensor.Value = 1;
-                }
-                else if (oneSensorObject.ToString().Contains("luminosity"))
-                {
-                    luminosity_value = oneSensorObject["luminosity"]["value"].ToString();
-                    if (Convert.ToInt32(luminosity_value) <= 30)
-                        App.Repo.Containers[0].Security.LuminositySensor.Value = 0;
-                    else
-                        App.Repo.Containers[0].Security.LuminositySensor.Value = 1;
-                }
             }
          
         }
