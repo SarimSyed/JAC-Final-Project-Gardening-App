@@ -62,7 +62,7 @@ namespace ContainerFarm.Repos
                 {
                     string door_value = oneSensorObject[DOOR][VALUE].ToString();
 
-                    if (door_value == DOOR_OPEN)
+                    if (door_value == "open")
                         _containers[0].Security.DoorSensor.Value = 0;
                     else
                         _containers[0].Security.DoorSensor.Value = 1;
@@ -70,7 +70,7 @@ namespace ContainerFarm.Repos
                 else if (oneSensorObject.ToString().Contains(MOTION))
                 {
                     string motion_value = oneSensorObject[MOTION][VALUE].ToString();
-                    if (motion_value == DOOR_CLOSE)
+                    if (motion_value == "open")
                         _containers[0].Security.MotionSensor.Value = 1;
                     else
                         _containers[0].Security.MotionSensor.Value = 0;
