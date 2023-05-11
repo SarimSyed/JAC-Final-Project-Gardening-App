@@ -178,4 +178,4 @@ class ConnectionManager:
         msg.content_type = "application/json"
 
             
-        # await self._client.send_message(msg)
+        await self._client.send_message(msg)
