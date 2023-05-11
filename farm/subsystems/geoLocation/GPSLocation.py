@@ -96,7 +96,7 @@ class GPSLocation(ISensor):
                             return AReading(AReading.Type.GPSLOCATION,
                                         AReading.Unit.LOCATION, 
                                         {
-                                            'value': f'({latitude}, {longitude})'
+                                            'value': f'Address: {full_address_location}'
                                         })
 
                     # Read the data line from the GPS
