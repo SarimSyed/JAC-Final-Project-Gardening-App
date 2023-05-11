@@ -16,6 +16,6 @@
                Grid.Row="1"
                HorizontalOptions="FillAndExpand"/>-->
 
-        <maps:Map x:Name="map_app" MapType="Satellite" Grid.Row="1"  />
+        <maps:Map x:Name="map_app" MapType="Street" Grid.Row="1"  />
     </Grid>
 </ContentPage>

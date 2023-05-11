@@ -28,7 +28,7 @@
 
                         <Frame Margin="10" BackgroundColor="LightGreen">
                             <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                <TapGestureRecognizer Tapped="Container_Farm_GeoLocation_Tapped"/>
                             </Frame.GestureRecognizers>
                             <Grid>
                                 <Grid.RowDefinitions>
