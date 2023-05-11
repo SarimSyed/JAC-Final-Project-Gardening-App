@@ -25,7 +25,11 @@
                                        BackgroundColor="Red"
                                        Invoked="SwipeItem_Invoked" />
                         </SwipeView.RightItems>
+
                         <Frame Margin="10" BackgroundColor="LightGreen">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                            </Frame.GestureRecognizers>
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -43,12 +47,10 @@
                                        Source="container"
                                        WidthRequest="80"
                                        Margin="0,0,20,0"/>
-                                <Button Grid.Column="1"
+                                <Label Grid.Column="1"
                                         x:Name="nameBtn"
-                                        BackgroundColor="LightSeaGreen"
                                         TextColor="Black"
                                         Text="{Binding Name}"
-                                        Clicked="View_Clicked"
                                         FontAttributes="Bold"
                                         FontSize="Medium"/>
                                 <Label Grid.Column="1"

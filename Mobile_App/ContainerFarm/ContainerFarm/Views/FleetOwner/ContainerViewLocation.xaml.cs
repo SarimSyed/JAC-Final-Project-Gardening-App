@@ -27,9 +27,10 @@ public partial class ContainerViewLocation : ContentPage
 
     }
 
-    private void View_Clicked(object sender, EventArgs e)
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
-        Button button = sender as Button;
+        Frame frame = sender as Frame;
+        Label button = frame.FindByName("nameBtn") as Label;
 
         //Checks which container was clicked by the user
         Container containerClicked = App.Repo.Containers.Where(c => c.Name == button.Text).FirstOrDefault();
