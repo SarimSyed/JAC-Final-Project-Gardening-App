@@ -58,39 +58,39 @@ namespace ContainerFarm.Repos
             {
                 JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
 
-                //if (oneSensorObject.ToString().Contains(DOOR))
-                //{
-                //    string door_value = oneSensorObject[DOOR][VALUE].ToString();
+                if (oneSensorObject.ToString().Contains(DOOR))
+                {
+                    string door_value = oneSensorObject[DOOR][VALUE].ToString();
 
-                //    if (door_value == "open")
-                //        _containers[0].Security.DoorSensor.Value = 0;
-                //    else
-                //        _containers[0].Security.DoorSensor.Value = 1;
-                //}
-                //else if (oneSensorObject.ToString().Contains(MOTION))
-                //{
-                //    string motion_value = oneSensorObject[MOTION][VALUE].ToString();
-                //    if (motion_value == "open")
-                //        _containers[0].Security.MotionSensor.Value = 1;
-                //    else
-                //        _containers[0].Security.MotionSensor.Value = 0;
-                //}
-                //else if (oneSensorObject.ToString().Contains(NOISE))
-                //{
-                //    string noise_value = oneSensorObject[NOISE][VALUE].ToString();
-                //    if (Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180)
-                //        _containers[0].Security.NoiseSensor.Value = 1;
-                //    else
-                //        _containers[0].Security.NoiseSensor.Value = 0;
-                //}
-                //else if (oneSensorObject.ToString().Contains(LUMINOSITY))
-                //{
-                //    string luminosity_value = oneSensorObject[LUMINOSITY][VALUE].ToString();
-                //    if (Convert.ToInt32(luminosity_value) > 30)
-                //        _containers[0].Security.LuminositySensor.Value = 1;
-                //    else
-                //        _containers[0].Security.LuminositySensor.Value = 0;
-                //}
+                    if (door_value == "open")
+                        _containers[0].Security.DoorSensor.Value = 0;
+                    else
+                        _containers[0].Security.DoorSensor.Value = 1;
+                }
+                else if (oneSensorObject.ToString().Contains(MOTION))
+                {
+                    string motion_value = oneSensorObject[MOTION][VALUE].ToString();
+                    if (motion_value == "open")
+                        _containers[0].Security.MotionSensor.Value = 1;
+                    else
+                        _containers[0].Security.MotionSensor.Value = 0;
+                }
+                else if (oneSensorObject.ToString().Contains(NOISE))
+                {
+                    string noise_value = oneSensorObject[NOISE][VALUE].ToString();
+                    if (Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180)
+                        _containers[0].Security.NoiseSensor.Value = 1;
+                    else
+                        _containers[0].Security.NoiseSensor.Value = 0;
+                }
+                else if (oneSensorObject.ToString().Contains(LUMINOSITY))
+                {
+                    string luminosity_value = oneSensorObject[LUMINOSITY][VALUE].ToString();
+                    if (Convert.ToInt32(luminosity_value) > 30)
+                        _containers[0].Security.LuminositySensor.Value = 1;
+                    else
+                        _containers[0].Security.LuminositySensor.Value = 0;
+                }
                 if (oneSensorObject.ToString().Contains(WATER_LEVEL))
                 {
                     string value;
