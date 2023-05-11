@@ -20,8 +20,8 @@ class PlantSystem:
         
         return [
         
-            LiquidLevelSensor(2, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
-            SoilMoistureSensor(5, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
+            LiquidLevelSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
+            SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
 
             HumiditySensor(26,"AHT20", AReading.Type.HUMIDITY ),
             TemperatureSensor(26, "AHT20", AReading.Type.HUMIDITY )
