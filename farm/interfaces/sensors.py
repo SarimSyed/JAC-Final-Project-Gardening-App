@@ -82,7 +82,8 @@ class AReading:
         """Exports a reading as a json encoded string
         :return str: json string representation of the reading
         """
-        return {self.reading_type:{"value": self.value, "unit": self.reading_unit.value}}
+        temp = self.value["value"]
+        return {self.reading_type:{"value": temp, "unit": self.reading_unit.value}}
 
 
 
