@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using ContainerFarm.Models.Sensors;
 using ContainerFarm.Models.Actuators;
 using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using System.Globalization;
 
 namespace ContainerFarm.Repos
 {
@@ -23,18 +25,25 @@ namespace ContainerFarm.Repos
         private const string DOOR_OPEN = "open";
         private const string DOOR_CLOSE = "close";
         private const string MOTION = "motion";
+        private const string MOTION_DETECTED = "detected";
         private const string NOISE = "noise";
         private const string LUMINOSITY = "luminosity";
+
         private const string WATER_LEVEL = "water-level-sensor";
         private const string SOIL_MOISTURE = "soil-moisture";
         private const string HUMIDITY = "humidity";
         private const string TEMPERATURE = "temperature";
         private const string VALUE = "value";
-        private const string MOTION_DETECTED = "detected";
+
+        private const string BUZZER = "buzzer";
+        private const string GPS_ADDRESS = "Address";
+        private const string GPS_LOCATION = "gps-location";
+        private const string PITCH = "pitch";
+        private const string ROLL_ANGLE = "roll-angle";
+        private const string VIBRATION = "vibration";
 
 
-
-         private ObservableCollection<Container> _containers;
+        private ObservableCollection<Container> _containers;
 
         public ContainerRepo()
         {
@@ -54,10 +63,13 @@ namespace ContainerFarm.Repos
             JObject sensorJson = JObject.Parse(readings);
             JArray jArray = (JArray)sensorJson["sensors"];
 
+            Console.WriteLine(jArray);
 
             for (int i = 0; i < jArray.Count; i++)
             {
                 JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
+
+                #region Security
 
                 if (oneSensorObject.ToString().Contains(DOOR))
                 {
@@ -92,6 +104,11 @@ namespace ContainerFarm.Repos
                     else
                         _containers[0].Security.LuminositySensor.Value = 0;
                 }
+
+                #endregion
+
+                #region Plants
+
                 if (oneSensorObject.ToString().Contains(WATER_LEVEL))
                 {
                     string value;
@@ -122,6 +139,40 @@ namespace ContainerFarm.Repos
 
 
                 }
+
+                #endregion
+
+                #region Geo Location
+
+                if (oneSensorObject.ToString().Contains(GPS_LOCATION))
+                {
+                    string gps_location_value = oneSensorObject[GPS_LOCATION][VALUE].ToString();
+
+                    if (!gps_location_value.ToString().Contains(GPS_ADDRESS))
+                        return;
+
+                    string[] splitByAddressWord = gps_location_value.Split($"{GPS_ADDRESS}:");
+
+                    string gps_address = splitByAddressWord[1].Trim();
+                    _containers[0].Location.GpsSensor.Address = gps_address;                    
+                }
+                if (oneSensorObject.ToString().Contains(PITCH))
+                {
+                    string pitch_value = oneSensorObject[PITCH][VALUE].ToString();
+                    _containers[0].Location.PitchAngleSensor.Value = Single.Parse(pitch_value, CultureInfo.InvariantCulture);
+                }
+                if (oneSensorObject.ToString().Contains(ROLL_ANGLE))
+                {
+                    string roll_angle_value = oneSensorObject[ROLL_ANGLE][VALUE].ToString();
+                    _containers[0].Location.RollAngleSensor.Value = Single.Parse(roll_angle_value, CultureInfo.InvariantCulture);
+                }
+                if (oneSensorObject.ToString().Contains(VIBRATION))
+                {
+                    string vibration_value = oneSensorObject[VIBRATION][VALUE].ToString();
+                    _containers[0].Location.VibrationSensor.Value = Single.Parse(vibration_value, CultureInfo.InvariantCulture);
+                }
+
+                #endregion
             }
         }
         private float StringToFloat(string value)
