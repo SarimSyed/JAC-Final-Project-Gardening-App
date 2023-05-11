@@ -90,6 +90,9 @@ public partial class LoginPage : ContentPage
 
             // Display successful login
             ShowSnackbar.NewSnackbar($"Logged in successfully!");
+
+            await D2CService.Initialize();
+            await D2CService.Processor.StartProcessingAsync();
         }
         catch (AggregateException ex)
         {
