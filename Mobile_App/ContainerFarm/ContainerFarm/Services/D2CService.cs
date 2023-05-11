@@ -139,25 +139,25 @@ namespace ContainerFarm.Services
                 {
                     motion_value = oneSensorObject["motion"]["value"].ToString();
                     if (motion_value == "open")
-                        App.Repo.Containers[0].Security.MotionSensor.Value = 0;
-                    else
                         App.Repo.Containers[0].Security.MotionSensor.Value = 1;
+                    else
+                        App.Repo.Containers[0].Security.MotionSensor.Value = 0;
                 }
                 else if (oneSensorObject.ToString().Contains("noise"))
                 {
                     noise_value = oneSensorObject["noise"]["value"].ToString();
                     if (Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180)
-                        App.Repo.Containers[0].Security.NoiseSensor.Value = 0;
-                    else
                         App.Repo.Containers[0].Security.NoiseSensor.Value = 1;
+                    else
+                        App.Repo.Containers[0].Security.NoiseSensor.Value = 0;
                 }
                 else if (oneSensorObject.ToString().Contains("luminosity"))
                 {
                     luminosity_value = oneSensorObject["luminosity"]["value"].ToString();
-                    if (Convert.ToInt32(luminosity_value) <= 30)
-                        App.Repo.Containers[0].Security.LuminositySensor.Value = 0;
-                    else
+                    if (Convert.ToInt32(luminosity_value) > 30)
                         App.Repo.Containers[0].Security.LuminositySensor.Value = 1;
+                    else
+                        App.Repo.Containers[0].Security.LuminositySensor.Value = 0;
                 }
             }
          
