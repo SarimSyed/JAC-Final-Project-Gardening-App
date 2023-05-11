@@ -1,9 +1,7 @@
-﻿using Android.Hardware;
-using Azure.Messaging.EventHubs;
+﻿using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using ContainerFarm.Models.Actuators;
-using ContainerFarm.Repos;
 using ContainerFarm.Repos;
 using ContainerFarm.Views.FleetOwner;
 using Newtonsoft.Json.Linq;
