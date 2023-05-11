@@ -30,33 +30,29 @@
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Container_Farm_GeoLocation_Tapped"/>
                             </Frame.GestureRecognizers>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                
+
+                            <Grid 
+                                RowDefinitions="auto, auto" 
+                                ColumnDefinitions="auto, auto, auto" 
+                                ColumnSpacing="25"
+                                VerticalOptions="Center"
+                                RowSpacing="10">
                                 <!--Containers-->
                                 <Image x:Name="containerNameLbl"
                                        Grid.RowSpan="2"
                                        Source="container"
-                                       WidthRequest="80"
-                                       Margin="0,0,20,0"/>
+                                       WidthRequest="80"/>
                                 <Label Grid.Column="1"
                                         x:Name="nameBtn"
                                         TextColor="Black"
                                         Text="{Binding Name}"
                                         FontAttributes="Bold"
-                                        FontSize="Medium"/>
+                                        FontSize="20"
+                                       VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"/>
                                 <Label Grid.Column="1"
                                        Grid.Row="1"
-                                       Text="{Binding Location.GpsSensor.Address}"
-                                       Margin="0,10,0,0"/>
+                                       Text="{Binding Location.GpsSensor.Address}"/>
                             </Grid>
 
                         </Frame>
