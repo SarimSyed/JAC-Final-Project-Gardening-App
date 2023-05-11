@@ -77,7 +77,46 @@ namespace ContainerFarm.Repos
                     else
                         _containers[0].Security.LuminositySensor.Value = 0;
                 }
+                if (oneSensorObject.ToString().Contains("water-level-sensor"))
+                {
+                    string value;
+                    value = oneSensorObject["water-level-sensor"]["value"].ToString();
+
+                    _containers[0].Plant.WaterLevel.Value = StringToFloat(value);
+                }
+                if (oneSensorObject.ToString().Contains("soil-moisture"))
+                {
+                    string value;
+
+                    value = oneSensorObject["soil-moisture"]["value"].ToString();
+                    _containers[0].Plant.SoilMoisture.Value = StringToFloat(value);
+                }
+                if (oneSensorObject.ToString().Contains("humidity"))
+                {
+                    string value;
+
+                    value = oneSensorObject["humidity"]["value"].ToString();
+                    _containers[0].Plant.Humidity.Value = StringToFloat(value);
+                }
+                if (oneSensorObject.ToString().Contains("temperature"))
+                {
+                    string value;
+
+                    value = oneSensorObject["temperature"]["value"].ToString();
+                    _containers[0].Plant.Temperature.Value = StringToFloat(value);
+
+
+                }
             }
+        }
+        private float StringToFloat(string value)
+        {
+
+            if (float.TryParse(value, out float parsedValue))
+            {
+                return parsedValue;
+            }
+            return 0;
         }
 
         public void InitializeRepo()
