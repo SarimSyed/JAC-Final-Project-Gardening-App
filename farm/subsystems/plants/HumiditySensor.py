@@ -25,7 +25,7 @@ class HumiditySensor(ISensor) :
         (temp, humid) = self.sensor.read()
         self.value = round(humid, 2)                                                                                    
 
-        return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, self.value)
+        return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, {"value":  self.value})
 
     
 if __name__ == "__main__":

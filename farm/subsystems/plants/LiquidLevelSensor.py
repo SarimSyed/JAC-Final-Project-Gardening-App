@@ -30,7 +30,7 @@ class LiquidLevelSensor(ISensor):
             AReading: AReading object of type WATER_LEVEL that stores what percentage of the water sensor is submerged.
         """
         self.value = self.sensor.value/10 
-        return AReading(self.reading_type, AReading.Unit.WATER_LEVEL, self.value) 
+        return AReading(self.reading_type, AReading.Unit.WATER_LEVEL, {"value":  self.value}) 
 
 
 if __name__ == "__main__":
