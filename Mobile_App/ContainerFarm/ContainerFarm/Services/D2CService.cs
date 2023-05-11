@@ -1,6 +1,7 @@
 ﻿using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
+using ContainerFarm.Repos;
 using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -50,11 +51,34 @@ namespace ContainerFarm.Services
                     byte[] eventBody = args.Data.EventBody.ToArray();
 
                     string eventBodyString = System.Text.Encoding.Default.GetString(eventBody);
-                    string eventBodyCleaned = eventBodyString.Replace("\n", "").Replace(@"\", "");
-
+                    string eventBodyCleaned = eventBodyString.Replace("\n", "");
                     JObject sensorJson = JObject.Parse(eventBodyCleaned);
+                    JArray jArray = (JArray)sensorJson["sensors"];
 
-                    Console.WriteLine(sensorJson["sensors"]);
+                    for (int i = 0; i < jArray.Count; i++)
+                    {
+                       JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
+                        string value = "";
+
+                        if (oneSensorObject.ToString().Contains("door"))
+                        {
+                            value = oneSensorObject["door"]["value"]["value"].ToString();
+                        }
+                        else if (oneSensorObject.ToString().Contains("motion"))
+                        {
+                            value = oneSensorObject["motion"]["value"]["value"].ToString();
+                        }
+                        else if (oneSensorObject.ToString().Contains("noise"))
+                        {
+                            value = oneSensorObject["noise"]["value"]["value"].ToString();
+                        }
+                        else if (oneSensorObject.ToString().Contains("luminosity"))
+                        {
+                            value = oneSensorObject["luminosity"]["value"]["value"].ToString();
+                        }
+
+                        Console.WriteLine(value);
+                    }
 
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
