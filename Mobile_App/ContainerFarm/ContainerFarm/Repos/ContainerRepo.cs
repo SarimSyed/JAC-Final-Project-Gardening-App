@@ -30,7 +30,7 @@ namespace ContainerFarm.Repos
         private const string HUMIDITY = "humidity";
         private const string TEMPERATURE = "temperature";
         private const string VALUE = "value";
-        private const MOTION_DETECTED = "detected"
+        private const string MOTION_DETECTED = "detected";
 
 
 
