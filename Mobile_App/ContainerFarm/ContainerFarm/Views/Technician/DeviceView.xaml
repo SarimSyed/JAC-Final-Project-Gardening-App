@@ -30,7 +30,7 @@
             <HorizontalStackLayout>
                 <Image Source="soil.png" WidthRequest="45"/>
                 <Label Text="Soil" VerticalOptions="Center" WidthRequest="150" Margin="10,0,0,0"/>
-                <Label Text="{Binding SoilMoisture.Value, StringFormat='{0:F2} mV'}" VerticalOptions="Center" Margin="80,0,0,0" />
+                <Label Text="{Binding SoilMoisture.SoilMoisture}" VerticalOptions="Center" Margin="80,0,0,0" />
             </HorizontalStackLayout>
         </Frame>
 
