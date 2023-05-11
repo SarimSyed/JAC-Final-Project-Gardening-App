@@ -19,6 +19,20 @@ namespace ContainerFarm.Repos
     /// </summary>
     internal class ContainerRepo
     {
+        private const string DOOR = "door";
+        private const string DOOR_OPEN = "open";
+        private const string DOOR_CLOSE = "close";
+        private const string MOTION = "motion";
+        private const string NOISE = "noise";
+        private const string LUMINOSITY = "luminosity";
+        private const string WATER_LEVEL = "water-level-sensor";
+        private const string SOIL_MOISTURE = "soil-moisture";
+        private const string HUMIDITY = "humidity";
+        private const string TEMPERATURE = "temperature";
+        private const string VALUE = "value";
+
+
+
          private ObservableCollection<Container> _containers;
 
         public ContainerRepo()
@@ -44,65 +58,65 @@ namespace ContainerFarm.Repos
             {
                 JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
 
-                if (oneSensorObject.ToString().Contains("door"))
+                if (oneSensorObject.ToString().Contains(DOOR))
                 {
-                    string door_value = oneSensorObject["door"]["value"].ToString();
+                    string door_value = oneSensorObject[DOOR][VALUE].ToString();
 
-                    if (door_value == "open")
+                    if (door_value == DOOR_OPEN)
                         _containers[0].Security.DoorSensor.Value = 0;
                     else
                         _containers[0].Security.DoorSensor.Value = 1;
                 }
-                else if (oneSensorObject.ToString().Contains("motion"))
+                else if (oneSensorObject.ToString().Contains(MOTION))
                 {
-                    string motion_value = oneSensorObject["motion"]["value"].ToString();
-                    if (motion_value == "open")
+                    string motion_value = oneSensorObject[MOTION][VALUE].ToString();
+                    if (motion_value == DOOR_CLOSE)
                         _containers[0].Security.MotionSensor.Value = 1;
                     else
                         _containers[0].Security.MotionSensor.Value = 0;
                 }
-                else if (oneSensorObject.ToString().Contains("noise"))
+                else if (oneSensorObject.ToString().Contains(NOISE))
                 {
-                    string noise_value = oneSensorObject["noise"]["value"].ToString();
+                    string noise_value = oneSensorObject[NOISE][VALUE].ToString();
                     if (Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180)
                         _containers[0].Security.NoiseSensor.Value = 1;
                     else
                         _containers[0].Security.NoiseSensor.Value = 0;
                 }
-                else if (oneSensorObject.ToString().Contains("luminosity"))
+                else if (oneSensorObject.ToString().Contains(LUMINOSITY))
                 {
-                    string luminosity_value = oneSensorObject["luminosity"]["value"].ToString();
+                    string luminosity_value = oneSensorObject[LUMINOSITY][VALUE].ToString();
                     if (Convert.ToInt32(luminosity_value) > 30)
                         _containers[0].Security.LuminositySensor.Value = 1;
                     else
                         _containers[0].Security.LuminositySensor.Value = 0;
                 }
-                if (oneSensorObject.ToString().Contains("water-level-sensor"))
+                if (oneSensorObject.ToString().Contains(WATER_LEVEL))
                 {
                     string value;
-                    value = oneSensorObject["water-level-sensor"]["value"].ToString();
+                    value = oneSensorObject[WATER_LEVEL][VALUE].ToString();
 
                     _containers[0].Plant.WaterLevel.Value = StringToFloat(value);
                 }
-                if (oneSensorObject.ToString().Contains("soil-moisture"))
+                if (oneSensorObject.ToString().Contains(SOIL_MOISTURE))
                 {
                     string value;
 
-                    value = oneSensorObject["soil-moisture"]["value"].ToString();
+                    value = oneSensorObject[SOIL_MOISTURE][VALUE].ToString();
                     _containers[0].Plant.SoilMoisture.Value = StringToFloat(value);
                 }
-                if (oneSensorObject.ToString().Contains("humidity"))
+                if (oneSensorObject.ToString().Contains(HUMIDITY))
                 {
                     string value;
 
-                    value = oneSensorObject["humidity"]["value"].ToString();
+                    value = oneSensorObject[HUMIDITY][VALUE].ToString();
                     _containers[0].Plant.Humidity.Value = StringToFloat(value);
                 }
-                if (oneSensorObject.ToString().Contains("temperature"))
+                if (oneSensorObject.ToString().Contains(TEMPERATURE))
                 {
                     string value;
 
-                    value = oneSensorObject["temperature"]["value"].ToString();
+                    value = oneSensorObject[TEMPERATURE][VALUE].ToString();
                     _containers[0].Plant.Temperature.Value = StringToFloat(value);
 
 
