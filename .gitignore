@@ -348,3 +348,12 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/Mobile_App/ContainerFarm/ContainerFarm/obj/ContainerFarm.csproj.nuget.g.targets
+/Mobile_App/ContainerFarm/ContainerFarm/obj/ContainerFarm.csproj.nuget.g.props
+/Mobile_App/ContainerFarm/ContainerFarm/obj/Debug/net7.0-windows10.0.19041.0/win10-x64/ContainerFarm.assets.cache
+/Mobile_App/ContainerFarm/ContainerFarm/obj/ContainerFarm.csproj.nuget.dgspec.json
+/Mobile_App/ContainerFarm/ContainerFarm/obj/Debug/net7.0-ios/iossimulator-x64/ContainerFarm.assets.cache
+/Mobile_App/ContainerFarm/ContainerFarm/obj/Debug/net7.0-maccatalyst/maccatalyst-x64/ContainerFarm.assets.cache
+/Mobile_App/ContainerFarm/ContainerFarm/obj/Debug/net7.0-android/designtime/build.props
+/Mobile_App/ContainerFarm/ContainerFarm/obj/Debug/net7.0-android/android-x64/ContainerFarm.csproj.AssemblyReference.cache
+/Mobile_App/ContainerFarm/ContainerFarm/obj/Debug/net7.0-android/android-x64/ContainerFarm.assets.cache

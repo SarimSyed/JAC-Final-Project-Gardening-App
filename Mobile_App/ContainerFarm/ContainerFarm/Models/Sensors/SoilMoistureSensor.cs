@@ -11,6 +11,7 @@ namespace ContainerFarm.Models.Sensors
     /// </summary>
     public class SoilMoistureSensor : ISensor
     {
+        private string soilMoisture;
         public string Name
         {
             get; set;
@@ -19,6 +20,26 @@ namespace ContainerFarm.Models.Sensors
         {
             get; set;
         }
+        public string SoilMoisture
+        {
+            get
+            {
+                if (0 <= Value && Value < 300)
+                {
+                    return "Dry";
+                }
+                else if (300 <=  Value && Value < 600)
+                {
+                    return "Moist";
+                }
+                else
+                {
+                    return "Wet";
+                }
+            }
+
+        }
         public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }
