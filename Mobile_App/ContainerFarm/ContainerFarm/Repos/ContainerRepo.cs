@@ -45,11 +45,17 @@ namespace ContainerFarm.Repos
 
         private ObservableCollection<Container> _containers;
 
+        /// <summary>
+        /// Instantiates a new instance of the <see cref="ContainerRepo"/> class.
+        /// </summary>
         public ContainerRepo()
         {
             InitializeRepo();
         }
 
+        /// <summary>
+        /// The containers list.
+        /// </summary>
         public ObservableCollection<Container> Containers
         {
             get
@@ -58,19 +64,26 @@ namespace ContainerFarm.Repos
             }
         }
 
+        /// <summary>
+        /// Updates the container subsystem readings.
+        /// </summary>
+        /// <param name="readings"></param>
         public void UpdateReadings(string readings)
         {
+            // Get the json object of the readings
             JObject sensorJson = JObject.Parse(readings);
+            // Get the array for the 'sensors' property.
             JArray jArray = (JArray)sensorJson["sensors"];
 
-            Console.WriteLine(jArray);
-
+            // Loop over the array
             for (int i = 0; i < jArray.Count; i++)
             {
+                // Get the sensor object in the current array
                 JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
 
                 #region Security
 
+                // Door sensor 
                 if (oneSensorObject.ToString().Contains(DOOR))
                 {
                     string door_value = oneSensorObject[DOOR][VALUE].ToString();
@@ -80,93 +93,95 @@ namespace ContainerFarm.Repos
                     else
                         _containers[0].Security.DoorSensor.Value = 1;
                 }
+                // Motion sensor
                 else if (oneSensorObject.ToString().Contains(MOTION))
                 {
                     string motion_value = oneSensorObject[MOTION][VALUE].ToString();
-                    if (motion_value == MOTION_DETECTED)
-                        _containers[0].Security.MotionSensor.Value = 1;
-                    else
-                        _containers[0].Security.MotionSensor.Value = 0;
+                    _containers[0].Security.MotionSensor.Value = motion_value == MOTION_DETECTED
+                                                                   ? 1
+                                                                   : 0;
                 }
+                // Noise sensor
                 else if (oneSensorObject.ToString().Contains(NOISE))
                 {
                     string noise_value = oneSensorObject[NOISE][VALUE].ToString();
-                    if (Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180)
-                        _containers[0].Security.NoiseSensor.Value = 1;
-                    else
-                        _containers[0].Security.NoiseSensor.Value = 0;
+                    _containers[0].Security.NoiseSensor.Value = Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180
+                                                                   ? 1
+                                                                   : 0;
                 }
+                // Luminosity sensor
                 else if (oneSensorObject.ToString().Contains(LUMINOSITY))
                 {
                     string luminosity_value = oneSensorObject[LUMINOSITY][VALUE].ToString();
-                    if (Convert.ToInt32(luminosity_value) > 30)
-                        _containers[0].Security.LuminositySensor.Value = 1;
-                    else
-                        _containers[0].Security.LuminositySensor.Value = 0;
+                    _containers[0].Security.LuminositySensor.Value = Convert.ToInt32(luminosity_value) > 30
+                                                                   ? 1 
+                                                                   : 0;
                 }
 
                 #endregion
 
                 #region Plants
 
+                // Water level sensor
                 if (oneSensorObject.ToString().Contains(WATER_LEVEL))
                 {
-                    string value;
-                    value = oneSensorObject[WATER_LEVEL][VALUE].ToString();
-
+                    string value = oneSensorObject[WATER_LEVEL][VALUE].ToString();
                     _containers[0].Plant.WaterLevel.Value = StringToFloat(value);
                 }
-                if (oneSensorObject.ToString().Contains(SOIL_MOISTURE))
+                // Soil moisture sensor
+                else if (oneSensorObject.ToString().Contains(SOIL_MOISTURE))
                 {
-                    string value;
-
-                    value = oneSensorObject[SOIL_MOISTURE][VALUE].ToString();
+                    string value = oneSensorObject[SOIL_MOISTURE][VALUE].ToString();
                     _containers[0].Plant.SoilMoisture.Value = StringToFloat(value);
                 }
-                if (oneSensorObject.ToString().Contains(HUMIDITY))
+                // Humidity sensor
+                else if (oneSensorObject.ToString().Contains(HUMIDITY))
                 {
-                    string value;
-
-                    value = oneSensorObject[HUMIDITY][VALUE].ToString();
+                    string value = oneSensorObject[HUMIDITY][VALUE].ToString();
                     _containers[0].Plant.Humidity.Value = StringToFloat(value);
                 }
-                if (oneSensorObject.ToString().Contains(TEMPERATURE))
+                // Temperature sensor
+                else if (oneSensorObject.ToString().Contains(TEMPERATURE))
                 {
-                    string value;
-
-                    value = oneSensorObject[TEMPERATURE][VALUE].ToString();
+                    string value = oneSensorObject[TEMPERATURE][VALUE].ToString();
                     _containers[0].Plant.Temperature.Value = StringToFloat(value);
-
-
                 }
 
                 #endregion
 
                 #region Geo Location
 
+                // GPS address location sensor
                 if (oneSensorObject.ToString().Contains(GPS_LOCATION))
                 {
                     string gps_location_value = oneSensorObject[GPS_LOCATION][VALUE].ToString();
 
+                    // If no 'Address' word in gps location, no address location
                     if (!gps_location_value.ToString().Contains(GPS_ADDRESS))
                         return;
 
+                    // Split to get the address location
                     string[] splitByAddressWord = gps_location_value.Split($"{GPS_ADDRESS}:");
 
+                    // Get the address location 
                     string gps_address = splitByAddressWord[1].Trim();
+
                     _containers[0].Location.GpsSensor.Address = gps_address;                    
                 }
-                if (oneSensorObject.ToString().Contains(PITCH))
+                // Pitch sensor
+                else if (oneSensorObject.ToString().Contains(PITCH))
                 {
                     string pitch_value = oneSensorObject[PITCH][VALUE].ToString();
                     _containers[0].Location.PitchAngleSensor.Value = Single.Parse(pitch_value, CultureInfo.InvariantCulture);
                 }
-                if (oneSensorObject.ToString().Contains(ROLL_ANGLE))
+                // Roll angle sensor
+                else if (oneSensorObject.ToString().Contains(ROLL_ANGLE))
                 {
                     string roll_angle_value = oneSensorObject[ROLL_ANGLE][VALUE].ToString();
                     _containers[0].Location.RollAngleSensor.Value = Single.Parse(roll_angle_value, CultureInfo.InvariantCulture);
                 }
-                if (oneSensorObject.ToString().Contains(VIBRATION))
+                // Vibration sensor
+                else if (oneSensorObject.ToString().Contains(VIBRATION))
                 {
                     string vibration_value = oneSensorObject[VIBRATION][VALUE].ToString();
                     _containers[0].Location.VibrationSensor.Value = Single.Parse(vibration_value, CultureInfo.InvariantCulture);
@@ -175,27 +190,26 @@ namespace ContainerFarm.Repos
                 #endregion
             }
         }
+
+        /// <summary>
+        /// Converts the specified string to a float.
+        /// </summary>
+        /// <param name="value">The string to convert.</param>
+        /// <returns>The float value if could parse, otherwise 0.</returns>
         private float StringToFloat(string value)
         {
-
             if (float.TryParse(value, out float parsedValue))
-            {
                 return parsedValue;
-            }
             return 0;
         }
 
+        /// <summary>
+        /// Initializes the containers repo with default containers.
+        /// </summary>
         public void InitializeRepo()
         {
             _containers = new ObservableCollection<Container>();
 
-            //_containers.Add(new Container()
-            //{
-            //    GeoLocationDetails = new GeoLocation() { Address = "123 Sesame Street", Buzzer = false, VibrationLevel = 0, PitchAngle = 2, RollAngle = 1 },
-            //    Name = "Schoolyard",
-            //    PlantDetails = new Plant() { Temperature = 20, Fan = false, Humidity = 15, SoilLevel = 50, WaterLevel = 50, Light = false },
-            //    SecurityDetails = new Models.Security() { Buzzer = false, Door = Models.Security.OpenClosed.Open, DoorLock = false, Luminosity = Models.Security.Detection.Detected, Motion = Models.Security.Detection.NotDetected, Noise = Models.Security.Detection.Detected }
-            //});
             _containers.Add(new Container()
             {
                 Name = "Container 1",
@@ -225,34 +239,34 @@ namespace ContainerFarm.Repos
                     NoiseSensor = new NoiseSensor() { Value = 0, Name = "Noise Sensor" },
                 }
 
-            }); _containers.Add(new Container()
-            {
-                Name = "Container 2",
-                Plant = new Plant()
-                {
-                    Humidity = new HumiditySensor() { Name = "AH20", Value = 10 },
-                    LightActuator = new LightActuator() { IsOn = true, Name = "Light" },
-                    SoilMoisture = new SoilMoistureSensor() { Value = 50, Name = "Moisture Sensor" },
-                    Temperature = new TemperatureSensor() { Name = "AH20", Value = 50 },
-                    WaterLevel = new WaterLevelSensor() { Name = "Water Level", Value = 11 }
-                },
-                Location = new GeoLocation()
-                {
-                    BuzzerActuator = new BuzzerActuator() { IsOn = false, Name = "Buzzer" },
-                    GpsSensor = new GpsSensor() { Address = "John Abbott", Coordinates = "1.1.1.1.1.1", Name = "Sesame Street", Value = 0 },
-                    PitchAngleSensor = new PitchAngleSensor() { Value = 4, Name = "Acelerometer" },
-                    RollAngleSensor = new RollAngleSensor() { Name = "Acelerometer", Value = 3 },
-                    VibrationSensor = new VibrationSensor() { Name = "Vibration Sensor", Value = 5 },
-                },
-                Security = new Models.Security()
-                {
-                    BuzzerActuator = new BuzzerActuator() { Name = "Buzzer", IsOn = false },
-                    DoorSensor = new DoorSensor() { Name = "Door Sensor", Value = 0 },
-                    DoorlockActuator = new DoorlockActuator() { Name = "Door Lock", IsOn = true },
-                    LuminositySensor = new LuminositySensor() { Name = "Light Sensor", Value = 1 },
-                    MotionSensor = new MotionSensor() { Name = "Motion Sensor", Value = 1 },
-                    NoiseSensor = new NoiseSensor() { Value = 1, Name = "Noise Sensor" },
-                }
+            //}); _containers.Add(new Container()
+            //{
+            //    Name = "Container 2",
+            //    Plant = new Plant()
+            //    {
+            //        Humidity = new HumiditySensor() { Name = "AH20", Value = 10 },
+            //        LightActuator = new LightActuator() { IsOn = true, Name = "Light" },
+            //        SoilMoisture = new SoilMoistureSensor() { Value = 50, Name = "Moisture Sensor" },
+            //        Temperature = new TemperatureSensor() { Name = "AH20", Value = 50 },
+            //        WaterLevel = new WaterLevelSensor() { Name = "Water Level", Value = 11 }
+            //    },
+            //    Location = new GeoLocation()
+            //    {
+            //        BuzzerActuator = new BuzzerActuator() { IsOn = false, Name = "Buzzer" },
+            //        GpsSensor = new GpsSensor() { Address = "John Abbott", Coordinates = "1.1.1.1.1.1", Name = "Sesame Street", Value = 0 },
+            //        PitchAngleSensor = new PitchAngleSensor() { Value = 4, Name = "Acelerometer" },
+            //        RollAngleSensor = new RollAngleSensor() { Name = "Acelerometer", Value = 3 },
+            //        VibrationSensor = new VibrationSensor() { Name = "Vibration Sensor", Value = 5 },
+            //    },
+            //    Security = new Models.Security()
+            //    {
+            //        BuzzerActuator = new BuzzerActuator() { Name = "Buzzer", IsOn = false },
+            //        DoorSensor = new DoorSensor() { Name = "Door Sensor", Value = 0 },
+            //        DoorlockActuator = new DoorlockActuator() { Name = "Door Lock", IsOn = true },
+            //        LuminositySensor = new LuminositySensor() { Name = "Light Sensor", Value = 1 },
+            //        MotionSensor = new MotionSensor() { Name = "Motion Sensor", Value = 1 },
+            //        NoiseSensor = new NoiseSensor() { Value = 1, Name = "Noise Sensor" },
+            //    }
 
             });
 
