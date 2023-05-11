@@ -30,6 +30,7 @@ namespace ContainerFarm.Repos
         private const string HUMIDITY = "humidity";
         private const string TEMPERATURE = "temperature";
         private const string VALUE = "value";
+        private const string MOTION_DETECTED = "detected";
 
 
 
@@ -62,7 +63,7 @@ namespace ContainerFarm.Repos
                 {
                     string door_value = oneSensorObject[DOOR][VALUE].ToString();
 
-                    if (door_value == "open")
+                    if (door_value == DOOR_OPEN)
                         _containers[0].Security.DoorSensor.Value = 0;
                     else
                         _containers[0].Security.DoorSensor.Value = 1;
@@ -70,7 +71,7 @@ namespace ContainerFarm.Repos
                 else if (oneSensorObject.ToString().Contains(MOTION))
                 {
                     string motion_value = oneSensorObject[MOTION][VALUE].ToString();
-                    if (motion_value == "open")
+                    if (motion_value == MOTION_DETECTED)
                         _containers[0].Security.MotionSensor.Value = 1;
                     else
                         _containers[0].Security.MotionSensor.Value = 0;
