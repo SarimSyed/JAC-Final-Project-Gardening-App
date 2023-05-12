@@ -14,19 +14,20 @@ public partial class MapView : ContentPage
 	{
 		InitializeComponent();
 
-        Location location = new Location(45.406389035136094, -73.9417282);
+        Location location = new Location(45.40872533174768, -74.15082292759962);
         MapSpan mapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(0.44));
-        Map map = new Map(mapSpan);
-        map.MoveToRegion(mapSpan);
+        map_app = new Map(mapSpan);
+        map_app.MoveToRegion(mapSpan);
 
-        map.Pins.Add(new Pin()
+        map_app.Pins.Add(new Pin()
         {
             Label = "Cegep John Abbott",
             Address = "Maple street",
             Type = PinType.Place,
-            Location = new Location(45.406389035136094, -73.9417282)
+            Location = new Location(45.40872533174768, -74.15082292759962)
         });
-        map_app = map;
+
+        this.BindingContext = map_app;
     }
 
     /// <summary>
