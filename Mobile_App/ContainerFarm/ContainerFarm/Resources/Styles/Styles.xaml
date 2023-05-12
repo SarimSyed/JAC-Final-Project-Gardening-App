@@ -422,7 +422,22 @@
         <!--<Setter Property="FontAttributes" Value="Bold"/>-->
         <Setter Property="FontSize" Value="18"/>
     </Style>
+
+    <Style TargetType="Label" x:Key="ContainerDevicesTitle">
+        <Setter Property="Grid.Column" Value="1"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
     
+    <Style TargetType="Label" x:Key="ContainerDevicesValueText">
+        <Setter Property="Grid.Column" Value="2"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+
     <!--Geo-Location container info page-->
     <Style TargetType="Grid" x:Key="SensorActuatorGrid">
         <Setter Property="RowDefinitions" Value="auto, 1*"/>
@@ -446,4 +461,6 @@
         <Setter Property="HorizontalOptions" Value="Center"/>
         <Setter Property="HorizontalTextAlignment" Value="Center"/>
     </Style>
+    
+    
 </ResourceDictionary>

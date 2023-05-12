@@ -54,7 +54,7 @@ namespace ContainerFarm.Repos
             // Get the json object of the readings
             JObject sensorJson = JObject.Parse(readings);
             // Get the array for the 'sensors' property.
-            JArray jArray = (JArray)sensorJson["sensors"];
+            JArray jArray = (JArray) sensorJson["sensors"];
 
             // Loop over the array
             for (int i = 0; i < jArray.Count; i++)
@@ -62,119 +62,144 @@ namespace ContainerFarm.Repos
                 // Get the sensor object in the current array
                 JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
 
-                #region Security
-
-                // Door sensor 
-                if (oneSensorObject.ToString().Contains(SecurityReadingTitle.DOOR))
-                {
-                    string door_value = oneSensorObject[SecurityReadingTitle.DOOR][VALUE_KEY].ToString();
-                    _containers[0].Security.DoorSensor.Value = door_value == SecurityReadingTitle.DOOR_OPEN
-                                                             ? 0
-                                                             : 1;
-                }
-                // Motion sensor
-                else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.MOTION))
-                {
-                    string motion_value = oneSensorObject[SecurityReadingTitle.MOTION][VALUE_KEY].ToString();
-                    _containers[0].Security.MotionSensor.Value = motion_value == SecurityReadingTitle.MOTION_DETECTED
-                                                               ? 1
-                                                               : 0;
-                }
-                // Noise sensor
-                else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.NOISE))
-                {
-                    string noise_value = oneSensorObject[SecurityReadingTitle.NOISE][VALUE_KEY].ToString();
-                    _containers[0].Security.NoiseSensor.Value = Convert.ToInt32(noise_value) <= 100 || Convert.ToInt32(noise_value) > 180
-                                                                   ? 1
-                                                                   : 0;
-                }
-                // Luminosity sensor
-                else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.LUMINOSITY))
-                {
-                    string luminosity_value = oneSensorObject[SecurityReadingTitle.LUMINOSITY][VALUE_KEY].ToString();
-                    _containers[0].Security.LuminositySensor.Value = Convert.ToInt32(luminosity_value) > 30
-                                                                   ? 1 
-                                                                   : 0;
-                }
-
-                #endregion
-
-                #region Plants
-
-                // Water level sensor
-                if (oneSensorObject.ToString().Contains(PlantReadingTitle.WATER_LEVEL))
-                {
-                    string value = oneSensorObject[PlantReadingTitle.WATER_LEVEL][VALUE_KEY].ToString();
-                    _containers[0].Plant.WaterLevel.Value = StringToFloat(value);
-                }
-                // Soil moisture sensor
-                else if (oneSensorObject.ToString().Contains(PlantReadingTitle.SOIL_MOISTURE))
-                {
-                    string value = oneSensorObject[PlantReadingTitle.SOIL_MOISTURE][VALUE_KEY].ToString();
-                    _containers[0].Plant.SoilMoisture.Value = StringToFloat(value);
-                }
-                // Humidity sensor
-                else if (oneSensorObject.ToString().Contains(PlantReadingTitle.HUMIDITY))
-                {
-                    string value = oneSensorObject[PlantReadingTitle.HUMIDITY][VALUE_KEY].ToString();
-                    _containers[0].Plant.Humidity.Value = StringToFloat(value);
-                }
-                // Temperature sensor
-                else if (oneSensorObject.ToString().Contains(PlantReadingTitle.TEMPERATURE))
-                {
-                    string value = oneSensorObject[PlantReadingTitle.TEMPERATURE][VALUE_KEY].ToString();
-                    _containers[0].Plant.Temperature.Value = StringToFloat(value);
-                }
-
-                #endregion
-
-                #region Geo Location
-
-                // GPS address location sensor
-                if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.GPS_LOCATION))
-                {
-                    string gps_location_value = oneSensorObject[GeoLocationReadingTitle.GPS_LOCATION][VALUE_KEY].ToString();
-
-                    // If no 'Address' word in gps location, no address location
-                    if (!gps_location_value.ToString().Contains(GeoLocationReadingTitle.GPS_ADDRESS))
-                        return;
-
-                    // Split to get the address location
-                    string[] splitByAddressWord = gps_location_value.Split($"{GeoLocationReadingTitle.GPS_ADDRESS}:");
-
-                    // Get the address location 
-                    string gps_address = splitByAddressWord[1].Trim();
-
-                    _containers[0].Location.GpsSensor.Address = gps_address;                    
-                }
-                // Pitch sensor
-                else if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.PITCH))
-                {
-                    string pitch_value = oneSensorObject[GeoLocationReadingTitle.PITCH][VALUE_KEY].ToString();
-                    _containers[0].Location.PitchAngleSensor.Value = Single.Parse(pitch_value, CultureInfo.InvariantCulture);
-                }
-                // Roll angle sensor
-                else if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.ROLL_ANGLE))
-                {
-                    string roll_angle_value = oneSensorObject[GeoLocationReadingTitle.ROLL_ANGLE][VALUE_KEY].ToString();
-                    _containers[0].Location.RollAngleSensor.Value = Single.Parse(roll_angle_value, CultureInfo.InvariantCulture);
-                }
-                // Vibration sensor
-                else if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.VIBRATION))
-                {
-                    string vibration_value = oneSensorObject[GeoLocationReadingTitle.VIBRATION][VALUE_KEY].ToString();
-                    _containers[0].Location.VibrationSensor.Value = Single.Parse(vibration_value, CultureInfo.InvariantCulture);
-                }
-
-                #endregion
+                UpdateSecurityReading(oneSensorObject); 
+                UpdatePlantReading(oneSensorObject);
+                UpdateGeoLocationReading(oneSensorObject);
             }
         }
+
+        #region Security Reading
+
+        /// <summary>
+        /// Updates the Security reading based on the specified object.
+        /// </summary>
+        /// <param name="oneSensorObject">The specified sensor object.</param>
+        private void UpdateSecurityReading(JObject oneSensorObject)
+        {
+            // Door sensor 
+            if (oneSensorObject.ToString().Contains(SecurityReadingTitle.DOOR))
+            {
+                string door_value = oneSensorObject[SecurityReadingTitle.DOOR][VALUE_KEY].ToString();
+                _containers[0].Security.DoorSensor.Value = door_value == SecurityReadingTitle.DOOR_OPEN
+                                                         ? SecurityReadingTitle.TURN_OFF
+                                                         : SecurityReadingTitle.TURN_ON;
+            }
+            // Motion sensor
+            else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.MOTION))
+            {
+                string motion_value = oneSensorObject[SecurityReadingTitle.MOTION][VALUE_KEY].ToString();
+                _containers[0].Security.MotionSensor.Value = motion_value == SecurityReadingTitle.MOTION_DETECTED
+                                                           ? SecurityReadingTitle.TURN_ON
+                                                           : SecurityReadingTitle.TURN_OFF;
+            }
+            // Noise sensor
+            else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.NOISE))
+            {
+                string noise_value = oneSensorObject[SecurityReadingTitle.NOISE][VALUE_KEY].ToString();
+                _containers[0].Security.NoiseSensor.Value = Convert.ToInt32(noise_value) <= SecurityReadingTitle.NOISE_LOW_THRESHOLD || Convert.ToInt32(noise_value) > SecurityReadingTitle.NOISE_HIGH_THRESHOLD
+                                                               ? SecurityReadingTitle.TURN_ON
+                                                               : SecurityReadingTitle.TURN_OFF;
+            }
+            // Luminosity sensor
+            else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.LUMINOSITY))
+            {
+                string luminosity_value = oneSensorObject[SecurityReadingTitle.LUMINOSITY][VALUE_KEY].ToString();
+                _containers[0].Security.LuminositySensor.Value = Convert.ToInt32(luminosity_value) > SecurityReadingTitle.LUMINOSITY_THRESHOLD
+                                                               ? SecurityReadingTitle.TURN_ON
+                                                               : SecurityReadingTitle.TURN_OFF;
+            }
+        }
+
+        #endregion
+
+        #region Plants Reading
+
+        /// <summary>
+        /// Updates the Plant reading based on the specified object.
+        /// </summary>
+        /// <param name="oneSensorObject">The specified sensor object.</param>
+        private void UpdatePlantReading(JObject oneSensorObject)
+        {
+            // Water level sensor
+            if (oneSensorObject.ToString().Contains(PlantReadingTitle.WATER_LEVEL))
+            {
+                string waterLevelValue = oneSensorObject[PlantReadingTitle.WATER_LEVEL][VALUE_KEY].ToString();
+                _containers[0].Plant.WaterLevel.Value = StringToFloat(waterLevelValue);
+            }
+            // Soil moisture sensor
+            else if (oneSensorObject.ToString().Contains(PlantReadingTitle.SOIL_MOISTURE))
+            {
+                string soilMoistureValue = oneSensorObject[PlantReadingTitle.SOIL_MOISTURE][VALUE_KEY].ToString();
+                _containers[0].Plant.SoilMoisture.Value = StringToFloat(soilMoistureValue);
+            }
+            // Humidity sensor
+            else if (oneSensorObject.ToString().Contains(PlantReadingTitle.HUMIDITY))
+            {
+                string humidityValue = oneSensorObject[PlantReadingTitle.HUMIDITY][VALUE_KEY].ToString();
+                _containers[0].Plant.Humidity.Value = StringToFloat(humidityValue);
+            }
+            // Temperature sensor
+            else if (oneSensorObject.ToString().Contains(PlantReadingTitle.TEMPERATURE))
+            {
+                string temperatureValue = oneSensorObject[PlantReadingTitle.TEMPERATURE][VALUE_KEY].ToString();
+                _containers[0].Plant.Temperature.Value = StringToFloat(temperatureValue);
+            }
+        }
+
+        #endregion
+        
+        #region Geo Location Reading
+
+        /// <summary>
+        /// Updates the Geo Location reading based on the specified object.
+        /// </summary>
+        /// <param name="oneSensorObject">The specified sensor object.</param>
+        private void UpdateGeoLocationReading(JObject oneSensorObject)
+        {
+            // GPS address location sensor
+            if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.GPS_LOCATION))
+            {
+                string gps_location_value = oneSensorObject[GeoLocationReadingTitle.GPS_LOCATION][VALUE_KEY].ToString();
+
+                // If no 'Address' word in gps location, no address location
+                if (!gps_location_value.ToString().Contains(GeoLocationReadingTitle.GPS_ADDRESS))
+                    return;
+
+                // Split to get the address location
+                string[] splitByAddressWord = gps_location_value.Split($"{GeoLocationReadingTitle.GPS_ADDRESS}:");
+
+                // Get the address location 
+                string gps_address = splitByAddressWord[1].Trim();
+
+                _containers[0].Location.GpsSensor.Address = gps_address;
+            }
+            // Pitch sensor
+            else if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.PITCH))
+            {
+                string pitch_value = oneSensorObject[GeoLocationReadingTitle.PITCH][VALUE_KEY].ToString();
+                _containers[0].Location.PitchAngleSensor.Value = Single.Parse(pitch_value, CultureInfo.InvariantCulture);
+            }
+            // Roll angle sensor
+            else if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.ROLL_ANGLE))
+            {
+                string roll_angle_value = oneSensorObject[GeoLocationReadingTitle.ROLL_ANGLE][VALUE_KEY].ToString();
+                _containers[0].Location.RollAngleSensor.Value = Single.Parse(roll_angle_value, CultureInfo.InvariantCulture);
+            }
+            // Vibration sensor
+            else if (oneSensorObject.ToString().Contains(GeoLocationReadingTitle.VIBRATION))
+            {
+                string vibration_value = oneSensorObject[GeoLocationReadingTitle.VIBRATION][VALUE_KEY].ToString();
+                _containers[0].Location.VibrationSensor.Value = Single.Parse(vibration_value, CultureInfo.InvariantCulture);
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// Converts the specified string to a float.
         /// </summary>
         /// <param name="value">The string to convert.</param>
-        /// <returns>The float value if could parse, otherwise 0.</returns>
+        /// <returns>The float waterLevelValue if could parse, otherwise 0.</returns>
         private float StringToFloat(string value)
         {
             if (float.TryParse(value, out float parsedValue))

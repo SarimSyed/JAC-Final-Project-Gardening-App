@@ -56,8 +56,8 @@ namespace ContainerFarm.Services
                     string eventBodyString = System.Text.Encoding.Default.GetString(eventBody);
                     string eventBodyCleaned = eventBodyString.Replace("\n", "");
 
+                    // Update Readings
                     App.Repo.UpdateReadings(eventBodyCleaned);
-
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
                         key: partition,

@@ -18,5 +18,12 @@ namespace ContainerFarm.Enums
         public const string MOTION_DETECTED = "detected";
         public const string NOISE = "noise";
         public const string LUMINOSITY = "luminosity";
+
+        public const byte LUMINOSITY_THRESHOLD = 30;
+        public const byte NOISE_LOW_THRESHOLD = 100;
+        public const byte NOISE_HIGH_THRESHOLD = 180;
+
+        public const byte TURN_ON = 1;
+        public const byte TURN_OFF = 0;
     }
 }

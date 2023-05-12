@@ -91,6 +91,7 @@ public partial class LoginPage : ContentPage
             // Display successful login
             ShowSnackbar.NewSnackbar($"Logged in successfully!");
 
+            // Initialize the service
             await D2CService.Initialize();
             await D2CService.Processor.StartProcessingAsync();
         }
