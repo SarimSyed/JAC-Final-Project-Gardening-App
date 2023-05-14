@@ -158,6 +158,21 @@ class ConnectionManager:
             buzzer_command = ACommand(ACommand.Type.BUZZER, raw_message_body)
 
             self.subsystems_controller.control_actuator(self.subsystems_controller.geolocation, buzzer_command)
+
+        if "securityDoorLock" in desired_properties:
+
+            # Get the new telemetry value
+            doorlock_value = desired_properties["securityDoorLock"]
+            print(f"New telemetry interval: {doorlock_value}")
+
+            if doorlock_value == "lock":
+                raw_message_body = '{"value": "lock"}'
+            else:
+                raw_message_body = '{"value": "unlock"}'
+            
+            doorlock_command = ACommand(ACommand.Type.DOORLOCK, raw_message_body)
+
+            self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
     
     async def _report_telemetry_interval_twin_property(self, telemetry_property_value):
         """Updates the telemetryInterval report properties when desired property is updated in IoT Hub.

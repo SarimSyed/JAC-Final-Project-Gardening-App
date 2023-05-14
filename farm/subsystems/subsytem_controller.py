@@ -20,7 +20,7 @@ class SubsystemController:
         Returns:
             list[AReading]: List of all sensor readings
         """
-        return self.geolocation.read_sensors()
+        return self.security.read_sensors()
         # return self.plants.read_sensors() + self.security.read_sensors() + self.geolocation.read_sensors()
     
     def control_actuator(self, subsystem, command: ACommand) -> bool:
