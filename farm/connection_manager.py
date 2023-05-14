@@ -142,7 +142,7 @@ class ConnectionManager:
             self.telemetry_interval = telemetry_property_value
 
             # Report twin property of telemetry interval
-            await self._report_telemetry_interval_twin_property(telemetry_property_value)
+            await self._report_telemetry_interval_twin_property(self.telemetry_interval)
     
     async def _report_telemetry_interval_twin_property(self, telemetry_property_value):
         """Updates the telemetryInterval report properties when desired property is updated in IoT Hub.
