@@ -24,6 +24,21 @@
 
 # Controlling Actuators
 ## Fan
+
+- Communication Strategy
+- Code snippet
+
 ## Light
+
+- Communication Strategy
+- Code snippet
+
 ## Buzzer
+
+- Communication Strategy
+- Code snippet
+
 ## Door Lock
+
+- Communication Strategy
+- Code snippet
