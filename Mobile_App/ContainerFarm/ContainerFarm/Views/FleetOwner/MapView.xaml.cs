@@ -1,5 +1,7 @@
 namespace ContainerFarm.Views.FleetOwner;
 
+using Microsoft.Maui.Controls.Maps;
+
 //using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Devices.Sensors;
 using Microsoft.Maui.Maps;
@@ -12,10 +14,20 @@ public partial class MapView : ContentPage
 	{
 		InitializeComponent();
 
-        Location location = new Location(45.406389035136094, -73.9417282);
-        MapSpan mapSpan = new MapSpan(location, 0.01, 0.01);
-        Map map = new Map(mapSpan);
-        map_app = map;
+        Location location = new Location(45.40872533174768, -74.15082292759962);
+        MapSpan mapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(0.44));
+        map_app = new Map(mapSpan);
+        map_app.MoveToRegion(mapSpan);
+
+        map_app.Pins.Add(new Pin()
+        {
+            Label = "Cegep John Abbott",
+            Address = "Maple street",
+            Type = PinType.Place,
+            Location = new Location(45.40872533174768, -74.15082292759962)
+        });
+
+        this.BindingContext = map_app;
     }
 
     /// <summary>

@@ -13,7 +13,7 @@ namespace ContainerFarm.Services
     {
         private static FirebaseAuthConfig config = new FirebaseAuthConfig
         {
-            ApiKey = ResourceStrings.ApiKey,
+            ApiKey = ResourceStrings.Firebase_ApiKey,
             AuthDomain = ResourceStrings.AuthorizedDomain,
             Providers = new FirebaseAuthProvider[]
     {

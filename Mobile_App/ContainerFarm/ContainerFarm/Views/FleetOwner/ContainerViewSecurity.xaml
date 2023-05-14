@@ -12,18 +12,29 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:Container">
                         <Frame Margin="10" BackgroundColor="LightGreen">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Container_Farm_Security_Tapped"/>
+                            </Frame.GestureRecognizers>
                         <Grid RowDefinitions="auto"
-                              ColumnDefinitions="auto,auto,auto">
+                              ColumnDefinitions="auto,auto,1*"
+                              VerticalOptions="Center"
+                              ColumnSpacing="25">
                             
                             <!--Containers-->
-                                <Image Source="container.png" Grid.RowSpan="2" WidthRequest="80" Margin="0,0,20,0"/>
-                                <VerticalStackLayout Grid.Column="1">
-                                    <Button  Text="{Binding Name}" Clicked="ContainerButton_Clicked" BackgroundColor="LightSeaGreen" TextColor="Black" 
-                                        FontSize="Medium" FontAttributes="Bold"/>
-                                    <Label Text="0 Issues" Margin="0,10,0,0"/>
+                                <Image Source="container.png" Grid.RowSpan="2" WidthRequest="80" />
+                                <VerticalStackLayout Grid.Column="1" 
+                                                     VerticalOptions="Center"
+                                                     Spacing="12">
+                                    <Label  Text="{Binding Name}" x:Name="nameBtn"  TextColor="Black" 
+                                        FontSize="20" FontAttributes="Bold"
+                                            VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"/>
+                                    <Label Text="0 Issues"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="Center"/>
                                 </VerticalStackLayout>
                                 <Image Source="accept.png" Grid.Column="2" WidthRequest="30"
-                                       Margin="40,0,0,0"/>
+                                           HorizontalOptions="Center"/>
                             </Grid>
                         </Frame>
                     </DataTemplate>

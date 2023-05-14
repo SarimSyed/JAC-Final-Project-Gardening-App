@@ -422,4 +422,45 @@
         <!--<Setter Property="FontAttributes" Value="Bold"/>-->
         <Setter Property="FontSize" Value="18"/>
     </Style>
+
+    <Style TargetType="Label" x:Key="ContainerDevicesTitle">
+        <Setter Property="Grid.Column" Value="1"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+    
+    <Style TargetType="Label" x:Key="ContainerDevicesValueText">
+        <Setter Property="Grid.Column" Value="2"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="VerticalTextAlignment" Value="Center"/>
+    </Style>
+
+    <!--Geo-Location container info page-->
+    <Style TargetType="Grid" x:Key="SensorActuatorGrid">
+        <Setter Property="RowDefinitions" Value="auto, 1*"/>
+        <Setter Property="ColumnDefinitions" Value="1*"/>
+        <Setter Property="RowSpacing" Value="9"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="SensorActuatorGridTitle">
+        <Setter Property="FontSize" Value="Medium"/>
+        <Setter Property="HorizontalOptions" Value="Start"/>
+        <Setter Property="FontAttributes" Value="Bold"/>
+    </Style>
+
+    <Style TargetType="Frame" x:Key="SensorActuatorGridFrame">
+        <Setter Property="BorderColor" Value="Black"/>
+        <Setter Property="CornerRadius" Value="10"/>
+    </Style>
+
+    <Style TargetType="Label" x:Key="SensorActuatorGridValue">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalOptions" Value="Center"/>
+        <Setter Property="HorizontalTextAlignment" Value="Center"/>
+    </Style>
+    
+    
 </ResourceDictionary>

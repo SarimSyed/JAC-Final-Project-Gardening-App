@@ -1,4 +1,8 @@
+using Azure;
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 using ContainerFarm.Repos;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace ContainerFarm.Views.Technician;
 
@@ -17,6 +21,7 @@ public partial class DeviceView : ContentPage
     public DeviceView()
     {
         InitializeComponent();
+
         //Using the index 0 of the repo since technicians will only have access to one container
         BindingContext = App.Repo.Containers[0].Plant;
     }
@@ -25,31 +30,27 @@ public partial class DeviceView : ContentPage
     {
         //Shows the confimation to the user that the fan has been turned on or off
         Switch fanSwitch = sender as Switch;
-        if (fanSwitch.IsToggled)
-        {
-            fanStatus.Text = "ON";
-            fanStatus.TextColor = Colors.DarkGreen;
-        }
-        else
-        {
-            fanStatus.Text = "OFF";
-            fanStatus.TextColor = Colors.Red;
-        }
+        SetSwitchTextStatus(fanSwitch, fanStatus);
     }
 
     private void LightSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
         //Shows the confimation to the user that the fan has been turned on or off
         Switch lightSwitch = sender as Switch;
-        if (lightSwitch.IsToggled)
+        SetSwitchTextStatus(lightSwitch, lightStatus);
+    }
+
+    private void SetSwitchTextStatus(Switch actuatorSwitch, Label actuatorText)
+    {
+        if (actuatorSwitch.IsToggled)
         {
-            lightStatus.Text = "ON";
-            lightStatus.TextColor = Colors.DarkGreen;
+            actuatorText.Text = "ON";
+            actuatorText.TextColor = Colors.DarkGreen;
         }
         else
         {
-            lightStatus.Text = "OFF";
-            lightStatus.TextColor = Colors.Red;
+            actuatorText.Text = "OFF";
+            actuatorText.TextColor = Colors.Red;
         }
     }
 }

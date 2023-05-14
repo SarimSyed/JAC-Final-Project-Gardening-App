@@ -18,6 +18,8 @@ public partial class AppShell : Shell
     {
         try
         {
+             await D2CService.Processor.StopProcessingAsync();
+
             // Validates that there's a signed in user
             if (AuthService.Client.User == null)
                 return;

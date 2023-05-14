@@ -5,56 +5,62 @@ from .TemperatureSensor import TemperatureSensor
 from .LiquidLevelSensor import LiquidLevelSensor
 from .SoilMoistureSensor import SoilMoistureSensor
 from interfaces.sensors import AReading, ISensor
-from actuators import ACommand, IActuator
+from interfaces.actuators import ACommand, IActuator
 from time import sleep
+import json
 
 
 class PlantSystem:
     def __init__(self) -> None:
         self._sensors: list[ISensor] = self._initialize_sensors()
-        self._actuators : list[IActuator] = self._initialize_actuators()
+        # self._actuators : list[IActuator] = self._initialize_actuators()
         self.sensorReadings : list[AReading] = []
 
     def _initialize_sensors(self)-> list[ISensor]:
         
         return [
         
-            LiquidLevelSensor(1, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
+            LiquidLevelSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
             SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
 
-            HumiditySensor(6, "AHT20", AReading.Type.HUMIDITY ),
-            TemperatureSensor(1, "AHT20", AReading.Type.HUMIDITY )
+            HumiditySensor(26,"AHT20", AReading.Type.HUMIDITY ),
+            TemperatureSensor(26, "AHT20", AReading.Type.HUMIDITY )
         
         ]
 
-    def _initialize_actuators(self)-> list[IActuator]:
-        return [
-            Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON}),
-            Fan(5, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
-        ]
+    # def _initialize_actuators(self)-> list[IActuator]:
+    #     return [
+    #         Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON}),
+    #         Fan(22, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
+    #     ]
 
     def read_sensors(self) -> list[AReading]:
         #reset list
-        self.sensorReadings = []
+        
         readings: list[AReading] = []
         for x in range(len(self._sensors)):
-            print(self._sensors[x].read_sensor())    
-
+            print(self._sensors[x].read_sensor())
+            readings.append(self._sensors[x].read_sensor())    
+        self.sensorReadings = readings
         return self.sensorReadings
     
-    def control_actuators(self, command: ACommand)-> None:
-        if (command.target_type == ACommand.Type.FAN):
-            for x in range(len(self._actuators)):
-                if(self._actuators[x].type == ACommand.Type.FAN):
-                    self._actuators[x].control_actuator(command.data)
+    # def control_actuators(self, command: ACommand)-> None:
+    #     if (command.target_type == ACommand.Type.FAN):
+    #         for x in range(len(self._actuators)):
+    #             if(self._actuators[x].type == ACommand.Type.FAN):
+    #                 self._actuators[x].control_actuator(command.data)
 
-        if (command.target_type == ACommand.Type.LED):
-            for x in range(len(self._actuators)):
-                if(self._actuators[x].type == ACommand.Type.LED):
-                    self._actuators[x].control_actuator(command.data)       
+    #     if (command.target_type == ACommand.Type.LED):
+    #         for x in range(len(self._actuators)):
+    #             if(self._actuators[x].type == ACommand.Type.LED):
+    #                 self._actuators[x].control_actuator(command.data)       
         
 
         
+
+class Sensors(object):
+    def __init__(self, sensors : list[str]) -> None:
+        self.sensors = sensors
 
 
 if __name__ == "__main__":
@@ -86,7 +92,7 @@ if __name__ == "__main__":
     humid = HumiditySensor(6, "AHT20", AReading.Type.HUMIDITY )
     temperatureSensor = TemperatureSensor(1, "AHT20", AReading.Type.HUMIDITY )
     while True:
-        sleep(1)
+        sleep(2)
 
 
         test = led.validate_command(test_off_cmd)
@@ -110,4 +116,19 @@ if __name__ == "__main__":
         print(humid.read_sensor())
         print(soilSensor.read_sensor())
         print(liqudSensor.read_sensor())
+        temp : list = []
+
+        plant = PlantSystem()
+        readings = plant.read_sensors()
+        for x in range(len(readings)):
+            temp.append(readings[x].export_json())
+            json_string = json.dumps(temp[x])
+            
+        
+        sensors = Sensors(temp)
+        json_string = json.dumps(sensors, default=lambda o: o.__dict__, indent=2)
+        print(json_string)
+
+
+
         

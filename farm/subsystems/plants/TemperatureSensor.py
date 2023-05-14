@@ -19,7 +19,7 @@ class TemperatureSensor(ISensor):
     def read_sensor(self) -> AReading:
         (temp, humid) = self.sensor.read()
         self.value = round(temp, 2)
-        return AReading(AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, self.value)
+        return AReading(AReading.Type.TEMPERATURE, AReading.Unit.CELCIUS, {"value":  self.value})
         
     
 if __name__ == "__main__":

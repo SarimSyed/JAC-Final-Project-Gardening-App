@@ -9,6 +9,6 @@ namespace ContainerFarm.Config
     static internal class ResourceStrings
     {
         static public string AuthorizedDomain { get; set; } = "container-farms.firebaseapp.com";
-        public static string ApiKey { get; set; } = "AIzaSyDHQuUBlz9s5R2Lp7AbzpW3eKJ4MoCt4Ew";
+        public static string Firebase_ApiKey { get; set; } = "AIzaSyDHQuUBlz9s5R2Lp7AbzpW3eKJ4MoCt4Ew";
     }
 }

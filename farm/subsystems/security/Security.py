@@ -50,7 +50,7 @@ class Security:
         readings: list[AReading] = []
         for x in range(len(self._sensors)):
             print(self._sensors[x].read_sensor())
-
+            readings.append(self._sensors[x].read_sensor())    
         return readings
 
     def control_actuators(self,  command: ACommand) -> None:

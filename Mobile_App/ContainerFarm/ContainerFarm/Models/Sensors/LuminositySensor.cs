@@ -16,6 +16,12 @@ namespace ContainerFarm.Models.Sensors
     /// </summary>
     public class LuminositySensor : ISensor
     {
+        public enum Detection
+        {
+            Detected,
+            NotDetected
+        };
+
         public string Name
         {
             get; set;
@@ -23,6 +29,21 @@ namespace ContainerFarm.Models.Sensors
         public float Value
         {
             get; set;
+        }
+
+        public string Detected
+        {
+            get
+            {
+                if (Value == 0)
+                {
+                    return Detection.NotDetected.ToString();
+                }
+                else
+                {
+                    return Detection.Detected.ToString();
+                }
+            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -27,12 +27,13 @@ public partial class ContainerViewLocation : ContentPage
 
     }
 
-    private void View_Clicked(object sender, EventArgs e)
+    private void Container_Farm_GeoLocation_Tapped(object sender, TappedEventArgs e)
     {
-        Button button = sender as Button;
+        Frame frame = sender as Frame;
+        Label label = frame.FindByName("nameBtn") as Label;
 
         //Checks which container was clicked by the user
-        Container containerClicked = App.Repo.Containers.Where(c => c.Name == button.Text).FirstOrDefault();
+        Container containerClicked = App.Repo.Containers.Where(c => c.Name == label.Text).FirstOrDefault();
 
         //Navigates to the information details for that container
         Navigation.PushAsync(new ContainerLocationInfo(containerClicked));

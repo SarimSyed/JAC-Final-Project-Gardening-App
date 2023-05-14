@@ -1,6 +1,24 @@
-# <div align='center'>(420-6A6-AB) APP DEV III <br>(420-6P3-AB) Connected Objects <br>Winter 2023</div>
+# Grove Base Pi Hat Pins
 
-## <div align='center'>Final Project</div>
-## <div align='center'>Container-Farms</div>
 
-Template repo for final year project
+
+|    Sensor     | Actuator  |     Grove Hat Pin      |  Subsystem   |
+| :-----------: | :-------: | :--------------------: | :----------: |
+| GPS (Air530)  |           |          UART          | Geo-Location |
+|     Pitch     |           | Built-in accelerometer | Geo-Location |
+|  Roll Angle   |           | Built-in accelerometer | Geo-Location |
+|   Vibration   |           | Built-in accelerometer | Geo-Location |
+|               |  Buzzer   | Built-in accelerometer | Geo-Location |
+|   Humidity    |           |           26           |    Plants    |
+|  Temperature  |           |           26           |    Plants    |
+| Soil Moisture |           |           A2           |    Plants    |
+| Liquid Level  |           |           A4           |    Plants    |
+|               |    LED    |           18           |    Plants    |
+|               |    Fan    |           22           |    Plants    |
+|  Luminosity   |           |  Built-in Rasberry Pi  |   Security   |
+|    Motion     |           |          D16           |   Security   |
+|     Noise     |           |           A0           |   Security   |
+|     Door      |           |           D5           |   Security   |
+|               | Door Lock |          PWM           |   Security   |
+|               |  Buzzer   | Built-in accelerometer |   Security   |
+

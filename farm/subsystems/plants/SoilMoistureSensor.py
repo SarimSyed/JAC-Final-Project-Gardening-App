@@ -1,5 +1,5 @@
 
-from library.grove_moisture_sensor import GroveMoistureSensor
+from .library.grove_moisture_sensor import GroveMoistureSensor
 from interfaces.sensors import ISensor, AReading
 from grove.i2c import i2c_msg
 import RPi.GPIO as gpio 
@@ -33,7 +33,7 @@ class SoilMoistureSensor(ISensor):
         """
         #Currently returning the voltage reading from the 
         self.value = SoilMoistureSensor.SENSOR_CORRECTION_VAL - self.sensor.moisture
-        temp = AReading(AReading.Type.MOISTURE, AReading.Unit.MOISTURE, self.value)
+        temp = AReading(AReading.Type.MOISTURE, AReading.Unit.MOISTURE, {"value":  self.value})
         return temp
 
     def is_soil_moist(self) -> str:

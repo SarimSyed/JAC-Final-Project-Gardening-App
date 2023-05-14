@@ -4,7 +4,6 @@
              x:Class="ContainerFarm.Views.FleetOwner.MapView"
              xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
              Title="MapView">
-    <!--<maps:Map x:Name="map" MapType="Hybrid" />-->
     <Grid RowDefinitions="auto,1*">
         <Label Text="All of your container locations"
                Grid.Row="0"
@@ -16,6 +15,6 @@
                Grid.Row="1"
                HorizontalOptions="FillAndExpand"/>-->
 
-        <maps:Map x:Name="map_app" MapType="Satellite" Grid.Row="1"  />
+        <maps:Map x:Name="map_app" MapType="Street" Grid.Row="1"  />
     </Grid>
 </ContentPage>
