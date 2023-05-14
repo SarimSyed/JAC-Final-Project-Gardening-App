@@ -13,12 +13,13 @@ from subsystems.subsytem_controller import SubsystemController
 
 async def main():
 
+    subsystems : SubsystemController = SubsystemController()
+
     # Instantiate & connect the connection manager
-    connection_manager = ConnectionManager()
+    connection_manager = ConnectionManager(subsystems)
     await connection_manager.connect()
 
     # Instantiate the subsystems
-    subsystems : SubsystemController = SubsystemController()
     # plants: PlantSystem = PlantSystem()
     # security: Security = Security()
     # geolocation : GeoLocation = GeoLocation()

@@ -20,11 +20,12 @@ class SubsystemController:
         Returns:
             list[AReading]: List of all sensor readings
         """
-        return self.plants.read_sensors() + self.security.read_sensors() + self.geolocation.read_sensors()
+        return self.geolocation.read_sensors()
+        # return self.plants.read_sensors() + self.security.read_sensors() + self.geolocation.read_sensors()
     
-    def control_actuator(self, property )-> bool:
+    def control_actuator(self, subsystem, command: ACommand) -> bool:
         #property is the desired property that was retrieved and will be used to control actuator
         #With an if statement make the appropriate actuator work
 
-        return True
+        return subsystem.control_actuators(command)
     

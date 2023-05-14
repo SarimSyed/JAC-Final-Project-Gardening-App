@@ -10,7 +10,7 @@ from azure.iot.device import MethodResponse
 from dotenv import dotenv_values
 import os
 import json
-
+# from farm.subsystems.subsytem_controller import SubsystemController as con
 
 class Sensor:
     """Sensor class used only to store list of AReadings to aid with the json formatting in send_readings() method
@@ -43,7 +43,7 @@ class ConnectionManager:
     IS_ONLINE_DIRECT_METHOD = "is_online"
     DESIRED_PROPERTY_NAME = "desired"
 
-    def __init__(self) -> None:
+    def __init__(self, subsystems_controller) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
         """
         self._connected = False
@@ -51,6 +51,7 @@ class ConnectionManager:
         self._client = IoTHubDeviceClient.create_from_connection_string(
             self._config._device_connection_str)
         self.telemetry_interval = 5
+        self.subsystems_controller = subsystems_controller
 
     def _load_connection_config(self) -> ConnectionConfig:
         """Loads connection credentials from .env file in the project's top-level directory.
@@ -143,6 +144,20 @@ class ConnectionManager:
 
             # Report twin property of telemetry interval
             await self._report_telemetry_interval_twin_property(self.telemetry_interval)
+
+        if "geolocationBuzzer" in desired_properties:
+            # Get the new telemetry value
+            buzzer_value = desired_properties["geolocationBuzzer"]
+            print(f"New telemetry interval: {buzzer_value}")
+
+            if buzzer_value == "on":
+                raw_message_body = '{"value": "on"}'
+            else:
+                raw_message_body = '{"value": "off"}'
+            
+            buzzer_command = ACommand(ACommand.Type.BUZZER, raw_message_body)
+
+            self.subsystems_controller.control_actuator(self.subsystems_controller.geolocation, buzzer_command)
     
     async def _report_telemetry_interval_twin_property(self, telemetry_property_value):
         """Updates the telemetryInterval report properties when desired property is updated in IoT Hub.
