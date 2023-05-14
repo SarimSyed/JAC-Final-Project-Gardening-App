@@ -114,7 +114,7 @@ class ConnectionManager:
         await self._client.send_method_response(method_response)
 
     # Callback to receive twin data 
-    def twin_patch_handler(self, patch):
+    async def twin_patch_handler(self, patch):
         """Handles the twin patch of the device received from the IoT Hub.
 
         Args:
@@ -124,9 +124,9 @@ class ConnectionManager:
         # Can remove
         print("the data in the desired properties patch was: {}".format(patch))
 
-        self._telemetry_property_handler(patch)
+        await self._telemetry_property_handler(patch)
 
-    def _telemetry_property_handler(self, desired_properties):
+    async def _telemetry_property_handler(self, desired_properties):
         """Handles setting the telemetry interval value from the twin desired properties.
            Sets the telemetry value to the new one if in desire properties.
 
@@ -140,6 +140,23 @@ class ConnectionManager:
             telemetry_property_value = desired_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]
             print(f"New telemetry interval: {telemetry_property_value}")
             self.telemetry_interval = telemetry_property_value
+
+            # Report twin property of telemetry interval
+            await self._report_telemetry_interval_twin_property(telemetry_property_value)
+    
+    async def _report_telemetry_interval_twin_property(self, telemetry_property_value):
+        """Updates the telemetryInterval report properties when desired property is updated in IoT Hub.
+
+        Args:
+            telemetry_property_value (float): The desired telemtryInterval property value.
+        """
+
+        # Report twin properties
+        reported_properties = {
+            ConnectionManager.TELEMETRY_INTERVAL_PROPERTY: telemetry_property_value}
+        print("Setting reported temperature to {}".format(
+            reported_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]))
+        await self._client.patch_twin_reported_properties(reported_properties)
 
     # Get Twin updates when device connected
     async def device_connected_twin_handler(self, device_client):
@@ -156,7 +173,7 @@ class ConnectionManager:
         print("Twin document:")
         print("{}".format(twin))
 
-        self._telemetry_property_handler(twin[ConnectionManager.DESIRED_PROPERTY_NAME])
+        await self._telemetry_property_handler(twin[ConnectionManager.DESIRED_PROPERTY_NAME])
 
     async def send_readings(self, readings: list[AReading]) -> None:
         """Send a list of sensor readings as messages to the cloud gateway.
