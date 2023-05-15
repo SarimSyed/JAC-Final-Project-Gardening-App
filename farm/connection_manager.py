@@ -44,7 +44,6 @@ class ConnectionManager:
     DESIRED_PROPERTY_NAME = "desired"
     PROPERTY_KEY_NAME = "value"
     SECURITY_DOORLOCK_PROPERTY = "securityDoorLock"
-    SECURITY_DOORLOCK_VALUES = ["unlock", "lock"]
 
     def __init__(self, subsystems_controller) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
@@ -165,14 +164,25 @@ class ConnectionManager:
 
         #SECURITY DOOR LOCK
         if ConnectionManager.SECURITY_DOORLOCK_PROPERTY in desired_properties:
-            # Get the new telemetry value
-            doorlock_value = desired_properties[ConnectionManager.SECURITY_DOORLOCK_PROPERTY]
-            print(f"New telemetry interval: {doorlock_value}")
 
-            if doorlock_value in ConnectionManager.SECURITY_DOORLOCK_VALUES:
-                raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, doorlock_value)
-                doorlock_command = ACommand(ACommand.Type.DOORLOCK, raw_message_body)
-                self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
+            # Get the new door lock value
+            doorlock_value = desired_properties[ConnectionManager.SECURITY_DOORLOCK_PROPERTY]
+
+            #Gets the json message body
+            raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, doorlock_value)
+
+            #Sets the actuator command
+            doorlock_command = ACommand(ACommand.Type.DOORLOCK, raw_message_body)
+
+            #Calls the command from subsystems controller
+            value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
+
+            #Prints new door lock value if it was valid
+            if(value_changed):
+                print(f"New door lock value: {doorlock_value}")
+            else:
+                print(f"Door lock value {doorlock_value} not found")
+
 
     
     async def _report_telemetry_interval_twin_property(self, telemetry_property_value):
