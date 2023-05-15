@@ -163,7 +163,6 @@ class ConnectionManager:
         :param list[AReading] readings: List of readings to be sent.
         """
 
-
         json_list : list = []    
         
 

@@ -20,6 +20,7 @@ class PlantSystem:
         
         return [
         
+
             LiquidLevelSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
             SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
 
