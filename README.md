@@ -26,12 +26,32 @@
 ## Fan
 
 - Communication Strategy
+    - Device Twins
+    - Device twin was used for this actuator because this strategy allows the IoT Hub to know if the state of the actuator was changed after requesting it which is not available for D2C messages. Direct methods returns a response to the IoT Hub however,       it is better to use device twins since you can keep track of the current state of all the actuator with the reported twin properties which can be helpful in tracking the state of the actuators in the app.
 - Code snippet
+  - Set plantsFan to on
+      ```
+      az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"plantsFan": "on"}'
+      ```
+   - Set plantsFan to off
+      ```
+      az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"plantsFan": "off"}'
+      ```
 
 ## Light
 
 - Communication Strategy
+    - Device Twins
+    - Device twin was used for this actuator because this strategy allows the IoT Hub to know if the state of the actuator was changed after requesting it which is not available for D2C messages. Direct methods returns a response to the IoT Hub however, it is better to use device twins since you can keep track of the current state of all the actuator with the reported twin properties which can be helpful in tracking the state of the actuators in the app.
 - Code snippet
+  - Set plantsLED to on
+      ```
+      az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"plantsLED": "lights-on"}'
+      ```
+   - Set plantsLED to off
+      ```
+      az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"plantsLED": "lights-off"}'
+      ```
 
 ## Buzzer (Geo-Location & Security)
 
@@ -41,19 +61,6 @@
   - Device twin was used for this actuator because this strategy allows the IoT Hub to know if the state of the actuator was changed after requesting it which is not available for D2C messages. Direct methods returns a response to the IoT Hub however, it is better to use device twins since you can keep track of the current state of all the actuator with the reported twin properties which can be helpful in tracking the state of the actuators in the app.
 
 - Code snippet
-
-  - Set securityBuzzer to on
-
-    ```
-    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"securityBuzzer": "on"}'
-    ```
-
-  - Set securityBuzzer to off
-
-    ```
-    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"securityBuzzer": "off"}'
-    ```
-
   - Set geolocationBuzzer to on
 
     ```
