@@ -39,12 +39,16 @@ class ConnectionManager:
     Includes registering command and reading endpoints and sending and receiving data.
     """
 
-    TELEMETRY_INTERVAL_PROPERTY = "telemetryInterval"
-    IS_ONLINE_DIRECT_METHOD = "is_online"
+    # Property titles
     DESIRED_PROPERTY_NAME = "desired"
     PROPERTY_KEY_NAME = "value"
+
+    # Twin properties
+    TELEMETRY_INTERVAL_PROPERTY = "telemetryInterval"
+    IS_ONLINE_DIRECT_METHOD = "is_online"
     SECURITY_DOORLOCK_PROPERTY = "securityDoorLock"
     SECURITY_BUZZER_PROPERTY = "securityBuzzer"
+    GEOLOCATION_BUZZER_PROPERTY = "geolocationBuzzer"
 
     def __init__(self, subsystems_controller) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
@@ -146,42 +150,15 @@ class ConnectionManager:
             self.telemetry_interval = telemetry_property_value
 
             # Report twin property of telemetry interval
-            await self._report_telemetry_interval_twin_property(self.telemetry_interval)
+            await self._report_actuator_twin_property(ConnectionManager.TELEMETRY_INTERVAL_PROPERTY, self.telemetry_interval)
 
         #GEO LOCATION BUZZER
-        if "geolocationBuzzer" in desired_properties:
-            # Get the new telemetry value
-            buzzer_value = desired_properties["geolocationBuzzer"]
-            print(f"New telemetry interval: {buzzer_value}")
-
-            if buzzer_value == "on":
-                raw_message_body = '{"value": "on"}'
-            else:
-                raw_message_body = '{"value": "off"}'
-            
-            buzzer_command = ACommand(ACommand.Type.BUZZER, raw_message_body)
-
-            self.subsystems_controller.control_actuator(self.subsystems_controller.geolocation, buzzer_command)
+        if ConnectionManager.GEOLOCATION_BUZZER_PROPERTY in desired_properties:
+            await self._handle_buzzer_twin_property(desired_properties, self.subsystems_controller.geolocation, ConnectionManager.GEOLOCATION_BUZZER_PROPERTY)
 
         #SECURITY BUZZER
         if ConnectionManager.SECURITY_BUZZER_PROPERTY in desired_properties:
-
-            # Get the new buzzer value
-            buzzer_value = desired_properties[ConnectionManager.SECURITY_BUZZER_PROPERTY]
-
-            #Gets the json message body
-            raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, buzzer_value)
-
-            #Sets the actuator command
-            buzzer_command = ACommand(ACommand.Type.BUZZER, raw_message_body)
-
-            #Calls the command from subsystems controller
-            value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.security , buzzer_command)
-
-            #Prints new door lock value if it was valid and sets the reported twin properties
-            if(value_changed):
-                print(f"New buzzer value: {buzzer_value}")
-                await self._report_actuator_twin_property(ConnectionManager.SECURITY_BUZZER_PROPERTY, buzzer_value)
+            await self._handle_buzzer_twin_property(desired_properties, self.subsystems_controller.security, ConnectionManager.SECURITY_BUZZER_PROPERTY)
 
         #SECURITY DOOR LOCK
         if ConnectionManager.SECURITY_DOORLOCK_PROPERTY in desired_properties:
@@ -203,21 +180,32 @@ class ConnectionManager:
                 print(f"New door lock value: {doorlock_value}")
                 await self._report_actuator_twin_property(ConnectionManager.SECURITY_DOORLOCK_PROPERTY, doorlock_value)
 
-
-    
-    async def _report_telemetry_interval_twin_property(self, telemetry_property_value):
-        """Updates the telemetryInterval report properties when desired property is updated in IoT Hub.
+    async def _handle_buzzer_twin_property(self, desired_properties, subsystem, property_name):
+        """Handles the buzzer twin property for the specified subsystem (geolocation or security).
 
         Args:
-            telemetry_property_value (float): The desired telemtryInterval property value.
+            desired_properties (_type_): The desired properties of the twin patch.
+            subsystem (_type_): The subsystem buzzer.
+            property_name (_type_): The name of the property in the desired properties.
         """
 
-        # Report twin properties
-        reported_properties = {
-            ConnectionManager.TELEMETRY_INTERVAL_PROPERTY: telemetry_property_value}
-        print("Setting reported temperature to {}".format(
-            reported_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]))
-        await self._client.patch_twin_reported_properties(reported_properties)
+        # Get the new buzzer value
+        buzzer_value = desired_properties[property_name]
+
+        # Gets the json message body
+        raw_message_body = self.create_raw_message_body(
+            ConnectionManager.PROPERTY_KEY_NAME, buzzer_value)
+
+        # Sets the actuator command
+        buzzer_command = ACommand(ACommand.Type.BUZZER, raw_message_body)
+
+        # Calls the command from subsystems controller
+        value_changed = self.subsystems_controller.control_actuator(subsystem, buzzer_command)
+
+        # Prints new door lock value if it was valid and sets the reported twin properties
+        if value_changed:
+            print(f"New security buzzer value: {buzzer_value}")
+            await self._report_actuator_twin_property(property_name, buzzer_value)
 
     async def _report_actuator_twin_property(self, property_name: str, property_value: str):
         """Updates the actuator's report properties when desired property is updated in IoT Hub.
@@ -255,12 +243,10 @@ class ConnectionManager:
         :param list[AReading] readings: List of readings to be sent.
         """
 
-
         json_list : list = []    
         
-
         for x in range(len(readings)):
-                json_list.append(readings[x].export_json())
+            json_list.append(readings[x].export_json())
 
         sensors = Sensor(json_list)
         #json.dump use learned from : https://www.geeksforgeeks.org/serialize-and-deserialize-complex-json-in-python/
@@ -282,4 +268,4 @@ class ConnectionManager:
         Returns:
             _type_: The json message that can change the state of the actuator
         """
-        return '{"'+ key  +'": "'+ value +'"}'
+        return '{"'+ key +'": "'+ value +'"}'

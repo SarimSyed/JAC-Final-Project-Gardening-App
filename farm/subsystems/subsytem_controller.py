@@ -9,6 +9,8 @@ class SubsystemController:
     """This class will manage all the subsystems created and allow them to be manipulated from one class instead of 3 instantiations
     """
     def __init__(self) -> None:
+        """Instantiates a new instance of the SubsystemController class.
+        """
 
         self.plants : PlantSystem = PlantSystem()
         self.security: Security = Security()
@@ -24,7 +26,14 @@ class SubsystemController:
         # return self.plants.read_sensors() + self.security.read_sensors() + self.geolocation.read_sensors()
     
     def control_actuator(self, subsystem, command: ACommand) -> bool:
-        #property is the desired property that was retrieved and will be used to control actuator
-        #With an if statement make the appropriate actuator work
+        """Controls the specified actuator in the subsystem.
+
+        Args:
+            subsystem (_type_): The subsystem with the actuator.
+            command (ACommand): The command to control the specified actuator.
+
+        Returns:
+            bool: True if the state of the actuator changed; otherwise false.
+        """
 
         return subsystem.control_actuators(command)
