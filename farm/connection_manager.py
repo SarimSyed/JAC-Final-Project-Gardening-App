@@ -180,6 +180,7 @@ class ConnectionManager:
             #Prints new door lock value if it was valid
             if(value_changed):
                 print(f"New door lock value: {doorlock_value}")
+                await self._report_actuator_twin_property(ConnectionManager.SECURITY_DOORLOCK_PROPERTY, doorlock_value)
             else:
                 print(f"Door lock value {doorlock_value} not found")
 
@@ -197,6 +198,12 @@ class ConnectionManager:
             ConnectionManager.TELEMETRY_INTERVAL_PROPERTY: telemetry_property_value}
         print("Setting reported temperature to {}".format(
             reported_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]))
+        await self._client.patch_twin_reported_properties(reported_properties)
+
+    async def _report_actuator_twin_property(self, property_name: str, property_value: str):
+        # Report twin properties
+        reported_properties = {
+            property_name: property_value}
         await self._client.patch_twin_reported_properties(reported_properties)
 
     # Get Twin updates when device connected

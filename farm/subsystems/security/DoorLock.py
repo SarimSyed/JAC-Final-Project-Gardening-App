@@ -43,7 +43,7 @@ class DoorLock(IActuator):
         data_value = data["value"]
 
         #Check if current state changes
-        isChanged = self._current_state != data_value
+        isChanged = self._current_state != data
 
         #Change current state
         self._current_state = data
