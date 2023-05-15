@@ -36,9 +36,56 @@
 ## Buzzer
 
 - Communication Strategy
+
+  - Device Twins
+  - Device twin was used for this actuator because this strategy allows the IoT Hub to know if the state of the actuator was changed after requesting it which is not available for D2C messages. Direct methods returns a response to the IoT Hub however, it is better to use device twins since you can keep track of the current state of all the actuator with the reported twin properties which can be helpful in tracking the state of the actuators in the app.
+
 - Code snippet
+
+  - Set securityBuzzer to on
+
+    ```
+    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"securityBuzzer": "on"}'
+    ```
+
+  - Set securityBuzzer to off
+
+    ```
+    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"securityBuzzer": "off"}'
+    ```
+
+  - Set geolocationBuzzer to on
+
+    ```
+    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"geolocationBuzzer": "on"}'
+    ```
+
+  - Set geolocationBuzzer to off
+
+    ```
+    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"geolocationBuzzer": "off"}'
+    ```
+
+    
 
 ## Door Lock
 
 - Communication Strategy
+  - Device Twins
+  - Device twin was used for this actuator because this strategy allows the IoT Hub to know if the state of the actuator was changed after requesting it which is not available for D2C messages. Direct methods returns a response to the IoT Hub however, it is better to use device twins since you can keep track of the current state of all the actuator with the reported twin properties which can be helpful in tracking the state of the actuators in the app.
+  
 - Code snippet
+
+  - Set securityDoorLock to lock
+    ```
+    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"securityDoorLock": "lock"}'
+    ```
+
+  - Set securityDoorLock to unlock
+
+    ```
+    az iot hub device-twin update -n {iothub_name} -d {device_id} --desired '{"securityDoorLock": "unlock"}'
+    ```
+
+    
+
