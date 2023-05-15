@@ -24,17 +24,14 @@ class Led(IActuator):
         super().__init__(gpio, type, initial_state)
 
         self.type :ACommand.Type = type or ACommand.Type.LED
-        self._current_state :str =  Led.LIGHT_OFF
-        if initial_state:
-            self._current_state = initial_state["value"]
+        self._current_state = initial_state
+
         self.led :GroveWS2813RgbStrip = GroveWS2813RgbStrip(gpio, count= Led.NUM_OF_LEDS)
-        self.set_max_brightness()
+        
         
         self.brightness : str = Led.LIGHT_BRIGHT
         
 
-        if initial_state == Led.LIGHT_ON: 
-            self.set_max_brightness()
 
     def control_actuator(self, data: dict) -> bool:
         

@@ -3,6 +3,7 @@ from typing import Callable
 
 from interfaces.sensors import AReading
 from interfaces.actuators import ACommand
+from subsystems.subsystem_controller import SubsystemController
 
 from azure.iot.device.aio import IoTHubDeviceClient
 from azure.iot.device import Message
@@ -51,6 +52,8 @@ class ConnectionManager:
     SECURITY_DOORLOCK_PROPERTY = "securityDoorLock"
     SECURITY_BUZZER_PROPERTY = "securityBuzzer"
     GEOLOCATION_BUZZER_PROPERTY = "geolocationBuzzer"
+    PLANTS_LED_PROPERTY = "plantsLED"
+    PLANTS_FAN_PROPERTY = "plantsFan"
 
     def __init__(self, subsystems_controller) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
@@ -60,7 +63,7 @@ class ConnectionManager:
         self._client = IoTHubDeviceClient.create_from_connection_string(
             self._config._device_connection_str)
         self.telemetry_interval = 5
-        self.subsystems_controller = subsystems_controller
+        self.subsystems_controller : SubsystemController = subsystems_controller
 
     def _load_connection_config(self) -> ConnectionConfig:
         """Loads connection credentials from .env file in the project's top-level directory.
@@ -162,6 +165,31 @@ class ConnectionManager:
         if ConnectionManager.SECURITY_BUZZER_PROPERTY in desired_properties:
             await self._handle_buzzer_twin_property(desired_properties, self.subsystems_controller.security, ConnectionManager.SECURITY_BUZZER_PROPERTY)
       
+        #PLANT LED
+        if ConnectionManager.PLANTS_LED_PROPERTY in desired_properties:
+                message_value = desired_properties[ConnectionManager.PLANTS_LED_PROPERTY]
+                raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, message_value)
+                
+                led_command = ACommand(ACommand.Type.LED, raw_message_body)
+                value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.plants , led_command)
+                if value_changed:
+                    print(value_changed)
+                    print(f"New LED state:  {message_value}")
+                    await self._report_actuator_twin_property(ConnectionManager.PLANTS_LED_PROPERTY, message_value)
+
+        #PLANT FAN 
+        if ConnectionManager.PLANTS_FAN_PROPERTY in desired_properties:
+                message_value = desired_properties[ConnectionManager.PLANTS_FAN_PROPERTY]
+                raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, message_value)
+                
+                fan_command = ACommand(ACommand.Type.FAN, raw_message_body)
+                value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.plants , fan_command)
+                if value_changed:
+                    print(value_changed)
+                    print(f"New LED state:  {message_value}")
+                    await self._report_actuator_twin_property(ConnectionManager.PLANTS_FAN_PROPERTY, message_value)
+               
+
         #SECURITY DOOR LOCK
         if ConnectionManager.SECURITY_DOORLOCK_PROPERTY in desired_properties:
 

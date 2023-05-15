@@ -7,7 +7,7 @@ from connection_manager import ConnectionManager
 from subsystems.plants.PlantController import PlantSystem
 from subsystems.geoLocation.GeoLocation import GeoLocation
 from subsystems.security.Security import Security
-from subsystems.subsytem_controller import SubsystemController
+from subsystems.subsystem_controller import SubsystemController
 
 
 
