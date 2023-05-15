@@ -177,12 +177,13 @@ class ConnectionManager:
             #Calls the command from subsystems controller
             value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
 
-            #Prints new door lock value if it was valid
+            #Prints new door lock value if it was valid and sets the reported twin properties
             if(value_changed):
                 print(f"New door lock value: {doorlock_value}")
                 await self._report_actuator_twin_property(ConnectionManager.SECURITY_DOORLOCK_PROPERTY, doorlock_value)
             else:
-                print(f"Door lock value {doorlock_value} not found")
+                #Error during the process of controlling tha ctuator (value is not valid)
+                print(f"Door lock value '{doorlock_value}' not found")
 
 
     
