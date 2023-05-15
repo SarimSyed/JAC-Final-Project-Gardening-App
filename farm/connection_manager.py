@@ -135,6 +135,8 @@ class ConnectionManager:
         """
 
         # Can remove
+        print("\n-----------------------DEVICE TWIN PATCH-----------------------")
+
         print("the data in the desired properties patch was: {}".format(patch))
 
         await self._telemetry_property_handler(patch)
@@ -151,6 +153,7 @@ class ConnectionManager:
         if ConnectionManager.TELEMETRY_INTERVAL_PROPERTY in desired_properties:
             # Get the new telemetry value
             telemetry_property_value = desired_properties[ConnectionManager.TELEMETRY_INTERVAL_PROPERTY]
+            print("\n-----------------------DEVIN TWIN PROPERTIES-----------------------")
             print(f"New telemetry interval: {telemetry_property_value}")
             self.telemetry_interval = telemetry_property_value
 
@@ -173,7 +176,6 @@ class ConnectionManager:
                 led_command = ACommand(ACommand.Type.LED, raw_message_body)
                 value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.plants , led_command)
                 if value_changed:
-                    print(value_changed)
                     print(f"New LED state:  {message_value}")
                     await self._report_actuator_twin_property(ConnectionManager.PLANTS_LED_PROPERTY, message_value)
 
@@ -185,7 +187,6 @@ class ConnectionManager:
                 fan_command = ACommand(ACommand.Type.FAN, raw_message_body)
                 value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.plants , fan_command)
                 if value_changed:
-                    print(value_changed)
                     print(f"New LED state:  {message_value}")
                     await self._report_actuator_twin_property(ConnectionManager.PLANTS_FAN_PROPERTY, message_value)
                

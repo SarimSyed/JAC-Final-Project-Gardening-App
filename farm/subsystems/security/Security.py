@@ -39,7 +39,7 @@ class Security:
         return [
             # Instantiate each actuator inside this list, separate items by comma.
             Buzzer({'value': 'off'}),
-            DoorLock(12, {"value": "lock"})
+            DoorLock(12)
         ]
 
     def read_sensors(self) -> list[AReading]:
@@ -48,8 +48,9 @@ class Security:
         :return list[AReading]: a list containing all readings collected from sensors.
         """
         readings: list[AReading] = []
+        print("\n-----------------------SECURITY SENSORS-----------------------")
         for x in range(len(self._sensors)):
-            #print(self._sensors[x].read_sensor())
+            print(self._sensors[x].read_sensor())
             readings.append(self._sensors[x].read_sensor())    
         return readings
 

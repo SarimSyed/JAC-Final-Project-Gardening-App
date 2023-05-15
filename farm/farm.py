@@ -30,7 +30,7 @@ async def main():
     # Loop
     while True:
         sensor_data : list[AReading] = subsystems.read_sensors()
-        print(sensor_data)
+        #print(sensor_data)
         await connection_manager.send_readings(sensor_data)
         await asyncio.sleep(connection_manager.telemetry_interval)
         

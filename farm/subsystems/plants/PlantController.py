@@ -10,6 +10,7 @@ from time import sleep
 import json
 
 
+
 class PlantSystem:
     def __init__(self) -> None:
         self._sensors: list[ISensor] = self._initialize_sensors()
@@ -25,17 +26,18 @@ class PlantSystem:
 
             HumiditySensor(26,"AHT20", AReading.Type.HUMIDITY ),
             TemperatureSensor(26, "AHT20", AReading.Type.HUMIDITY )
-        
         ]
 
     def _initialize_actuators(self)-> list[IActuator]:
         return [
-            Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON}),
-            Fan(22, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
+            Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_OFF}),
+            Fan(22, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_OFF})
         ]
 
     def read_sensors(self) -> list[AReading]:
         #reset list
+        print("\n-------------------------PLANTS SENSORS-------------------------")
+
         
         readings: list[AReading] = []
         for x in range(len(self._sensors)):

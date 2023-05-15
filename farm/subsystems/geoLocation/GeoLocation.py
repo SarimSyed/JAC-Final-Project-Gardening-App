@@ -45,6 +45,7 @@ class GeoLocation:
         """  
 
         readings: list[AReading] = []
+        print("\n---------------------GEO-LOCATION SENSORS---------------------")
 
         for sensor in self._sensors:
             # Get the sensor reading
