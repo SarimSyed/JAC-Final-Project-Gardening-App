@@ -39,6 +39,8 @@ class ConnectionManager:
     Includes registering command and reading endpoints and sending and receiving data.
     """
 
+    ON_STATE = "on"
+
     # Property titles
     DESIRED_PROPERTY_NAME = "desired"
     PROPERTY_KEY_NAME = "value"
@@ -159,7 +161,7 @@ class ConnectionManager:
         #SECURITY BUZZER
         if ConnectionManager.SECURITY_BUZZER_PROPERTY in desired_properties:
             await self._handle_buzzer_twin_property(desired_properties, self.subsystems_controller.security, ConnectionManager.SECURITY_BUZZER_PROPERTY)
-
+      
         #SECURITY DOOR LOCK
         if ConnectionManager.SECURITY_DOORLOCK_PROPERTY in desired_properties:
 
@@ -188,6 +190,14 @@ class ConnectionManager:
             subsystem (_type_): The subsystem buzzer.
             property_name (_type_): The name of the property in the desired properties.
         """
+        
+        # Check if geo location buzzer is on when security buzzer twin property
+        if self._check_other_buzzer_value_on(desired_properties, property_name, ConnectionManager.SECURITY_BUZZER_PROPERTY, ConnectionManager.GEOLOCATION_BUZZER_PROPERTY):
+            return
+        
+        # Check if security buzzer is on when geo location buzzer twin property
+        if self._check_other_buzzer_value_on(desired_properties, property_name, ConnectionManager.GEOLOCATION_BUZZER_PROPERTY, ConnectionManager.SECURITY_BUZZER_PROPERTY):
+            return
 
         # Get the new buzzer value
         buzzer_value = desired_properties[property_name]
@@ -206,6 +216,29 @@ class ConnectionManager:
         if value_changed:
             print(f"New security buzzer value: {buzzer_value}")
             await self._report_actuator_twin_property(property_name, buzzer_value)
+
+    def _check_other_buzzer_value_on(self, desired_properties, current_property_name: str, other_property_name: str, actual_buzzer_property: str) -> bool:
+        """Checks if the other buzzer property is on if evaluating the actual buzzer property.
+
+        Remarks:
+            Ex: True if trying to set the 'securityBuzzer' twin property value to 'on' if the 'geolocationBuzzer' twin property value is already 'on'.
+
+        Args:
+            desired_properties (_type_): The desired properties of the twin patch.
+            current_property_name (str): The current property name to check in the patch.
+            other_buzzer_property (str): The other buzzer property to check value.
+            actual_property_name (str): The actual buzzer property to check value.
+
+        Returns:
+            bool: True if the other buzzer property is set to 'on'; otherwise False.
+        """
+        
+        other_buzzer_value = desired_properties[other_property_name]
+
+        if current_property_name == actual_buzzer_property and other_buzzer_value == ConnectionManager.ON_STATE:
+            return True
+        
+        return False
 
     async def _report_actuator_twin_property(self, property_name: str, property_value: str):
         """Updates the actuator's report properties when desired property is updated in IoT Hub.
