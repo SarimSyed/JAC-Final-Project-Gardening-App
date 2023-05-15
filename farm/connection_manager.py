@@ -44,6 +44,7 @@ class ConnectionManager:
     DESIRED_PROPERTY_NAME = "desired"
     PROPERTY_KEY_NAME = "value"
     SECURITY_DOORLOCK_PROPERTY = "securityDoorLock"
+    SECURITY_BUZZER_PROPERTY = "securityBuzzer"
 
     def __init__(self, subsystems_controller) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
@@ -162,6 +163,29 @@ class ConnectionManager:
 
             self.subsystems_controller.control_actuator(self.subsystems_controller.geolocation, buzzer_command)
 
+        #SECURITY BUZZER
+        if ConnectionManager.SECURITY_BUZZER_PROPERTY in desired_properties:
+
+            # Get the new buzzer value
+            buzzer_value = desired_properties[ConnectionManager.SECURITY_BUZZER_PROPERTY]
+
+            #Gets the json message body
+            raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, buzzer_value)
+
+            #Sets the actuator command
+            buzzer_command = ACommand(ACommand.Type.BUZZER, raw_message_body)
+
+            #Calls the command from subsystems controller
+            value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.security , buzzer_command)
+
+            #Prints new door lock value if it was valid and sets the reported twin properties
+            if(value_changed):
+                print(f"New buzzer value: {buzzer_value}")
+                await self._report_actuator_twin_property(ConnectionManager.SECURITY_BUZZER_PROPERTY, buzzer_value)
+            else:
+                #Error during the process of controlling tha ctuator (value is not valid)
+                print(f"Buzzer value '{buzzer_value}' not found")
+
         #SECURITY DOOR LOCK
         if ConnectionManager.SECURITY_DOORLOCK_PROPERTY in desired_properties:
 
@@ -202,9 +226,17 @@ class ConnectionManager:
         await self._client.patch_twin_reported_properties(reported_properties)
 
     async def _report_actuator_twin_property(self, property_name: str, property_value: str):
+        """Updates the actuator's report properties when desired property is updated in IoT Hub.
+
+        Args:
+            property_name (str): the name of the twin property
+            property_value (str): the value of the property
+        """
         # Report twin properties
         reported_properties = {
             property_name: property_value}
+        print("Setting reported {} to {}".format(property_name,
+            reported_properties[property_name]))
         await self._client.patch_twin_reported_properties(reported_properties)
 
     # Get Twin updates when device connected
