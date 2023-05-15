@@ -33,7 +33,7 @@
 - Communication Strategy
 - Code snippet
 
-## Buzzer
+## Buzzer (Geo-Location & Security)
 
 - Communication Strategy
 
