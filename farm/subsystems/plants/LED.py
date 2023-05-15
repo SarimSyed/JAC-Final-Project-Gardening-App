@@ -7,8 +7,8 @@ class Led(IActuator):
 
     ON = "on"
     OFF = "off"
-    LIGHT_ON = 'light-on'
-    LIGHT_OFF = 'light-off'
+    LIGHT_ON = 'lights-on'
+    LIGHT_OFF = 'lights-off'
     LIGHT_BRIGHT = 'max-brightness'
     LIGHT_MEDIUM = 'mid-brightness'
     NUM_OF_LEDS = 10
@@ -39,7 +39,7 @@ class Led(IActuator):
         
         data_value = data["value"]
 
-        if(self._current_state == data_value):
+        if(self._current_state == data):
             return False
         
         if data_value == Led.LIGHT_OFF:
