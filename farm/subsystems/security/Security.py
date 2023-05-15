@@ -61,14 +61,12 @@ class Security:
         if (command.target_type == ACommand.Type.BUZZER):
             for x in range(len(self._actuators)):
                 if(self._actuators[x].type == ACommand.Type.BUZZER and self._actuators[x].validate_command(command)):
-                    self._actuators[x].control_actuator(command.data)
-                    return True
+                    return self._actuators[x].control_actuator(command.data)
 
         if (command.target_type == ACommand.Type.DOORLOCK):
             for x in range(len(self._actuators)):
                 if(self._actuators[x].type == ACommand.Type.DOORLOCK and self._actuators[x].validate_command(command)):
-                    self._actuators[x].control_actuator(command.data)
-                    return True
+                    return self._actuators[x].control_actuator(command.data)
         return False
 
 

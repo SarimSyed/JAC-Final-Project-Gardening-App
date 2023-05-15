@@ -182,9 +182,6 @@ class ConnectionManager:
             if(value_changed):
                 print(f"New buzzer value: {buzzer_value}")
                 await self._report_actuator_twin_property(ConnectionManager.SECURITY_BUZZER_PROPERTY, buzzer_value)
-            else:
-                #Error during the process of controlling tha ctuator (value is not valid)
-                print(f"Buzzer value '{buzzer_value}' not found")
 
         #SECURITY DOOR LOCK
         if ConnectionManager.SECURITY_DOORLOCK_PROPERTY in desired_properties:
@@ -205,9 +202,6 @@ class ConnectionManager:
             if(value_changed):
                 print(f"New door lock value: {doorlock_value}")
                 await self._report_actuator_twin_property(ConnectionManager.SECURITY_DOORLOCK_PROPERTY, doorlock_value)
-            else:
-                #Error during the process of controlling tha ctuator (value is not valid)
-                print(f"Door lock value '{doorlock_value}' not found")
 
 
     
