@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.FleetOwner.ContainerViewSecurity"
+             xmlns:models="clr-namespace:ContainerFarm.Models"
+             Title="Container Security">
+    <VerticalStackLayout>
+        <ScrollView>
+            <CollectionView
+                x:Name="securityCollection"
+                Margin="10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Container">
+                        <Frame Margin="10" BackgroundColor="LightGreen">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Container_Farm_Security_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        <Grid RowDefinitions="auto"
+                              ColumnDefinitions="auto,auto,1*"
+                              VerticalOptions="Center"
+                              ColumnSpacing="25">
+                            
+                            <!--Containers-->
+                                <Image Source="container.png" Grid.RowSpan="2" WidthRequest="80" />
+                                <VerticalStackLayout Grid.Column="1" 
+                                                     VerticalOptions="Center"
+                                                     Spacing="12">
+                                    <Label  Text="{Binding Name}" x:Name="nameBtn"  TextColor="Black" 
+                                        FontSize="20" FontAttributes="Bold"
+                                            VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"/>
+                                    <Label Text="0 Issues"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="Center"/>
+                                </VerticalStackLayout>
+                                <Image Source="accept.png" Grid.Column="2" WidthRequest="30"
+                                           HorizontalOptions="Center"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+    </VerticalStackLayout>
+</ContentPage>

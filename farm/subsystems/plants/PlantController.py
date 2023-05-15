@@ -13,26 +13,27 @@ import json
 class PlantSystem:
     def __init__(self) -> None:
         self._sensors: list[ISensor] = self._initialize_sensors()
-        self._actuators : list[IActuator] = self._initialize_actuators()
+        # self._actuators : list[IActuator] = self._initialize_actuators()
         self.sensorReadings : list[AReading] = []
 
     def _initialize_sensors(self)-> list[ISensor]:
         
         return [
         
-            LiquidLevelSensor(2, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
-            SoilMoistureSensor(5, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
+
+            LiquidLevelSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
+            SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
 
             HumiditySensor(26,"AHT20", AReading.Type.HUMIDITY ),
             TemperatureSensor(26, "AHT20", AReading.Type.HUMIDITY )
         
         ]
 
-    def _initialize_actuators(self)-> list[IActuator]:
-        return [
-            Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON}),
-            Fan(22, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
-        ]
+    # def _initialize_actuators(self)-> list[IActuator]:
+    #     return [
+    #         Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON}),
+    #         Fan(22, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_ON})
+    #     ]
 
     def read_sensors(self) -> list[AReading]:
         #reset list
@@ -44,16 +45,16 @@ class PlantSystem:
         self.sensorReadings = readings
         return self.sensorReadings
     
-    def control_actuators(self, command: ACommand)-> None:
-        if (command.target_type == ACommand.Type.FAN):
-            for x in range(len(self._actuators)):
-                if(self._actuators[x].type == ACommand.Type.FAN):
-                    self._actuators[x].control_actuator(command.data)
+    # def control_actuators(self, command: ACommand)-> None:
+    #     if (command.target_type == ACommand.Type.FAN):
+    #         for x in range(len(self._actuators)):
+    #             if(self._actuators[x].type == ACommand.Type.FAN):
+    #                 self._actuators[x].control_actuator(command.data)
 
-        if (command.target_type == ACommand.Type.LED):
-            for x in range(len(self._actuators)):
-                if(self._actuators[x].type == ACommand.Type.LED):
-                    self._actuators[x].control_actuator(command.data)       
+    #     if (command.target_type == ACommand.Type.LED):
+    #         for x in range(len(self._actuators)):
+    #             if(self._actuators[x].type == ACommand.Type.LED):
+    #                 self._actuators[x].control_actuator(command.data)       
         
 
         

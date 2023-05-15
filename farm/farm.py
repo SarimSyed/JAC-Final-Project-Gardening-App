@@ -20,14 +20,13 @@ async def main():
     security: Security = Security()
     geolocation : GeoLocation = GeoLocation()
 
-    # Get sensor readings and combine the lists received by just adding them and send by passing it into the send_readings method
-    sensor_data : list[AReading] = plants.read_sensors() + security.read_sensors() + geolocation.read_sensors()
-  
+    # Get sensor readings and combine the lists received by just adding them and send by passing it into the send_readings method  
     # Loop
     while True:
+        sensor_data : list[AReading] = plants.read_sensors() + security.read_sensors() + geolocation.read_sensors()
         await connection_manager.send_readings(sensor_data)
         await asyncio.sleep(connection_manager.telemetry_interval)
-
+        
 
 if __name__ == "__main__":
     asyncio.run(main())
