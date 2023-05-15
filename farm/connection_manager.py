@@ -218,7 +218,7 @@ class ConnectionManager:
             await self._report_actuator_twin_property(property_name, buzzer_value)
 
     def _check_other_buzzer_value_on(self, desired_properties, current_property_name: str, other_property_name: str, actual_buzzer_property: str) -> bool:
-        """Checks if the other buzzer property is on if evaluating the actual buzzer property.
+        """Checks if the other subsystem buzzer property is on if evaluating the actual buzzer property.
 
         Remarks:
             Ex: True if trying to set the 'securityBuzzer' twin property value to 'on' if the 'geolocationBuzzer' twin property value is already 'on'.
@@ -230,11 +230,13 @@ class ConnectionManager:
             actual_property_name (str): The actual buzzer property to check value.
 
         Returns:
-            bool: True if the other buzzer property is set to 'on'; otherwise False.
+            bool: True if the other subsystem buzzer property is set to 'on'; otherwise False.
         """
         
+        # Get the value of the other subsystem buzzer
         other_buzzer_value = desired_properties[other_property_name]
 
+        # Check if the other subsystem buzzer is on
         if current_property_name == actual_buzzer_property and other_buzzer_value == ConnectionManager.ON_STATE:
             return True
         
