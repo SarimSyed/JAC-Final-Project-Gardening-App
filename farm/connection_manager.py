@@ -42,6 +42,9 @@ class ConnectionManager:
     TELEMETRY_INTERVAL_PROPERTY = "telemetryInterval"
     IS_ONLINE_DIRECT_METHOD = "is_online"
     DESIRED_PROPERTY_NAME = "desired"
+    PROPERTY_KEY_NAME = "value"
+    SECURITY_DOORLOCK_PROPERTY = "securityDoorLock"
+    SECURITY_DOORLOCK_VALUES = ["unlock", "lock"]
 
     def __init__(self, subsystems_controller) -> None:
         """Constructor for ConnectionManager and initializes an internal cloud gateway client.
@@ -145,6 +148,7 @@ class ConnectionManager:
             # Report twin property of telemetry interval
             await self._report_telemetry_interval_twin_property(self.telemetry_interval)
 
+        #GEO LOCATION BUZZER
         if "geolocationBuzzer" in desired_properties:
             # Get the new telemetry value
             buzzer_value = desired_properties["geolocationBuzzer"]
@@ -159,20 +163,17 @@ class ConnectionManager:
 
             self.subsystems_controller.control_actuator(self.subsystems_controller.geolocation, buzzer_command)
 
-        if "securityDoorLock" in desired_properties:
-
+        #SECURITY DOOR LOCK
+        if ConnectionManager.SECURITY_DOORLOCK_PROPERTY in desired_properties:
             # Get the new telemetry value
-            doorlock_value = desired_properties["securityDoorLock"]
+            doorlock_value = desired_properties[ConnectionManager.SECURITY_DOORLOCK_PROPERTY]
             print(f"New telemetry interval: {doorlock_value}")
 
-            if doorlock_value == "lock":
-                raw_message_body = '{"value": "lock"}'
-            else:
-                raw_message_body = '{"value": "unlock"}'
-            
-            doorlock_command = ACommand(ACommand.Type.DOORLOCK, raw_message_body)
+            if doorlock_value in ConnectionManager.SECURITY_DOORLOCK_VALUES:
+                raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, doorlock_value)
+                doorlock_command = ACommand(ACommand.Type.DOORLOCK, raw_message_body)
+                self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
 
-            self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
     
     async def _report_telemetry_interval_twin_property(self, telemetry_property_value):
         """Updates the telemetryInterval report properties when desired property is updated in IoT Hub.
@@ -226,3 +227,15 @@ class ConnectionManager:
 
             
         await self._client.send_message(msg)
+
+    def create_raw_message_body(self, key, value):
+        """Create a json message body to set the state of the actuators.
+
+        Args:
+            key (_type_): The key value of the json object
+            value (_type_): The value of the key
+
+        Returns:
+            _type_: The json message that can change the state of the actuator
+        """
+        return '{"'+ key  +'": "'+ value +'"}'

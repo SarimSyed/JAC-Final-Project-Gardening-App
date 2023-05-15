@@ -28,4 +28,3 @@ class SubsystemController:
         #With an if statement make the appropriate actuator work
 
         return subsystem.control_actuators(command)
-    
