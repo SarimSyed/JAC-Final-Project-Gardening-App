@@ -1,4 +1,3 @@
-import asyncio
 from typing import Callable
 
 from interfaces.sensors import AReading
@@ -11,7 +10,6 @@ from azure.iot.device import MethodResponse
 from dotenv import dotenv_values
 import os
 import json
-# from farm.subsystems.subsytem_controller import SubsystemController as con
 
 class Sensor:
     """Sensor class used only to store list of AReadings to aid with the json formatting in send_readings() method
@@ -134,7 +132,6 @@ class ConnectionManager:
             patch (Unknown): The twin patch of the device (desired properties).
         """
 
-        # Can remove
         print("\n-----------------------DEVICE TWIN PATCH-----------------------")
 
         print("the data in the desired properties patch was: {}".format(patch))

@@ -1,8 +1,6 @@
 
 from .library.grove_moisture_sensor import GroveMoistureSensor
 from interfaces.sensors import ISensor, AReading
-from grove.i2c import i2c_msg
-import RPi.GPIO as gpio 
 from time import sleep
 
 

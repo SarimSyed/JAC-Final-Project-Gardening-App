@@ -1,6 +1,4 @@
 from interfaces.sensors import ISensor, AReading
-from grove.adc import ADC
-from grove.gpio import GPIO
 from .library.grove_water_sensor import GroveWaterSensor
 from time import sleep
 
