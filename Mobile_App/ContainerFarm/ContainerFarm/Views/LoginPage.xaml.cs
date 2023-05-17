@@ -94,6 +94,9 @@ public partial class LoginPage : ContentPage
             // Initialize the service
             await D2CService.Initialize();
             await D2CService.Processor.StartProcessingAsync();
+
+            // Create the twin thread
+            CreateDeviceTwinThread();
         }
         catch (AggregateException ex)
         {
@@ -117,37 +120,69 @@ public partial class LoginPage : ContentPage
         }
     }
 
-    // Invoke the direct method on the device, passing the payload.
-    private static async Task InvokeMethodAsync(string deviceId, ServiceClient serviceClient, string directMethod)
+    #region Device Twin - IoT Hub
+
+    /// <summary>
+    /// Creates a new thread to run the twin in the background off the main UI thread.
+    /// </summary>
+    private static void CreateDeviceTwinThread()
     {
-        var methodInvocation = new CloudToDeviceMethod(directMethod)
-        {
-            ResponseTimeout = TimeSpan.FromSeconds(30),
-        };
+        // Create the Registry Manager
+        ActuatorsDeviceTwinService.RegistryManager ??= RegistryManager.CreateFromConnectionString(App.Settings.HubConnectionString);
 
-        switch (directMethod)
-        {
-            case "lights-on":
-                methodInvocation.SetPayloadJson("{'status': 'completed'}");
-                break;
-            case "door-unlock":
-                methodInvocation.SetPayloadJson("{'status': 'completed'}");
-                break;
-            case "fan-on":
-                methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
-                break;
-            default:
-                methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
-                break;
-        }
-
-        Console.WriteLine($"Invoking direct method for device: {deviceId}");
-
-        // Invoke the direct method asynchronously and get the response from the simulated device.
-        CloudToDeviceMethodResult response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
-
-        Console.WriteLine($"Response status: {response.Status}, payload:\n\t{response.GetPayloadAsJson()}");
+        // Create a new thread for the twin readings
+        Thread twinThread = new Thread(ProcessTwinProperties);
+        twinThread.Start();
     }
+
+    /// <summary>
+    /// Handles the processing of the device twin via IoT Hub in forever loop.
+    /// </summary>
+    private static async void ProcessTwinProperties()
+    {
+        while (true)
+        {
+            // Create the twin with the specified device ID
+            var twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
+            // Read and update values
+            ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
+            Thread.Sleep(1000);
+        }
+    }
+
+    #endregion
+
+    // Invoke the direct method on the device, passing the payload.
+    //private static async Task InvokeMethodAsync(string deviceId, ServiceClient serviceClient, string directMethod)
+    //{
+    //    var methodInvocation = new CloudToDeviceMethod(directMethod)
+    //    {
+    //        ResponseTimeout = TimeSpan.FromSeconds(30),
+    //    };
+
+    //    switch (directMethod)
+    //    {
+    //        case "lights-on":
+    //            methodInvocation.SetPayloadJson("{'status': 'completed'}");
+    //            break;
+    //        case "door-unlock":
+    //            methodInvocation.SetPayloadJson("{'status': 'completed'}");
+    //            break;
+    //        case "fan-on":
+    //            methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
+    //            break;
+    //        default:
+    //            methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
+    //            break;
+    //    }
+
+    //    Console.WriteLine($"Invoking direct method for device: {deviceId}");
+
+    //    // Invoke the direct method asynchronously and get the response from the simulated device.
+    //    CloudToDeviceMethodResult response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
+
+    //    Console.WriteLine($"Response status: {response.Status}, payload:\n\t{response.GetPayloadAsJson()}");
+    //}
 
     private void Debug_Options()
     {

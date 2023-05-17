@@ -49,12 +49,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="appsettings - Copy.json" />
 	  <None Remove="appsettings.json" />
 	  <None Remove="Resources\Images\addbtn.png" />
 	  <None Remove="Resources\Images\container.png" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <EmbeddedResource Include="appsettings - Copy.json" />
 	  <EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
 

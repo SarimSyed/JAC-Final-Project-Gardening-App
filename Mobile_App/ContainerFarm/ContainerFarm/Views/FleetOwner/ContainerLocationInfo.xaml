@@ -65,7 +65,7 @@
                     <Frame  Grid.Column="0" 
                        Grid.Row="1" 
                         Style="{StaticResource SensorActuatorGridFrame}">
-                        <Label Text="{Binding PitchAngleSensor.Value}" 
+                        <Label Text="{Binding PitchAngleSensor.Value, StringFormat='{0:F2}'}" 
                            Style="{StaticResource SensorActuatorGridValue}"/>
                     </Frame>
                 </Grid>
@@ -82,7 +82,7 @@
                     <Frame  Grid.Column="0" 
                        Grid.Row="1" 
                         Style="{StaticResource SensorActuatorGridFrame}">
-                        <Label Text="{Binding RollAngleSensor.Value}"
+                        <Label Text="{Binding RollAngleSensor.Value, StringFormat='{0:F2}'}"
                            Style="{StaticResource SensorActuatorGridValue}"/>
                     </Frame>
                 </Grid>
@@ -99,7 +99,7 @@
                     <Frame  Grid.Column="0" 
                        Grid.Row="1" 
                         Style="{StaticResource SensorActuatorGridFrame}">
-                        <Label  Text="{Binding VibrationSensor.Value}"
+                        <Label  Text="{Binding VibrationSensor.Value, StringFormat='{0:F2}'}"
                            Style="{StaticResource SensorActuatorGridValue}"/>
                     </Frame>
                 </Grid>
@@ -143,7 +143,7 @@
                         Margin="0,0,20,0"
                         HorizontalOptions="End"
                         Spacing="10">
-                        <Switch IsToggled="{Binding BuzzerSensor.isOn}"  
+                        <Switch IsToggled="{Binding BuzzerActuator.IsOn}"  
                         PropertyChanged="BuzzerSwitch_PropertyChanged"/>
                         <Label x:Name="buzzerStatus"
                        VerticalOptions="Center"/>

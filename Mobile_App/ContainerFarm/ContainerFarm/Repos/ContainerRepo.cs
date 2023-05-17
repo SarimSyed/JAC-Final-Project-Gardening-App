@@ -56,7 +56,7 @@ namespace ContainerFarm.Repos
             // Get the array for the 'sensors' property.
             JArray jArray = (JArray) sensorJson["sensors"];
 
-            // Loop over the array
+            // DeviceTwinLoop over the array
             for (int i = 0; i < jArray.Count; i++)
             {
                 // Get the sensor object in the current array

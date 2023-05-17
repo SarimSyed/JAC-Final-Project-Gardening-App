@@ -64038,11 +64038,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Braeden\\Downloads\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
+      "projectUniqueName": "C:\\Users\\Braeden\\Documents\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
       "projectName": "ContainerFarm",
-      "projectPath": "C:\\Users\\Braeden\\Downloads\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
+      "projectPath": "C:\\Users\\Braeden\\Documents\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
       "packagesPath": "C:\\Users\\Braeden\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Braeden\\Downloads\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\obj\\",
+      "outputPath": "C:\\Users\\Braeden\\Documents\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
