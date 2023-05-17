@@ -34,7 +34,7 @@ namespace ContainerFarm.Services
             string geolocationBuzzer = await GeoLocationBuzzerTwin(twin, desiredProperties, reportedProperties);
             string securityDoorLock = SecurityDoorLockTwin(twin, desiredProperties, reportedProperties);
             string plantsLED = PlantsLEDTwin(twin, desiredProperties, reportedProperties);
-            string plantsFAN = PlantsFANTwin(twin, desiredProperties, reportedProperties);
+            string plantsFAN = await PlantsFANTwinAsync(twin, desiredProperties, reportedProperties);
 
             // Create the new twin patch
             var patch =
@@ -116,9 +116,50 @@ namespace ContainerFarm.Services
             return "lights-off";
         }
         
-        private static string PlantsFANTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
+        private static async Task<string> PlantsFANTwinAsync(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
-            return "off";
+            // Get the Fan actuator from the container
+            FanActuator plantsFan = App.Repo.Containers[0].Plant.FanActuator;
+
+            // Don't check twin properties if the actuator was just set to 'on' in the app
+            if (plantsFan.IsChanged)
+            {
+                // Since the state of the fan actuator was changed according to the twin, set to false
+                plantsFan.IsChanged = false;
+
+                return plantsFan.IsOnString;
+            }
+
+            // Check if the desired twin properties contains the plantsFan
+            if (desiredProperties.Contains(PlantsTwinProperties.FAN))
+            {
+                // Get the twin fan command
+                string fan_command = desiredProperties[PlantsTwinProperties.FAN];
+
+                Console.WriteLine($"Desired - new {PlantsTwinProperties.FAN} command: {fan_command}");
+
+                // Set the fan value according to the command
+                App.Repo.Containers[0].Plant.FanActuator.SetIsOn(fan_command);
+            }
+
+            // Check if the reported twin properties contains the plantsFan
+            if (reportedProperties.Contains(PlantsTwinProperties.FAN))
+            {
+                // Get the twin fan command
+                string fan_command = reportedProperties[PlantsTwinProperties.FAN];
+
+                Console.WriteLine($"Reported - new {PlantsTwinProperties.FAN} command: {fan_command}");
+
+                // Set the fan switch value according to if the fan was actually turned on
+                if (App.Repo.Containers[0].Plant.FanActuator.IsOn && fan_command == "on")
+                {
+                    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
+
+                    await Application.Current.MainPage.DisplayAlert("fan turned off", "The fan wasn't turned on successfully. Please check if the container farm is running.", "OK");
+                }
+            }
+
+            return plantsFan.IsOnString;
         }
     }
 }

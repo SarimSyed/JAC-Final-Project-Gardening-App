@@ -28,6 +28,8 @@ public partial class DeviceView : ContentPage
 
     private void FanSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
+        App.Repo.Containers[0].Plant.FanActuator.IsChanged = true;
+
         //Shows the confimation to the user that the fan has been turned on or off
         Switch fanSwitch = sender as Switch;
         SetSwitchTextStatus(fanSwitch, fanStatus);
