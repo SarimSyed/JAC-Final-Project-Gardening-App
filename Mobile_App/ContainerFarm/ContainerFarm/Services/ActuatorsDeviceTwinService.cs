@@ -31,7 +31,7 @@ namespace ContainerFarm.Services
             Console.WriteLine(desiredProperties);
 
             // Get the property values to updated the desired properties
-            string geolocationBuzzer = GeoLocationBuzzerTwin(twin, desiredProperties, reportedProperties);
+            string geolocationBuzzer = await GeoLocationBuzzerTwin(twin, desiredProperties, reportedProperties);
             string securityDoorLock = SecurityDoorLockTwin(twin, desiredProperties, reportedProperties);
             string plantsLED = PlantsLEDTwin(twin, desiredProperties, reportedProperties);
             string plantsFAN = PlantsFANTwin(twin, desiredProperties, reportedProperties);
@@ -60,7 +60,7 @@ namespace ContainerFarm.Services
         /// </summary>
         /// <param name="desiredProperties">The desired properties of the device twin.</param>
         /// <returns>The GeoLocation buzzer actuator twin property value.</returns>
-        private static string GeoLocationBuzzerTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
+        private static async Task<string> GeoLocationBuzzerTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             // Get the Geo Location buzzer actuator from the container
             BuzzerActuator geoLocationBuzzer = App.Repo.Containers[0].Location.BuzzerActuator;
@@ -96,7 +96,11 @@ namespace ContainerFarm.Services
 
                 // Set the buzzer switch value according to if the buzzer was actually turned on
                 if (App.Repo.Containers[0].Location.BuzzerActuator.IsOn && buzzer_command == "off")
+                {
                     App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
+
+                    await Application.Current.MainPage.DisplayAlert("Buzzer turned off", "The buzzer wasn't turned on successfully. Please check if the container farm is running.", "OK");
+                }
             }
 
             return geoLocationBuzzer.IsOnString;
