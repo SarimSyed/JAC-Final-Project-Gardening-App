@@ -21,6 +21,5 @@ async def main():
         await asyncio.sleep(connection_manager.telemetry_interval)
         
 
-
 if __name__ == "__main__":
     asyncio.run(main())
