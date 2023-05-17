@@ -1,4 +1,5 @@
-﻿using ContainerFarm.Models;
+﻿using ContainerFarm.Enums;
+using ContainerFarm.Models;
 using ContainerFarm.Models.Actuators;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Shared;
@@ -25,14 +26,15 @@ namespace ContainerFarm.Services
             if (twin == null) return;
 
             TwinCollection desiredProperties = twin.Properties.Desired;
+            TwinCollection reportedProperties = twin.Properties.Reported;
 
             Console.WriteLine(desiredProperties);
 
             // Get the property values to updated the desired properties
-            string geolocationBuzzer = GeoLocationBuzzerTwin(desiredProperties);
-            string securityDoorLock = SecurityDoorLockTwin(twin, desiredProperties);
-            string plantsLED = PlantsLEDTwin(twin, desiredProperties);
-            string plantsFAN = PlantsFANTwin(twin, desiredProperties);
+            string geolocationBuzzer = GeoLocationBuzzerTwin(twin, desiredProperties, reportedProperties);
+            string securityDoorLock = SecurityDoorLockTwin(twin, desiredProperties, reportedProperties);
+            string plantsLED = PlantsLEDTwin(twin, desiredProperties, reportedProperties);
+            string plantsFAN = PlantsFANTwin(twin, desiredProperties, reportedProperties);
 
             // Create the new twin patch
             var patch =
@@ -58,44 +60,59 @@ namespace ContainerFarm.Services
         /// </summary>
         /// <param name="desiredProperties">The desired properties of the device twin.</param>
         /// <returns>The GeoLocation buzzer actuator twin property value.</returns>
-        private static string GeoLocationBuzzerTwin(TwinCollection desiredProperties)
+        private static string GeoLocationBuzzerTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             // Get the Geo Location buzzer actuator from the container
             BuzzerActuator geoLocationBuzzer = App.Repo.Containers[0].Location.BuzzerActuator;
 
             // Don't check twin properties if the actuator was just set to 'on' in the app
             if (geoLocationBuzzer.IsChanged)
+            {
+                // Since the state of the buzzer actuator was changed according to the twin, set to false
+                geoLocationBuzzer.IsChanged = false;
+
                 return geoLocationBuzzer.IsOnString;
+            }
 
             // Check if the desired twin properties contains the geolocationBuzzer
-            if (desiredProperties.Contains("geolocationBuzzer"))
+            if (desiredProperties.Contains(GeoLocationTwinProperties.BUZZER))
             {
                 // Get the twin buzzer command
-                string buzzer_command = desiredProperties["geolocationBuzzer"];
+                string buzzer_command = desiredProperties[GeoLocationTwinProperties.BUZZER];
 
-                Console.WriteLine($"Desired - new telemetry interval: {buzzer_command}");
+                Console.WriteLine($"Desired - new {GeoLocationTwinProperties.BUZZER} command: {buzzer_command}");
 
                 // Set the buzzer value according to the command
                 App.Repo.Containers[0].Location.BuzzerActuator.SetIsOn(buzzer_command);
             }
 
-            // Since the state of the buzzer actuator was changed according to the tween, set to false
-            geoLocationBuzzer.IsChanged = false;
+            // Check if the reported twin properties contains the geolocationBuzzer
+            if (reportedProperties.Contains(GeoLocationTwinProperties.BUZZER))
+            {
+                // Get the twin buzzer command
+                string buzzer_command = reportedProperties[GeoLocationTwinProperties.BUZZER];
+
+                Console.WriteLine($"Reported - new {GeoLocationTwinProperties.BUZZER} command: {buzzer_command}");
+
+                // Set the buzzer switch value according to if the buzzer was actually turned on
+                if (App.Repo.Containers[0].Location.BuzzerActuator.IsOn && buzzer_command == "off")
+                    App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
+            }
 
             return geoLocationBuzzer.IsOnString;
         }
 
-        private static string SecurityDoorLockTwin(Twin twin, TwinCollection desiredProperties)
+        private static string SecurityDoorLockTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             return "unlock";
         }
         
-        private static string PlantsLEDTwin(Twin twin, TwinCollection desiredProperties)
+        private static string PlantsLEDTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             return "lights-off";
         }
         
-        private static string PlantsFANTwin(Twin twin, TwinCollection desiredProperties)
+        private static string PlantsFANTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             return "off";
         }
