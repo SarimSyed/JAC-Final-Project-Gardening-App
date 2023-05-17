@@ -1,14 +1,13 @@
 from grove.grove_ws2813_rgb_led_strip import GroveWS2813RgbStrip
 from interfaces.actuators import IActuator, ACommand
 from time import sleep
-from grove import i2c
 
 class Led(IActuator):
 
     ON = "on"
     OFF = "off"
-    LIGHT_ON = 'light-on'
-    LIGHT_OFF = 'light-off'
+    LIGHT_ON = 'lights-on'
+    LIGHT_OFF = 'lights-off'
     LIGHT_BRIGHT = 'max-brightness'
     LIGHT_MEDIUM = 'mid-brightness'
     NUM_OF_LEDS = 10
@@ -24,17 +23,14 @@ class Led(IActuator):
         super().__init__(gpio, type, initial_state)
 
         self.type :ACommand.Type = type or ACommand.Type.LED
-        self._current_state :str =  Led.LIGHT_OFF
-        if initial_state:
-            self._current_state = initial_state["value"]
+        self._current_state = initial_state
+
         self.led :GroveWS2813RgbStrip = GroveWS2813RgbStrip(gpio, count= Led.NUM_OF_LEDS)
-        self.set_max_brightness()
+        
         
         self.brightness : str = Led.LIGHT_BRIGHT
         
 
-        if initial_state == Led.LIGHT_ON: 
-            self.set_max_brightness()
 
     def control_actuator(self, data: dict) -> bool:
         
@@ -42,7 +38,7 @@ class Led(IActuator):
         
         data_value = data["value"]
 
-        if(self._current_state == data_value):
+        if(self._current_state == data):
             return False
         
         if data_value == Led.LIGHT_OFF:

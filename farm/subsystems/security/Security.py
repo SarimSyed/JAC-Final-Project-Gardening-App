@@ -39,7 +39,7 @@ class Security:
         return [
             # Instantiate each actuator inside this list, separate items by comma.
             Buzzer({'value': 'off'}),
-            DoorLock(12, {"value": "lock"})
+            DoorLock(12, {'value': 'lock'})
         ]
 
     def read_sensors(self) -> list[AReading]:
@@ -48,25 +48,27 @@ class Security:
         :return list[AReading]: a list containing all readings collected from sensors.
         """
         readings: list[AReading] = []
+        print("\n-----------------------SECURITY SENSORS-----------------------")
         for x in range(len(self._sensors)):
             print(self._sensors[x].read_sensor())
             readings.append(self._sensors[x].read_sensor())    
         return readings
 
-    def control_actuators(self,  command: ACommand) -> None:
+    def control_actuators(self,  command: ACommand) -> bool:
         """Controls actuators according to a list of commands. Each command is applied to it's respective actuator.
 
         :param list[ACommand] commands: List of commands to be dispatched to corresponding actuators.
         """
         if (command.target_type == ACommand.Type.BUZZER):
             for x in range(len(self._actuators)):
-                if(self._actuators[x].type == ACommand.Type.BUZZER):
-                    self._actuators[x].control_actuator(command.data)
+                if(self._actuators[x].type == ACommand.Type.BUZZER and self._actuators[x].validate_command(command)):
+                    return self._actuators[x].control_actuator(command.data)
 
         if (command.target_type == ACommand.Type.DOORLOCK):
             for x in range(len(self._actuators)):
-                if(self._actuators[x].type == ACommand.Type.DOORLOCK):
-                    self._actuators[x].control_actuator(command.data)
+                if(self._actuators[x].type == ACommand.Type.DOORLOCK and self._actuators[x].validate_command(command)):
+                    return self._actuators[x].control_actuator(command.data)
+        return False
 
 
 if __name__ == "__main__":
