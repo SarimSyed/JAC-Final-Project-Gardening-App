@@ -34,6 +34,7 @@ public partial class LoginPage : ContentPage
     {
         try
         {
+            signInBtn.IsEnabled = false;
             // Check internet connection
             NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
 
@@ -97,26 +98,35 @@ public partial class LoginPage : ContentPage
 
             // Create the twin thread
             CreateDeviceTwinThread();
+
+            signInBtn.IsEnabled = true;
         }
         catch (AggregateException ex)
         {
             // Display alert message
             await DisplayAlert("No Internet Connection", $"{ex.Message}", "OK");
+            signInBtn.IsEnabled = true;
         }
         catch (FirebaseAuthException ex)
         {
             // Display alert message
             await DisplayAlert("Invalid information", $"{ex.Reason}", "OK");
+            signInBtn.IsEnabled = true;
+
         }
         catch (ArgumentException ex)
         {
             // Display alert message
             await DisplayAlert("IoT Hub Error", $"{ex.Message}", "OK");
+            signInBtn.IsEnabled = true;
+
         }
         catch (Exception ex)
         {
             // Display alert message
             await DisplayAlert("Exception Thrown", $"{ex.Message}", "OK");
+            signInBtn.IsEnabled = true;
+
         }
     }
 

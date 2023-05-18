@@ -91,6 +91,7 @@
                     <!--<Button Text="Sign In" Clicked="SignInBtn_Clicked"/>-->
 
                     <ImageButton Source="right_arrow.png"
+                                 x:Name="signInBtn"
                                  Clicked="SignInBtn_Clicked"
                                  BackgroundColor="{StaticResource Primary}"
                                  HorizontalOptions="Center"
