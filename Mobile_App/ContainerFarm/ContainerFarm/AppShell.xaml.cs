@@ -16,9 +16,9 @@ public partial class AppShell : Shell
     /// <param name="e"></param>
     private async void Logout_MenuItem_Clicked(object sender, EventArgs e)
     {
-        try
+        try 
         {
-             await D2CService.Processor.StopProcessingAsync();
+            await D2CService.Processor.StopProcessingAsync(CancellationToken.None);
 
             // Validates that there's a signed in user
             if (AuthService.Client.User == null)

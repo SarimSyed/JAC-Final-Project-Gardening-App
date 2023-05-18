@@ -55,13 +55,11 @@ namespace ContainerFarm.Services
                     string partition = args.Partition.PartitionId;
                     byte[] eventBody = args.Data.EventBody.ToArray();
 
-                    Console.WriteLine(args.Data.EnqueuedTime);
-
                     string eventBodyString = System.Text.Encoding.Default.GetString(eventBody);
                     string eventBodyCleaned = eventBodyString.Replace("\n", "");
 
                     // Update Readings
-                    App.Repo.UpdateReadings(eventBodyCleaned, args.Partition, args.Data);
+                    App.Repo.UpdateReadings(eventBodyCleaned, args.Data);
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
                         key: partition,

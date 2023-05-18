@@ -5,6 +5,7 @@ using ContainerFarm.Services;
 using Firebase.Auth;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Common.Exceptions;
+using Microsoft.Azure.Devices.Shared;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContainerFarm.Views;
@@ -170,7 +171,17 @@ public partial class LoginPage : ContentPage
             try
             {
                 // Create the twin with the specified device ID
-                var twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
+                Twin twin;
+
+                try
+                {
+                    twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
+                }
+                catch (IotHubCommunicationException ex)
+                {
+                    Console.WriteLine(ex);
+                    throw;
+                }
 
                 if (twin == null)
                     continue;
@@ -178,6 +189,10 @@ public partial class LoginPage : ContentPage
                 // Read and update values
                 ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
                 Thread.Sleep(1000);
+            }
+            catch (IotHubCommunicationException)
+            {
+                throw;
             }
             catch (Exception)
             {

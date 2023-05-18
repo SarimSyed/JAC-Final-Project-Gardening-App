@@ -42,10 +42,21 @@ namespace ContainerFarm.Repos
         /// </summary>
         public ObservableCollection<Container> Containers { get { return _containers; } }
 
+        /// <summary>
+        /// The list of humidity values for the graph representation.
+        /// </summary>
         public static ObservableCollection<TempHumiGraphValue> HumidityValues { get; set; } = new ObservableCollection<TempHumiGraphValue>();
+        /// <summary>
+        /// The list of temperature values for the graph representation.
+        /// </summary>
         public static ObservableCollection<TempHumiGraphValue> TemperatureValues { get; set; } = new ObservableCollection<TempHumiGraphValue>();
 
-        public void UpdateTemperatureHumidityGraphValues(JObject oneSensorObject, PartitionContext partition, EventData data)
+        /// <summary>
+        /// Updates the temperature and humidity list values for the graph representations.
+        /// </summary>
+        /// <param name="oneSensorObject">The specified sensor object.</param>
+        /// <param name="data">The partition event data.</param>
+        public void UpdateTemperatureHumidityGraphValues(JObject oneSensorObject, EventData data)
         {
             // Humidity sensor
             if (oneSensorObject.ToString().Contains(PlantReadingTitle.HUMIDITY))
@@ -81,7 +92,7 @@ namespace ContainerFarm.Repos
         /// Updates the container subsystem readings.
         /// </summary>
         /// <param name="readings"></param>
-        public void UpdateReadings(string readings, PartitionContext partition, EventData data)
+        public void UpdateReadings(string readings, EventData data)
         {
             try
             {
@@ -96,7 +107,7 @@ namespace ContainerFarm.Repos
                     // Get the sensor object in the current array
                     JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
 
-                    UpdateTemperatureHumidityGraphValues(oneSensorObject, partition, data);
+                    UpdateTemperatureHumidityGraphValues(oneSensorObject, data);
 
                     UpdateSecurityReading(oneSensorObject);
                     UpdatePlantReading(oneSensorObject);
@@ -107,9 +118,6 @@ namespace ContainerFarm.Repos
             {
                 throw;
             }
-
-            int a = _containers[0].Security.IssuesCount;
-
         }
 
         #region Security Reading

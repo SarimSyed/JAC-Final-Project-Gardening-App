@@ -20,6 +20,10 @@ public partial class ContainerSecurityInfo : ContentPage
     {
         //Shows the user confirmation that the door lock has been turned on or off.
         Switch doorLockSwitch = sender as Switch;
+
+        if (doorLockSwitch == null || doorLockStatus == null)
+            return;
+
         if (doorLockSwitch.IsToggled)
         {
             doorLockStatus.Text = "ON";
@@ -38,6 +42,10 @@ public partial class ContainerSecurityInfo : ContentPage
 
         //Shows the user confirmation that the buzzer has been turned on or off.
         Switch buzzerSwitch = sender as Switch;
+
+        if (buzzerSwitch == null || buzzerStatus == null)
+            return;
+
         if (buzzerSwitch.IsToggled)
         {
             buzzerStatus.Text = "ON";

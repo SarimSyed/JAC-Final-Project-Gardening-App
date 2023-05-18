@@ -28,8 +28,6 @@ namespace ContainerFarm.Services
             TwinCollection desiredProperties = twin.Properties.Desired;
             TwinCollection reportedProperties = twin.Properties.Reported;
 
-            Console.WriteLine(desiredProperties);
-
             // Get the property values to updated the desired properties
             string geolocationBuzzer = await GeoLocationBuzzerTwin(twin, desiredProperties, reportedProperties);
             string securityDoorLock = SecurityDoorLockTwin(twin, desiredProperties, reportedProperties);
