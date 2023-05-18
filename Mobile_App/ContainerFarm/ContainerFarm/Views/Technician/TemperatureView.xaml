@@ -5,8 +5,9 @@
              xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              xmlns:models="clr-namespace:ContainerFarm.Models"
              Title="TemperatureView">
-    <Grid RowDefinitions="auto,1*,1*"
-          Padding="10">
+    <Grid RowDefinitions="1*,1*"
+          Padding="10"
+          RowSpacing="20">
         <!--<Picker 
                 Grid.Row="0"
             x:Name="charts_pc"
@@ -17,27 +18,41 @@
             </Picker.Items>
         </Picker>-->
 
-        <VerticalStackLayout Grid.Row="1"
+        <Grid RowDefinitions="auto, 1*" 
+            Grid.Row="0"
+               RowSpacing="7"
                              Style="{StaticResource GraphTitleToFrame}">
             <Label
+                Grid.Row="0"
                 Text="Data over the last x days"
                  Style="{StaticResource GraphTitleText}"/>
 
-            <!--<charts:PieChart
+            <Frame
+                Padding="10"
+                Margin="0"
+                CornerRadius="20"
+                Grid.Row="1">
+                <charts:CartesianChart
+                
             x:Name="pie_chart"
             TooltipTextSize="40"
-            />-->
-            <Frame
+            />
+            </Frame>
+            
+            <!--<Frame
                 HeightRequest="250"
                 CornerRadius="20">
                 <Image Source="wireframe_chart.png"/>
-            </Frame>
-        </VerticalStackLayout>
+            </Frame>-->
+        </Grid>
             <!--Series="{Binding Series}"-->
 
-        <VerticalStackLayout Grid.Row="2"
+        <Grid RowDefinitions="auto, 1*" 
+              Grid.Row="1"
+              RowSpacing="7"
                              Style="{StaticResource GraphTitleToFrame}">
             <Label
+                Grid.Row="0"
                 Text="More data over the last x days"
                  Style="{StaticResource GraphTitleText}"/>
 
@@ -46,10 +61,9 @@
             TooltipTextSize="40"
             />-->
             <Frame
-                HeightRequest="250"
-                CornerRadius="20" 
+                Grid.Row="1"
+                CornerRadius="20"
                 Padding="0"
-                Margin="0"
                 BorderColor="{StaticResource Primary}">
                 <CollectionView>
                     <CollectionView.ItemsSource>
@@ -105,6 +119,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </Frame>
-        </VerticalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

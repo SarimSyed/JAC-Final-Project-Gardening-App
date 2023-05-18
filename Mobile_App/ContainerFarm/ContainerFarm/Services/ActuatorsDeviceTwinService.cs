@@ -99,7 +99,7 @@ namespace ContainerFarm.Services
                 {
                     App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
 
-                    await Application.Current.MainPage.DisplayAlert("Buzzer turned off", "The buzzer wasn't turned on successfully. Please check if the container farm is running.", "OK");
+                    //await Application.Current.MainPage.DisplayAlert("Buzzer turned off", "The buzzer wasn't turned on successfully. Please check if the container farm is running.", "OK");
                 }
             }
 

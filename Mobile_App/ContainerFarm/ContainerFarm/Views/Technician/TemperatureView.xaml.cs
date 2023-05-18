@@ -1,3 +1,6 @@
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore;
+
 namespace ContainerFarm.Views.Technician;
 
 public partial class TemperatureView : ContentPage
@@ -11,5 +14,16 @@ public partial class TemperatureView : ContentPage
     public TemperatureView()
 	{
 		InitializeComponent();
+
+        pie_chart.Series = Series;
 	}
+
+    public ISeries[] Series { get; set; } =
+    {
+        new LineSeries<double>
+        {
+            Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
+            
+        }
+    };
 }
