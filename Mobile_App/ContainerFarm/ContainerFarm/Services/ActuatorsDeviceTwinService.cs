@@ -64,6 +64,7 @@ namespace ContainerFarm.Services
         {
             // Get the Geo Location buzzer actuator from the container
             BuzzerActuator geoLocationBuzzer = App.Repo.Containers[0].Location.BuzzerActuator;
+            BuzzerActuator securityBuzzer = App.Repo.Containers[0].Security.BuzzerActuator;
 
             // Don't check twin properties if the actuator was just set to 'on' in the app
             if (geoLocationBuzzer.IsChanged)
@@ -72,6 +73,15 @@ namespace ContainerFarm.Services
                 geoLocationBuzzer.IsChanged = false;
 
                 return geoLocationBuzzer.IsOnString;
+            }
+
+            // Don't check twin properties if the actuator was just set to 'on' in the app
+            if (securityBuzzer.IsChanged)
+            {
+                // Since the state of the buzzer actuator was changed according to the twin, set to false
+                securityBuzzer.IsChanged = false;
+
+                return securityBuzzer.IsOnString;
             }
 
             // Check if the desired twin properties contains the geolocationBuzzer
@@ -84,6 +94,7 @@ namespace ContainerFarm.Services
 
                 // Set the buzzer value according to the command
                 App.Repo.Containers[0].Location.BuzzerActuator.SetIsOn(buzzer_command);
+                App.Repo.Containers[0].Security.BuzzerActuator.SetIsOn(buzzer_command);
             }
 
             // Check if the reported twin properties contains the geolocationBuzzer
@@ -95,10 +106,12 @@ namespace ContainerFarm.Services
                 Console.WriteLine($"Reported - new {GeoLocationTwinProperties.BUZZER} command: {buzzer_command}");
 
                 // Set the buzzer switch value according to if the buzzer was actually turned on
-                if (App.Repo.Containers[0].Location.BuzzerActuator.IsOn && buzzer_command == "off")
+                if ((App.Repo.Containers[0].Location.BuzzerActuator.IsOn && App.Repo.Containers[0].Security.BuzzerActuator.IsOn) && buzzer_command == "off")
                 {
                     App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
+                    App.Repo.Containers[0].Security.BuzzerActuator.IsOn = false;
 
+                    Console.WriteLine("buzzer turned off");
                     //await Application.Current.MainPage.DisplayAlert("Buzzer turned off", "The buzzer wasn't turned on successfully. Please check if the container farm is running.", "OK");
                 }
             }
@@ -155,7 +168,9 @@ namespace ContainerFarm.Services
                 {
                     App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
-                    await Application.Current.MainPage.DisplayAlert("fan turned off", "The fan wasn't turned on successfully. Please check if the container farm is running.", "OK");
+                    Console.WriteLine("fan turned off");
+
+                    //await Application.Current.MainPage.DisplayAlert("fan turned off", "The fan wasn't turned on successfully. Please check if the container farm is running.", "OK");
                 }
             }
 

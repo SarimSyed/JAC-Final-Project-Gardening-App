@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\bin\Debug\net7.0-ios\iossimulator-x64\ContainerFarm.runtimeconfig.json
 C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\bin\Debug\net7.0-ios\iossimulator-x64\ContainerFarm.dll
 C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\bin\Debug\net7.0-ios\iossimulator-x64\ContainerFarm.pdb
@@ -664,3 +665,5 @@ C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\Con
 C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-ios\iossimulator-x64\ContainerFarm.pdb
 C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-ios\iossimulator-x64\ContainerFarm.genruntimeconfig.cache
 C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-ios\iossimulator-x64\ref\ContainerFarm.dll
+=======
+>>>>>>> 163542daacfdafca67a594fd9fea0e6ccd8f95ff

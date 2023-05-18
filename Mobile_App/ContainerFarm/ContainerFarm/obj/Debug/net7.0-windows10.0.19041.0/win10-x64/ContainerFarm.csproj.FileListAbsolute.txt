@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\ContainerFarm.exe
 C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.xbf
 C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\ContainerFarm.deps.json
@@ -766,3 +767,5 @@ C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\Con
 C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
 C:\Users\Braeden\Documents\proj\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\ProjectArchitectures.txt
+=======
+>>>>>>> 163542daacfdafca67a594fd9fea0e6ccd8f95ff

@@ -107,6 +107,9 @@ namespace ContainerFarm.Repos
             {
                 throw;
             }
+
+            int a = _containers[0].Security.IssuesCount;
+
         }
 
         #region Security Reading
@@ -276,7 +279,7 @@ namespace ContainerFarm.Repos
                 },
                 Security = new Models.Security()
                 {
-                    BuzzerActuator = new BuzzerActuator() { Name = "Buzzer", IsOn = true },
+                    BuzzerActuator = new BuzzerActuator() { Name = "Buzzer", IsOn = false },
                     DoorSensor = new DoorSensor() { Name = "Door Sensor", Value = 0 },
                     DoorlockActuator = new DoorlockActuator() { Name = "Door Lock", IsOn = true },
                     LuminositySensor = new LuminositySensor() { Name = "Light Sensor", Value = 1 },
