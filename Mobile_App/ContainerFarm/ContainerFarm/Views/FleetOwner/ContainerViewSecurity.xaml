@@ -29,11 +29,11 @@
                                         FontSize="20" FontAttributes="Bold"
                                             VerticalTextAlignment="Center"
                                        VerticalOptions="Center"/>
-                                    <Label Text="0 Issues"
+                                    <Label Text="{Binding Security.IssuesCount, StringFormat='Issues: {0:F0}'}"
                                            VerticalTextAlignment="Center"
                                            VerticalOptions="Center"/>
                                 </VerticalStackLayout>
-                                <Image Source="accept.png" Grid.Column="2" WidthRequest="30"
+                                <Image Source="{Binding Security.IssuesUri}" Grid.Column="2" WidthRequest="30"
                                            HorizontalOptions="Center"/>
                             </Grid>
                         </Frame>

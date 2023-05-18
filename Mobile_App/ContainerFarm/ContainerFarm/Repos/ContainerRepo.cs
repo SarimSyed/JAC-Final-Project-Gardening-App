@@ -66,6 +66,9 @@ namespace ContainerFarm.Repos
                 UpdatePlantReading(oneSensorObject);
                 UpdateGeoLocationReading(oneSensorObject);
             }
+
+            int a = _containers[0].Security.IssuesCount;
+
         }
 
         #region Security Reading

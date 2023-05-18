@@ -991,6 +991,9 @@
     <AppxPackagedFile Include="C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\appiconWideTile.scale-400.png">
       <PackagePath>appiconWideTile.scale-400.png</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\bad.scale-100.png">
+      <PackagePath>bad.scale-100.png</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\container.scale-100.png">
       <PackagePath>container.scale-100.png</PackagePath>
     </AppxPackagedFile>
@@ -1047,6 +1050,9 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\temperature_control.scale-100.png">
       <PackagePath>temperature_control.scale-100.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\warning.scale-100.png">
+      <PackagePath>warning.scale-100.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Payal\Desktop\GitHub\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\water.scale-100.png">
       <PackagePath>water.scale-100.png</PackagePath>
