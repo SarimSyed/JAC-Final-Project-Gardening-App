@@ -9,30 +9,22 @@
     <Grid RowDefinitions="1*,1*"
           Padding="10"
           RowSpacing="20">
-        <!--<Picker 
-                Grid.Row="0"
-            x:Name="charts_pc"
-            SelectedIndexChanged="charts_pc_SelectedIndexChanged">
-            <Picker.Items>
-                <x:String>Pie Chart</x:String>
-                <x:String>Gauge Chart</x:String>
-            </Picker.Items>
-        </Picker>-->
-
         <Grid RowDefinitions="auto, 1*" 
             Grid.Row="0"
                RowSpacing="7" 
                              Style="{StaticResource GraphTitleToFrame}">
             <Label
-                Text="Data over the last x days"
+                Text="Data over the last 24 hours"
                  Style="{StaticResource GraphTitleText}"/>
 
             <Frame
                 Padding="10"
                 Margin="0"
                 CornerRadius="20"
-                Grid.Row="1">
+                Grid.Row="1"
+                BorderColor="{StaticResource Primary}">
                 <charts:CartesianChart
+                    
                 
             x:Name="pie_chart"
             TooltipTextSize="40"
@@ -46,72 +38,80 @@
                RowSpacing="7"
                              Style="{StaticResource GraphTitleToFrame}">
             <Label
-                Text="More data over the last x days"
+                Grid.Row="0"
+                Text="More data over the last 24 hours"
                 Style="{StaticResource GraphTitleText}"/>
 
-            <!--<charts:PieChart
-            x:Name="pie_chart"
-            TooltipTextSize="40"
-            />-->
             <Frame
+                Grid.Row="1"
                 HeightRequest="250"
                 CornerRadius="20" 
                 Padding="0"
                 Margin="0"
                 BorderColor="{StaticResource Primary}">
-                <CollectionView>
-                    <CollectionView.ItemsSource>
-                        <x:Array Type="{x:Type models:PlantOld}">
-                            <models:PlantOld 
+                <ScrollView>
+                    <CollectionView x:Name="humidity_cv">
+                        <!--<CollectionView.ItemsSource>
+                            <x:Array Type="{x:Type models:PlantOld}">
+                                <models:PlantOld 
                                 Temperature="14"
                                />
-                            <models:PlantOld 
+                                <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:PlantOld 
+                                <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:PlantOld 
+                                <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:PlantOld 
+                                <models:PlantOld 
                                 Temperature="24"
                                />
-                            <models:PlantOld 
+                                <models:PlantOld 
                                 Temperature="24"
                                />
-                            
-                        </x:Array>
-                    </CollectionView.ItemsSource>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <!--<Border Padding="15,10"
-                                    Margin="0"
-                                    >-->
-                            <VerticalStackLayout>
-                                <VerticalStackLayout Padding="15,10">
-                                    <HorizontalStackLayout
-                                Spacing="115">
-                                        <HorizontalStackLayout HorizontalOptions="Start">
-                                            <Label
-                                        Text="Temp: "/>
-                                            <Label
-                                        Text="24 %"/>
-                                        </HorizontalStackLayout>
 
-                                        <HorizontalStackLayout HorizontalOptions="End">
-                                            <Label
-                                        Text="April 2, 2023 12:23 PM"/>
-                                        </HorizontalStackLayout>
-                                    </HorizontalStackLayout>
+                            </x:Array>
+                        </CollectionView.ItemsSource>-->
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                    <VerticalStackLayout Padding="15,10">
+                                        <Grid ColumnDefinitions="auto, auto"
+                                              RowDefinitions="1*"
+                                              >
+                                            <HorizontalStackLayout 
+                                                Grid.Column="0"
+                                                HorizontalOptions="Start">
+                                                <Label
+                                        Text="Humidity: "/>
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    Margin="0,0,5,0"
+                                        Text="{Binding Value, StringFormat='{0:F2}'}"/>
+                                                <Label
+                                                    
+                                        Text="{Binding Unit}"/>
+                                            </HorizontalStackLayout>
 
-                                </VerticalStackLayout>
+                                            <HorizontalStackLayout 
+                                                Grid.Column="1"
+                                                HorizontalOptions="End">
+                                                <Label
+                                        Text="{Binding EnqueuedTimeFormatted}"/>
+                                                <!--<Label
+                                        Text="April 2, 2023 12:23 PM"/>-->
+                                            </HorizontalStackLayout>
+                                        </Grid>
+
+                                    </VerticalStackLayout>
                                     <Line HeightRequest="1" BackgroundColor="Black"/>
-                            </VerticalStackLayout>
-                            <!--</Border>-->
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
             </Frame>
         </Grid>
     </Grid>

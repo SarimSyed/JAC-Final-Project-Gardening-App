@@ -1,11 +1,13 @@
 ﻿using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
+using ContainerFarm.Enums;
 using ContainerFarm.Models.Actuators;
 using ContainerFarm.Repos;
 using ContainerFarm.Views.FleetOwner;
 using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 
@@ -53,11 +55,13 @@ namespace ContainerFarm.Services
                     string partition = args.Partition.PartitionId;
                     byte[] eventBody = args.Data.EventBody.ToArray();
 
+                    Console.WriteLine(args.Data.EnqueuedTime);
+
                     string eventBodyString = System.Text.Encoding.Default.GetString(eventBody);
                     string eventBodyCleaned = eventBodyString.Replace("\n", "");
 
                     // Update Readings
-                    App.Repo.UpdateReadings(eventBodyCleaned);
+                    App.Repo.UpdateReadings(eventBodyCleaned, args.Partition, args.Data);
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
                         key: partition,

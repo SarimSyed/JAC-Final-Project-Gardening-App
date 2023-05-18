@@ -1,5 +1,6 @@
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
+using ContainerFarm.Repos;
 
 namespace ContainerFarm.Views.Technician;
 
@@ -16,7 +17,9 @@ public partial class TemperatureView : ContentPage
 		InitializeComponent();
 
         pie_chart.Series = Series;
-	}
+
+        temperature_cv.ItemsSource = ContainerRepo.TemperatureValues;
+    }
 
     public ISeries[] Series { get; set; } =
     {

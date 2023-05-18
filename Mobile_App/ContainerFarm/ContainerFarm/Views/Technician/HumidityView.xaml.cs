@@ -1,5 +1,6 @@
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
+using ContainerFarm.Repos;
 
 namespace ContainerFarm.Views.Technician;
 
@@ -16,6 +17,8 @@ public partial class HumidityView : ContentPage
 		InitializeComponent();
 
         pie_chart.Series = Series;
+
+        humidity_cv.ItemsSource = ContainerRepo.HumidityValues;
     }
 
     public ISeries[] Series { get; set; } =

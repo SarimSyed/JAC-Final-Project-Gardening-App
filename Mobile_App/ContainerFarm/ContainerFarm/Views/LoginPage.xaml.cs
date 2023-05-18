@@ -20,7 +20,7 @@ public partial class LoginPage : ContentPage
     private const string USERNAME = "user@email.com";
     private const string PASSWORD = "password";
 
-    private LoginOptions currentOption;
+    public static LoginOptions currentOption;
 
     public LoginPage()
 	{
@@ -35,6 +35,7 @@ public partial class LoginPage : ContentPage
         try
         {
             signInBtn.IsEnabled = false;
+
             // Check internet connection
             NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
 

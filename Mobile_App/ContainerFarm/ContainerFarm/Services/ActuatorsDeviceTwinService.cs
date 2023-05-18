@@ -41,10 +41,10 @@ namespace ContainerFarm.Services
                 $@"{{
                     properties: {{
                         desired: {{
-                            geolocationBuzzer: ""{geolocationBuzzer}"",
-                            securityDoorLock: ""{securityDoorLock}"",
-                            plantsLED: ""{plantsLED}"",
-                            plantsFan: ""{plantsFAN}"",
+                            ""{GeoLocationTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
+                            ""{SecurityTwinProperties.DOOR_LOCK}"": ""{securityDoorLock}"",
+                            ""{PlantsTwinProperties.LED}"": ""{plantsLED}"",
+                            ""{PlantsTwinProperties.FAN}"": ""{plantsFAN}"",
                         }}
                     }}
                 }}";

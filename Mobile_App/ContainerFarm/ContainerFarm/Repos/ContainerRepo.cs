@@ -11,6 +11,8 @@ using Newtonsoft.Json.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using System.Globalization;
 using ContainerFarm.Enums;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs;
 
 namespace ContainerFarm.Repos
 {
@@ -23,6 +25,7 @@ namespace ContainerFarm.Repos
     internal class ContainerRepo
     {
         private const string VALUE_KEY = "value";
+        private const string UNIT_KEY = "unit";
 
         private ObservableCollection<Container> _containers;
 
@@ -37,11 +40,40 @@ namespace ContainerFarm.Repos
         /// <summary>
         /// The containers list.
         /// </summary>
-        public ObservableCollection<Container> Containers
+        public ObservableCollection<Container> Containers { get { return _containers; } }
+
+        public static ObservableCollection<TempHumiGraphValue> HumidityValues { get; set; } = new ObservableCollection<TempHumiGraphValue>();
+        public static ObservableCollection<TempHumiGraphValue> TemperatureValues { get; set; } = new ObservableCollection<TempHumiGraphValue>();
+
+        public void UpdateTemperatureHumidityGraphValues(JObject oneSensorObject, PartitionContext partition, EventData data)
         {
-            get
+            // Humidity sensor
+            if (oneSensorObject.ToString().Contains(PlantReadingTitle.HUMIDITY))
             {
-                return _containers;
+                string unit_value = oneSensorObject[PlantReadingTitle.HUMIDITY][UNIT_KEY].ToString();
+                string humidityValueString = oneSensorObject[PlantReadingTitle.HUMIDITY][VALUE_KEY].ToString();
+                double humidityValue = StringToFloat(humidityValueString);
+
+                HumidityValues.Add(new TempHumiGraphValue()
+                {
+                    EnqueuedTime = data.EnqueuedTime,
+                    Value = humidityValue,
+                    Unit = unit_value,
+                });
+            }
+            // Temperature sensor
+            if (oneSensorObject.ToString().Contains(PlantReadingTitle.TEMPERATURE))
+            {
+                string unit_value = oneSensorObject[PlantReadingTitle.TEMPERATURE][UNIT_KEY].ToString();
+                string temperatureValueString = oneSensorObject[PlantReadingTitle.TEMPERATURE][VALUE_KEY].ToString();
+                double temperatureValue = StringToFloat(temperatureValueString);
+
+                TemperatureValues.Add(new TempHumiGraphValue()
+                {
+                    EnqueuedTime = data.EnqueuedTime,
+                    Value = temperatureValue,
+                    Unit = unit_value,
+                });
             }
         }
 
@@ -49,22 +81,31 @@ namespace ContainerFarm.Repos
         /// Updates the container subsystem readings.
         /// </summary>
         /// <param name="readings"></param>
-        public void UpdateReadings(string readings)
+        public void UpdateReadings(string readings, PartitionContext partition, EventData data)
         {
-            // Get the json object of the readings
-            JObject sensorJson = JObject.Parse(readings);
-            // Get the array for the 'sensors' property.
-            JArray jArray = (JArray) sensorJson["sensors"];
-
-            // DeviceTwinLoop over the array
-            for (int i = 0; i < jArray.Count; i++)
+            try
             {
-                // Get the sensor object in the current array
-                JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
+                // Get the json object of the readings
+                JObject sensorJson = JObject.Parse(readings);
+                // Get the array for the 'sensors' property.
+                JArray jArray = (JArray)sensorJson["sensors"];
 
-                UpdateSecurityReading(oneSensorObject); 
-                UpdatePlantReading(oneSensorObject);
-                UpdateGeoLocationReading(oneSensorObject);
+                // DeviceTwinLoop over the array
+                for (int i = 0; i < jArray.Count; i++)
+                {
+                    // Get the sensor object in the current array
+                    JObject oneSensorObject = JObject.Parse(jArray[i].ToString());
+
+                    UpdateTemperatureHumidityGraphValues(oneSensorObject, partition, data);
+
+                    UpdateSecurityReading(oneSensorObject);
+                    UpdatePlantReading(oneSensorObject);
+                    UpdateGeoLocationReading(oneSensorObject);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 
