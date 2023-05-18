@@ -64036,24 +64036,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Payal\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\asari\\.nuget\\packages\\": {},
+    "D:\\Programs\\VSModules\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Payal\\Desktop\\GitHub\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
+      "projectUniqueName": "E:\\Repos\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
       "projectName": "ContainerFarm",
-      "projectPath": "C:\\Users\\Payal\\Desktop\\GitHub\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
-      "packagesPath": "C:\\Users\\Payal\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Payal\\Desktop\\GitHub\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\obj\\",
+      "projectPath": "E:\\Repos\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\ContainerFarm.csproj",
+      "packagesPath": "C:\\Users\\asari\\.nuget\\packages\\",
+      "outputPath": "E:\\Repos\\course-project-connected-tractors\\Mobile_App\\ContainerFarm\\ContainerFarm\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "D:\\Programs\\VSModules\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Payal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asari\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -64265,7 +64265,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       },
       "net7.0-ios16.1": {
         "targetAlias": "net7.0-ios",
@@ -64384,7 +64384,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       },
       "net7.0-maccatalyst16.1": {
         "targetAlias": "net7.0-maccatalyst",
@@ -64504,7 +64504,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       },
       "net7.0-windows10.0.19041": {
         "targetAlias": "net7.0-windows10.0.19041.0",
@@ -64625,11 +64625,11 @@
         "downloadDependencies": [
           {
             "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-            "version": "[7.0.4, 7.0.4]"
+            "version": "[7.0.3, 7.0.3]"
           },
           {
             "name": "Microsoft.NETCore.App.Runtime.win-x64",
-            "version": "[7.0.4, 7.0.4]"
+            "version": "[7.0.3, 7.0.3]"
           },
           {
             "name": "Microsoft.Windows.SDK.NET.Ref",
@@ -64637,7 +64637,7 @@
           },
           {
             "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-            "version": "[7.0.4, 7.0.4]"
+            "version": "[7.0.3, 7.0.3]"
           }
         ],
         "frameworkReferences": {
@@ -64657,7 +64657,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {
