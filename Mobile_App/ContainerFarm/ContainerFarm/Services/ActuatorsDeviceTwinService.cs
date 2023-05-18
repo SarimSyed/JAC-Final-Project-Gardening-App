@@ -151,7 +151,7 @@ namespace ContainerFarm.Services
                 Console.WriteLine($"Reported - new {PlantsTwinProperties.FAN} command: {fan_command}");
 
                 // Set the fan switch value according to if the fan was actually turned on
-                if (App.Repo.Containers[0].Plant.FanActuator.IsOn && fan_command == "on")
+                if (App.Repo.Containers[0].Plant.FanActuator.IsOn && fan_command == "off")
                 {
                     App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
