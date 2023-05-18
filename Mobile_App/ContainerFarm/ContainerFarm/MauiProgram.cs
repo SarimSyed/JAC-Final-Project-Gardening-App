@@ -2,6 +2,7 @@
 using CommunityToolkit.Maui;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace ContainerFarm;
 public static class MauiProgram
@@ -9,7 +10,10 @@ public static class MauiProgram
     public static MauiApp CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
-        builder.UseMauiApp<App>().UseMauiMaps().ConfigureFonts(fonts =>
+        builder.UseMauiApp<App>()
+            .UseSkiaSharp()
+            .UseMauiMaps()
+            .ConfigureFonts(fonts =>
         {
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
