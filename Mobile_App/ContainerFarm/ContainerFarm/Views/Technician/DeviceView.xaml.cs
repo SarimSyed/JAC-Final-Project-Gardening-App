@@ -46,6 +46,8 @@ public partial class DeviceView : ContentPage
 
     private void SetSwitchTextStatus(Switch actuatorSwitch, Label actuatorText)
     {
+        if (actuatorSwitch == null || actuatorText == null) return;
+
         if (actuatorSwitch.IsToggled)
         {
             actuatorText.Text = "ON";

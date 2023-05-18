@@ -18,7 +18,7 @@ public partial class TemperatureView : ContentPage
 
         pie_chart.Series = Series;
 
-        temperature_cv.ItemsSource = ContainerRepo.TemperatureValues;
+        temperature_cv.ItemsSource = ContainerRepo.TemperatureValues.OrderByDescending(temp => temp.EnqueuedTime);
     }
 
     public ISeries[] Series { get; set; } =

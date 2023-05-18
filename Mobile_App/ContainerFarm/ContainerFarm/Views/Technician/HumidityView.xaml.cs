@@ -18,7 +18,7 @@ public partial class HumidityView : ContentPage
 
         pie_chart.Series = Series;
 
-        humidity_cv.ItemsSource = ContainerRepo.HumidityValues;
+        humidity_cv.ItemsSource = ContainerRepo.HumidityValues.OrderByDescending(humi => humi.EnqueuedTime); 
     }
 
     public ISeries[] Series { get; set; } =

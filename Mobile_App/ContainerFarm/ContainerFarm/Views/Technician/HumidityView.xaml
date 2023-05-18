@@ -78,14 +78,14 @@
                             <DataTemplate>
                                 <VerticalStackLayout>
                                     <VerticalStackLayout Padding="15,10">
-                                        <Grid ColumnDefinitions="auto, auto"
+                                        <Grid ColumnDefinitions="auto, 1*"
                                               RowDefinitions="1*"
                                               >
                                             <HorizontalStackLayout 
                                                 Grid.Column="0"
                                                 HorizontalOptions="Start">
                                                 <Label
-                                        Text="Humidity: "/>
+                                        Text="Humi: "/>
                                                 <Label
                                                     FontAttributes="Bold"
                                                     Margin="0,0,5,0"

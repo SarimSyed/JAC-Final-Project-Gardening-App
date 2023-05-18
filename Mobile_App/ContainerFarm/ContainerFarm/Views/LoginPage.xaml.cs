@@ -4,6 +4,7 @@ using ContainerFarm.Helpers;
 using ContainerFarm.Services;
 using Firebase.Auth;
 using Microsoft.Azure.Devices;
+using Microsoft.Azure.Devices.Common.Exceptions;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContainerFarm.Views;
@@ -138,12 +139,25 @@ public partial class LoginPage : ContentPage
     /// </summary>
     private static void CreateDeviceTwinThread()
     {
-        // Create the Registry Manager
-        ActuatorsDeviceTwinService.RegistryManager ??= RegistryManager.CreateFromConnectionString(App.Settings.HubConnectionString);
+        try
+        {
+            // Create the Registry Manager
+            ActuatorsDeviceTwinService.RegistryManager ??= RegistryManager.CreateFromConnectionString(App.Settings.HubConnectionString);
 
-        // Create a new thread for the twin readings
-        Thread twinThread = new Thread(ProcessTwinProperties);
-        twinThread.Start();
+            // Create a new thread for the twin readings
+            Thread twinThread = new Thread(ProcessTwinProperties);
+            twinThread.Start();
+        }
+        catch (IotHubCommunicationException ex)
+        {
+            // Create a new thread for the twin readings
+            Thread twinThread = new Thread(ProcessTwinProperties);
+            twinThread.Start();
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
 
     /// <summary>
@@ -153,47 +167,26 @@ public partial class LoginPage : ContentPage
     {
         while (true)
         {
-            // Create the twin with the specified device ID
-            var twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
-            // Read and update values
-            ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
-            Thread.Sleep(1000);
+            try
+            {
+                // Create the twin with the specified device ID
+                var twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
+
+                if (twin == null)
+                    continue;
+
+                // Read and update values
+                ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
+                Thread.Sleep(1000);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 
     #endregion
-
-    // Invoke the direct method on the device, passing the payload.
-    //private static async Task InvokeMethodAsync(string deviceId, ServiceClient serviceClient, string directMethod)
-    //{
-    //    var methodInvocation = new CloudToDeviceMethod(directMethod)
-    //    {
-    //        ResponseTimeout = TimeSpan.FromSeconds(30),
-    //    };
-
-    //    switch (directMethod)
-    //    {
-    //        case "lights-on":
-    //            methodInvocation.SetPayloadJson("{'status': 'completed'}");
-    //            break;
-    //        case "door-unlock":
-    //            methodInvocation.SetPayloadJson("{'status': 'completed'}");
-    //            break;
-    //        case "fan-on":
-    //            methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
-    //            break;
-    //        default:
-    //            methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
-    //            break;
-    //    }
-
-    //    Console.WriteLine($"Invoking direct method for device: {deviceId}");
-
-    //    // Invoke the direct method asynchronously and get the response from the simulated device.
-    //    CloudToDeviceMethodResult response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
-
-    //    Console.WriteLine($"Response status: {response.Status}, payload:\n\t{response.GetPayloadAsJson()}");
-    //}
 
     private void Debug_Options()
     {
