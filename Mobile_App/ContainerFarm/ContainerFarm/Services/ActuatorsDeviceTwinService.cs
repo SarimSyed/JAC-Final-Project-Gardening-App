@@ -26,6 +26,16 @@ namespace ContainerFarm.Services
             // Return if the specified twin is null
             if (twin == null) return;
 
+            // Check internet connection
+            NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
+
+            // Throw exception if no internet access
+            if (networkAccess != NetworkAccess.Internet)
+            {
+                TurnOffAllActuatorSwitches();
+                throw new AggregateException($"No internet connection. Please connect to the internet.");
+            }
+
             try
             {
                 TwinCollection desiredProperties = twin.Properties.Desired;
@@ -38,23 +48,23 @@ namespace ContainerFarm.Services
                 string plantsFAN = await PlantsFANTwinAsync(twin, desiredProperties, reportedProperties);
 
                 // Create the new twin patch
-                //var patch =
-                //    $@"{{
-                //    properties: {{
-                //        desired: {{
-                //            ""{GeoLocationTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
-                //            ""{SecurityTwinProperties.DOOR_LOCK}"": ""{securityDoorLock}"",
-                //            ""{SecurityTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
-                //            ""{PlantsTwinProperties.LED}"": ""{plantsLED}"",
-                //            ""{PlantsTwinProperties.FAN}"": ""{plantsFAN}"",
-                //        }}
-                //    }}
-                //}}";
+                var patch =
+                    $@"{{
+                    properties: {{
+                        desired: {{
+                            ""{GeoLocationTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
+                            ""{SecurityTwinProperties.DOOR_LOCK}"": ""{securityDoorLock}"",
+                            ""{SecurityTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
+                            ""{PlantsTwinProperties.LED}"": ""{plantsLED}"",
+                            ""{PlantsTwinProperties.FAN}"": ""{plantsFAN}"",
+                        }}
+                    }}
+                }}";
 
-                //// Update the device twin with the new patch
-                //await RegistryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
+                // Update the device twin with the new patch
+                await RegistryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
 
-                //Console.WriteLine(twin.Properties.Reported);
+                Console.WriteLine(twin.Properties.Reported);
             }
             catch (Exception ex)
             {
@@ -124,7 +134,6 @@ namespace ContainerFarm.Services
                         App.Repo.Containers[0].Security.BuzzerActuator.IsOn = false;
 
                         Console.WriteLine("buzzer turned off");
-                        //await Application.Current.MainPage.DisplayAlert("Buzzer turned off", "The buzzer wasn't turned on successfully. Please check if the container farm is running.", "OK");
                     }
                 }
                 else
@@ -247,8 +256,8 @@ namespace ContainerFarm.Services
                     // Set the fan value according to the command
                     App.Repo.Containers[0].Plant.FanActuator.SetIsOn(fan_command);
                 }
-                //else
-                //    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
+                else
+                    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                 // Check if the reported twin properties contains the plantsFan
                 if (reportedProperties.Contains(PlantsTwinProperties.FAN))
@@ -266,8 +275,8 @@ namespace ContainerFarm.Services
                         Console.WriteLine("fan turned off");
                     }
                 }
-                //else
-                //    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
+                else
+                    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                 return plantsFan.IsOnString;
             }
@@ -275,6 +284,15 @@ namespace ContainerFarm.Services
             {
                 throw;
             }
+        }
+
+        private static void TurnOffAllActuatorSwitches()
+        {
+            App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
+            App.Repo.Containers[0].Security.BuzzerActuator.IsOn = false;
+            App.Repo.Containers[0].Security.DoorlockActuator.IsOn = false;
+            App.Repo.Containers[0].Plant.LightActuator.IsOn = false;
+            App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
         }
     }
 }

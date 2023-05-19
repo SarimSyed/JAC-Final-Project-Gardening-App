@@ -18,5 +18,8 @@
     <MauiXaml Update="Views\FleetOwner\ContainerSecurityInfo.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+    <MauiXaml Update="Views\Settings.xaml">
+      <SubType>Designer</SubType>
+    </MauiXaml>
   </ItemGroup>
 </Project>

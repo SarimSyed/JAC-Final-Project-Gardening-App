@@ -18,5 +18,13 @@ namespace ContainerFarm.Config
         //IoT Hub Connection Strings
         public string HubConnectionString { get; set; }
         public string DeviceId { get; set; }
+
+        // Thresholds
+        public double TemperatureHighThreshold { get; set; } = 40;
+        public double TemperatureLowThreshold { get; set; } = 20;
+        public double HumidityHighThreshold { get; set; } = 20;
+        public double HumidityLowThreshold { get; set; } = 20;
+        public double WaterLevelHighThreshold { get; set; } = 20;
+        public double WaterLevelLowThreshold { get; set; } = 20;
     }
 }

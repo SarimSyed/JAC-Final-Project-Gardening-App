@@ -153,6 +153,10 @@ public partial class LoginPage : ContentPage
             };
             twinThread.Start();
         }
+        catch (AggregateException ex)
+        {
+            throw;
+        }
         catch (IotHubCommunicationException ex)
         {
             // Create a new thread for the twin readings
@@ -196,6 +200,10 @@ public partial class LoginPage : ContentPage
                 // Read and update values
                 ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
                 Thread.Sleep(1000);
+            }
+            catch (AggregateException ex)
+            {
+                throw;
             }
             catch (IotHubCommunicationException ex)
             {
