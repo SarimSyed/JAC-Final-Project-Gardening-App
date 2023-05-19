@@ -1,5 +1,8 @@
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore;
+using ContainerFarm.Repos;
+using ContainerFarm.Models;
+using System.Collections.ObjectModel;
 
 namespace ContainerFarm.Views.Technician;
 
@@ -16,14 +19,37 @@ public partial class HumidityView : ContentPage
 		InitializeComponent();
 
         pie_chart.Series = Series;
+
+        humidity_cv.ItemsSource = ContainerRepo.HumidityValues.OrderByDescending(humi => humi.EnqueuedTime); 
+
     }
 
+    /// <summary>
+    /// The Series for the humidity values chart.
+    /// </summary>
     public ISeries[] Series { get; set; } =
     {
         new LineSeries<double>
         {
-            Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
-
+            Values = ContainerRepo.HumidityValues.Select(humiValue => humiValue.Value),
+            DataLabelsFormatter = (point) => $"Humidity: {point.PrimaryValue.ToString("F2")}"
         }
     };
+
+
+    //private static IEnumerable<TempHumiPoint> GetHumiPoints()
+    //{
+    //    ObservableCollection<TempHumiPoint> tempHumiPoints = new ObservableCollection<TempHumiPoint>();
+
+    //    foreach (TempHumiGraphValue tempHumiGraphValue in ContainerRepo.HumidityValues)
+    //    {
+    //        tempHumiPoints.Add(new TempHumiPoint
+    //        {
+    //            Value = tempHumiGraphValue.Value,
+    //            EnqueuedTime = tempHumiGraphValue.EnqueuedTime.Hour
+    //        });
+    //    }
+
+    //    return tempHumiPoints;
+    //}
 }

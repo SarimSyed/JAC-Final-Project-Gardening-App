@@ -1,6 +1,7 @@
 ﻿using ContainerFarm.Models.Actuators;
 using ContainerFarm.Models.Sensors;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ContainerFarm.Models
 {
@@ -33,6 +34,7 @@ namespace ContainerFarm.Models
         private DoorSensor doorSensor;
         private DoorlockActuator doorlockActuator;
         private BuzzerActuator buzzerActuator;
+        private string motionsensor;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -68,7 +70,44 @@ namespace ContainerFarm.Models
                 doorlockActuator = value;
             } }
         public BuzzerActuator BuzzerActuator { get { { return buzzerActuator; } } set { buzzerActuator = value; } }
+        public int IssuesCount
+        {
+            get {
+                int issuesCount = 0;
+                if (MotionSensor.Detected == MotionSensor.Detection.Detected.ToString())
+                    issuesCount++;
+                if (DoorSensor.Detected == DoorSensor.OpenClosed.Open.ToString())
+                    issuesCount++;
+                if (NoiseSensor.Detected == NoiseSensor.Detection.Detected.ToString())
+                    issuesCount++;
+                if (LuminositySensor.Detected == LuminositySensor.Detection.Detected.ToString())
+                    issuesCount++;
 
+                return issuesCount; 
+                }
+        }
+
+        public string IssuesUri
+        {
+            get
+            {
+                if (IssuesCount == 0)
+                    return "accept.png";
+                else if (IssuesCount > 3)
+                    return "bad.png";
+                else
+                    return "warning.png";
+            }
+        }
+
+        /// <summary>
+        /// Invokes property changed event for a property whose value changed.
+        /// </summary>
+        /// <param name="name">The name of the property that changed.</param>
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
 
 

@@ -162,7 +162,7 @@
                         Margin="0,0,20,0"
                         HorizontalOptions="End"
                         Spacing="10">
-                        <Switch IsToggled="{Binding BuzzerSensor.isOn}"  
+                        <Switch IsToggled="{Binding BuzzerActuator.IsOn}"  
                         PropertyChanged="BuzzerSwitch_PropertyChanged"/>
                         <Label x:Name="buzzerStatus"
                        VerticalOptions="Center"/>

@@ -1,11 +1,13 @@
 ﻿using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
+using ContainerFarm.Enums;
 using ContainerFarm.Models.Actuators;
 using ContainerFarm.Repos;
 using ContainerFarm.Views.FleetOwner;
 using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 
@@ -57,7 +59,7 @@ namespace ContainerFarm.Services
                     string eventBodyCleaned = eventBodyString.Replace("\n", "");
 
                     // Update Readings
-                    App.Repo.UpdateReadings(eventBodyCleaned);
+                    App.Repo.UpdateReadings(eventBodyCleaned, args.Data);
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
                         key: partition,

@@ -11,10 +11,11 @@
                FontSize="20"
                Margin="10,10"/>
         
-        <!--<Image Source="map_image.png"
-               Grid.Row="1"
-               HorizontalOptions="FillAndExpand"/>-->
-
-        <maps:Map x:Name="map_app" MapType="Street" Grid.Row="1"  />
+        <maps:Map x:Name="map_app"
+                  MapType="Street" 
+                  Grid.Row="1"
+                  IsZoomEnabled="True"
+                  IsShowingUser="True"
+                  IsTrafficEnabled="True"/>
     </Grid>
 </ContentPage>

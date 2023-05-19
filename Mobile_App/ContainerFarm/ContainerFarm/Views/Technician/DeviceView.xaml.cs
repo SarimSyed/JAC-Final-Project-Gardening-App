@@ -25,44 +25,7 @@ public partial class DeviceView : ContentPage
         InitializeComponent();
 
         //Using the index 0 of the repo since technicians will only have access to one container
-        BindingContext = App.Repo.Containers[0].Plant;
-
-        //Thread eventDataThread = new Thread(Do);
-        //eventDataThread.Start();
-    }
-
-    private static async void Do()
-    {
-        string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-
-        await using (var producer = new EventHubProducerClient(App.Settings.EventHubConnectionString, App.Settings.EventHubName))
-        {
-            string[] partitionIds = await producer.GetPartitionIdsAsync();
-            Console.WriteLine(partitionIds);
-
-            foreach (string partitionId in partitionIds)
-            {
-                var partitionProperties = await producer.GetPartitionPropertiesAsync(partitionId);
-                Console.WriteLine(partitionProperties);
-            }
-        }
-
-        await using (var consumer = new EventHubConsumerClient(consumerGroup, App.Settings.EventHubConnectionString, App.Settings.EventHubName))
-        {
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(TimeSpan.FromSeconds(45));
-
-            await foreach (PartitionEvent receivedEvent in consumer.ReadEventsAsync(cancellationSource.Token))
-            {
-                // At this point, the loop will wait for events to be available in the Event Hub.  When an event
-                // is available, the loop will iterate with the event that was received.  Because we did not
-                // specify a maximum wait time, the loop will wait forever unless cancellation is requested using
-                // the cancellation token.
-                Console.WriteLine(receivedEvent);
-                Console.WriteLine(receivedEvent.Partition);
-                Console.WriteLine(receivedEvent.Data.EventBody);
-            }
-        }
+        BindingContext = App.Repo.Containers[0].Plant;        
     }
 
     private void FanSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -83,6 +46,8 @@ public partial class DeviceView : ContentPage
 
     private void SetSwitchTextStatus(Switch actuatorSwitch, Label actuatorText)
     {
+        if (actuatorSwitch == null || actuatorText == null) return;
+
         if (actuatorSwitch.IsToggled)
         {
             actuatorText.Text = "ON";
