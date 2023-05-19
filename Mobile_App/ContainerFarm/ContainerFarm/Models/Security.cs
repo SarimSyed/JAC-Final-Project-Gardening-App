@@ -2,6 +2,7 @@
 using ContainerFarm.Models.Sensors;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace ContainerFarm.Models
 {
@@ -70,6 +71,7 @@ namespace ContainerFarm.Models
                 doorlockActuator = value;
             } }
         public BuzzerActuator BuzzerActuator { get { { return buzzerActuator; } } set { buzzerActuator = value; } }
+        
         public int IssuesCount
         {
             get {
@@ -85,6 +87,26 @@ namespace ContainerFarm.Models
 
                 return issuesCount; 
                 }
+        }
+
+        /// <summary>
+        /// Builds the list of issue messages.
+        /// </summary>
+        /// <returns></returns>
+        public string IssuesMessage()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (MotionSensor.Detected == MotionSensor.Detection.Detected.ToString())
+                stringBuilder.AppendLine("Motion was detected");
+            if (DoorSensor.Detected == DoorSensor.OpenClosed.Open.ToString())
+                stringBuilder.AppendLine("Door is open");
+            if (NoiseSensor.Detected == NoiseSensor.Detection.Detected.ToString())
+                stringBuilder.AppendLine("Noise was detected");
+            if (LuminositySensor.Detected == LuminositySensor.Detection.Detected.ToString())
+                stringBuilder.AppendLine("Luminosity was detected");
+
+            return stringBuilder.ToString();
         }
 
         public string IssuesUri

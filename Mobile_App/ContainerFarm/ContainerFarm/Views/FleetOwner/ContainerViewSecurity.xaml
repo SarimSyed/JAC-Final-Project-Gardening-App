@@ -33,8 +33,9 @@
                                            VerticalTextAlignment="Center"
                                            VerticalOptions="Center"/>
                                 </VerticalStackLayout>
-                                <Image Source="{Binding Security.IssuesUri}" Grid.Column="2" WidthRequest="30"
-                                           HorizontalOptions="Center"/>
+                                <ImageButton Source="{Binding Security.IssuesUri}" Grid.Column="2" WidthRequest="30"
+                                           HorizontalOptions="End"
+                                       Clicked="Issues_Warning_Btn_Clicked"/>
                             </Grid>
                         </Frame>
                     </DataTemplate>
