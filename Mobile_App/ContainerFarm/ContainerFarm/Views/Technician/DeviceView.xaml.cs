@@ -39,6 +39,8 @@ public partial class DeviceView : ContentPage
 
     private void LightSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
+        App.Repo.Containers[0].Plant.LightActuator.IsChanged = true;
+
         //Shows the confimation to the user that the fan has been turned on or off
         Switch lightSwitch = sender as Switch;
         SetSwitchTextStatus(lightSwitch, lightStatus);

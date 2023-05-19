@@ -32,8 +32,8 @@ namespace ContainerFarm.Models.Actuators
             get
             {
                 return IsOn
-                       ? "unlock"
-                       : "lock";
+                       ? "lock"
+                       : "unlock";
             }
         }
 
@@ -43,7 +43,7 @@ namespace ContainerFarm.Models.Actuators
         /// <param name="doorLockValue">The door lock value in string representation (e.g. 'unlock' or 'lock').</param>
         public void SetIsOn(string doorLockValue)
         {
-            IsOn = doorLockValue == "unlock"
+            IsOn = doorLockValue == "lock"
                  ? true
                  : false;
         }

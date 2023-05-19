@@ -183,7 +183,7 @@ public partial class LoginPage : ContentPage
                     throw;
                 }
 
-                if (twin == null)
+                if (twin == null || twin.ETag == null)
                     continue;
 
                 // Read and update values

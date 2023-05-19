@@ -8,10 +8,10 @@ from interfaces.sensors import AReading, ISensor
 from interfaces.actuators import ACommand, IActuator
 from time import sleep
 import json
+from interfaces.subsystem import ISubsystem
 
 
-
-class PlantSystem:
+class PlantSystem(ISubsystem):
     def __init__(self) -> None:
         self._sensors: list[ISensor] = self._initialize_sensors()
         self._actuators : list[IActuator] = self._initialize_actuators()

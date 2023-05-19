@@ -5,6 +5,7 @@ using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Shared;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,7 @@ namespace ContainerFarm.Services
                         desired: {{
                             ""{GeoLocationTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
                             ""{SecurityTwinProperties.DOOR_LOCK}"": ""{securityDoorLock}"",
+                            ""{SecurityTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
                             ""{PlantsTwinProperties.LED}"": ""{plantsLED}"",
                             ""{PlantsTwinProperties.FAN}"": ""{plantsFAN}"",
                         }}
@@ -56,6 +58,7 @@ namespace ContainerFarm.Services
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex);
                 throw;
             }
         }
@@ -113,7 +116,7 @@ namespace ContainerFarm.Services
                     Console.WriteLine($"Reported - new {GeoLocationTwinProperties.BUZZER} command: {buzzer_command}");
 
                     // Set the buzzer switch value according to if the buzzer was actually turned on
-                    if ((App.Repo.Containers[0].Location.BuzzerActuator.IsOn && App.Repo.Containers[0].Security.BuzzerActuator.IsOn) && buzzer_command == "off")
+                    if ((App.Repo.Containers[0].Location.BuzzerActuator.IsOn || App.Repo.Containers[0].Security.BuzzerActuator.IsOn) && buzzer_command == "off")
                     {
                         App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
                         App.Repo.Containers[0].Security.BuzzerActuator.IsOn = false;
@@ -133,12 +136,76 @@ namespace ContainerFarm.Services
 
         private static string SecurityDoorLockTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
-            return "unlock";
+            DoorlockActuator doorlock = App.Repo.Containers[0].Security.DoorlockActuator;
+
+            if (doorlock.IsChanged)
+            {
+                doorlock.IsChanged = false;
+
+                return doorlock.IsOnString;
+            }
+
+            //Check if desired properties contains plantsLED
+            if (desiredProperties.Contains(SecurityTwinProperties.DOOR_LOCK))
+            {
+                string door_command = (string) desiredProperties[SecurityTwinProperties.DOOR_LOCK];
+                Console.WriteLine($"Desired - new {SecurityTwinProperties.DOOR_LOCK} command: {door_command}");
+
+                //set led value according to cmd
+                App.Repo.Containers[0].Security.DoorlockActuator.SetIsOn(door_command);
+            }
+
+            //check if reported twin properties contains the plantsLed
+            if (reportedProperties.Contains(SecurityTwinProperties.DOOR_LOCK))
+            {
+                //get twin command
+                string door_command = (string) reportedProperties[SecurityTwinProperties.DOOR_LOCK];
+
+                Console.WriteLine($"Reported - new {SecurityTwinProperties.DOOR_LOCK} command: {door_command}");
+
+                //set the led switch value according to if the LED was actually turned on
+                if (App.Repo.Containers[0].Security.DoorlockActuator.IsOn && door_command == "unlock")
+                    App.Repo.Containers[0].Security.DoorlockActuator.IsOn = false;
+            }
+
+            return doorlock.IsOnString;
         }
         
         private static string PlantsLEDTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
-            return "lights-off";
+            LightActuator plantsLED = App.Repo.Containers[0].Plant.LightActuator;
+
+            if (plantsLED.IsChanged)
+            {
+                plantsLED.IsChanged = false;
+
+                return plantsLED.IsOnString;
+            }
+
+            //Check if desired properties contains plantsLED
+            if (desiredProperties.Contains(PlantsTwinProperties.LED))
+            {
+                string led_command = (string) desiredProperties[PlantsTwinProperties.LED];
+                Console.WriteLine($"Desired - new {PlantsTwinProperties.LED} command: {led_command}");
+
+                //set led value according to cmd
+                App.Repo.Containers[0].Plant.LightActuator.SetIsOn(led_command);
+            }
+
+            //check if reported twin properties contains the plantsLed
+            if (reportedProperties.Contains(PlantsTwinProperties.LED))
+            {
+                //get twin command
+                string led_command = (string) reportedProperties[PlantsTwinProperties.LED];
+
+                Console.WriteLine($"Reported - new {PlantsTwinProperties.LED} command: {led_command}");
+
+                //set the led switch value according to if the LED was actually turned on
+                if (App.Repo.Containers[0].Plant.LightActuator.IsOn && (led_command == "off" || led_command == "lights-off"))
+                    App.Repo.Containers[0].Plant.LightActuator.IsOn = false;
+            }
+
+            return plantsLED.IsOnString;
         }
         
         private static async Task<string> PlantsFANTwinAsync(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
@@ -183,8 +250,6 @@ namespace ContainerFarm.Services
                         App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                         Console.WriteLine("fan turned off");
-
-                        //await Application.Current.MainPage.DisplayAlert("fan turned off", "The fan wasn't turned on successfully. Please check if the container farm is running.", "OK");
                     }
                 }
 

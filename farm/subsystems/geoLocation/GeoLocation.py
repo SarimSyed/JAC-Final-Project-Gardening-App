@@ -4,11 +4,11 @@ from .GPSLocation import GPSLocation
 from .Pitch import Pitch
 from .RollAngle import RollAngle
 from .Vibration import Vibration
-
+from interfaces.subsystem import ISubsystem
 from interfaces.actuators import ACommand, IActuator
 from interfaces.sensors import AReading, ISensor
 
-class GeoLocation:
+class GeoLocation(ISubsystem):
     """The Geo-Location subsystem of the container farm.
     """    
     def __init__(self) -> None:

@@ -24,6 +24,8 @@ public partial class ContainerSecurityInfo : ContentPage
         if (doorLockSwitch == null || doorLockStatus == null)
             return;
 
+        App.Repo.Containers[0].Security.DoorlockActuator.IsChanged = true;
+
         if (doorLockSwitch.IsToggled)
         {
             doorLockStatus.Text = "ON";
@@ -38,13 +40,13 @@ public partial class ContainerSecurityInfo : ContentPage
 
     private void BuzzerSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
-        App.Repo.Containers[0].Security.BuzzerActuator.IsChanged = true;
-
         //Shows the user confirmation that the buzzer has been turned on or off.
         Switch buzzerSwitch = sender as Switch;
 
         if (buzzerSwitch == null || buzzerStatus == null)
             return;
+
+        App.Repo.Containers[0].Security.BuzzerActuator.IsChanged = true;
 
         if (buzzerSwitch.IsToggled)
         {

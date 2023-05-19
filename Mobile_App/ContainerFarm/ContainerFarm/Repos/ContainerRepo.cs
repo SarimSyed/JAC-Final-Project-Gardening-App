@@ -273,7 +273,7 @@ namespace ContainerFarm.Repos
                 Plant = new Plant()
                 {
                     Humidity = new HumiditySensor() { Name = "AH20", Value = 25 },
-                    LightActuator = new LightActuator() { IsOn = true, Name = "Light" },
+                    LightActuator = new LightActuator() { IsOn = false, Name = "Light" },
                     SoilMoisture = new SoilMoistureSensor() { Value = 50, Name = "Moisture Sensor" },
                     Temperature = new TemperatureSensor() { Name = "AH20", Value = 15 },
                     WaterLevel = new WaterLevelSensor() { Name = "Water Level", Value = 10 }
@@ -290,7 +290,7 @@ namespace ContainerFarm.Repos
                 {
                     BuzzerActuator = new BuzzerActuator() { Name = "Buzzer", IsOn = false },
                     DoorSensor = new DoorSensor() { Name = "Door Sensor", Value = 0 },
-                    DoorlockActuator = new DoorlockActuator() { Name = "Door Lock", IsOn = true },
+                    DoorlockActuator = new DoorlockActuator() { Name = "Door Lock", IsOn = false },
                     LuminositySensor = new LuminositySensor() { Name = "Light Sensor", Value = 1 },
                     MotionSensor = new MotionSensor() { Name = "Motion Sensor", Value = 0 },
                     NoiseSensor = new NoiseSensor() { Value = 0, Name = "Noise Sensor" },

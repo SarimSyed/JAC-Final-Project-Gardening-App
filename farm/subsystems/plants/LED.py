@@ -6,8 +6,8 @@ class Led(IActuator):
 
     ON = "on"
     OFF = "off"
-    LIGHT_ON = 'lights-on'
-    LIGHT_OFF = 'lights-off'
+    LIGHT_ON = 'on'
+    LIGHT_OFF = 'off'
     LIGHT_BRIGHT = 'max-brightness'
     LIGHT_MEDIUM = 'mid-brightness'
     NUM_OF_LEDS = 10
@@ -99,9 +99,9 @@ if __name__ == "__main__":
     print("initialize")
     led = Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_ON})
     print("values")
-    fake_msg = '{"value": "light-off"}'
+    fake_msg = '{"value": "off"}'
     test_off_cmd = ACommand(ACommand.Type.LED, fake_msg)
-    fake_msg = '{"value": "light-on"}'
+    fake_msg = '{"value": "on"}'
     test_on_cmd = ACommand(ACommand.Type.LED, fake_msg)
     print("loop")
     while True:
