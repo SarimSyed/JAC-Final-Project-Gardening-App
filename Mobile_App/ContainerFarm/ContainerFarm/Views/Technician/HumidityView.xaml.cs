@@ -32,24 +32,8 @@ public partial class HumidityView : ContentPage
         new LineSeries<double>
         {
             Values = ContainerRepo.HumidityValues.Select(humiValue => humiValue.Value),
-            DataLabelsFormatter = (point) => $"Humidity: {point.PrimaryValue.ToString("F2")}"
+            DataLabelsFormatter = (point) => $"Humidity: {point.PrimaryValue.ToString("F2")}",
+            TooltipLabelFormatter = (point) => $"Humidity: {point.PrimaryValue.ToString("F2")}"
         }
     };
-
-
-    //private static IEnumerable<TempHumiPoint> GetHumiPoints()
-    //{
-    //    ObservableCollection<TempHumiPoint> tempHumiPoints = new ObservableCollection<TempHumiPoint>();
-
-    //    foreach (TempHumiGraphValue tempHumiGraphValue in ContainerRepo.HumidityValues)
-    //    {
-    //        tempHumiPoints.Add(new TempHumiPoint
-    //        {
-    //            Value = tempHumiGraphValue.Value,
-    //            EnqueuedTime = tempHumiGraphValue.EnqueuedTime.Hour
-    //        });
-    //    }
-
-    //    return tempHumiPoints;
-    //}
 }

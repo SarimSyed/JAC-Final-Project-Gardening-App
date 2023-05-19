@@ -98,7 +98,7 @@ namespace ContainerFarm.Services
                 if (desiredProperties.Contains(GeoLocationTwinProperties.BUZZER))
                 {
                     // Get the twin buzzer command
-                    string buzzer_command = (string) desiredProperties[GeoLocationTwinProperties.BUZZER];
+                    string buzzer_command = (string)desiredProperties[GeoLocationTwinProperties.BUZZER];
 
                     Console.WriteLine($"Desired - new {GeoLocationTwinProperties.BUZZER} command: {buzzer_command}");
 
@@ -106,6 +106,8 @@ namespace ContainerFarm.Services
                     App.Repo.Containers[0].Location.BuzzerActuator.SetIsOn(buzzer_command);
                     App.Repo.Containers[0].Security.BuzzerActuator.SetIsOn(buzzer_command);
                 }
+                else
+                    App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
 
                 // Check if the reported twin properties contains the geolocationBuzzer
                 if (reportedProperties.Contains(GeoLocationTwinProperties.BUZZER))
@@ -125,6 +127,8 @@ namespace ContainerFarm.Services
                         //await Application.Current.MainPage.DisplayAlert("Buzzer turned off", "The buzzer wasn't turned on successfully. Please check if the container farm is running.", "OK");
                     }
                 }
+                else
+                    App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;
 
                 return geoLocationBuzzer.IsOnString;
             }
@@ -154,6 +158,8 @@ namespace ContainerFarm.Services
                 //set led value according to cmd
                 App.Repo.Containers[0].Security.DoorlockActuator.SetIsOn(door_command);
             }
+            else
+                App.Repo.Containers[0].Security.DoorlockActuator.IsOn = false;
 
             //check if reported twin properties contains the plantsLed
             if (reportedProperties.Contains(SecurityTwinProperties.DOOR_LOCK))
@@ -167,6 +173,8 @@ namespace ContainerFarm.Services
                 if (App.Repo.Containers[0].Security.DoorlockActuator.IsOn && door_command == "unlock")
                     App.Repo.Containers[0].Security.DoorlockActuator.IsOn = false;
             }
+            else
+                App.Repo.Containers[0].Security.DoorlockActuator.IsOn = false;
 
             return doorlock.IsOnString;
         }
@@ -191,6 +199,8 @@ namespace ContainerFarm.Services
                 //set led value according to cmd
                 App.Repo.Containers[0].Plant.LightActuator.SetIsOn(led_command);
             }
+            else
+                App.Repo.Containers[0].Plant.LightActuator.IsOn = false;
 
             //check if reported twin properties contains the plantsLed
             if (reportedProperties.Contains(PlantsTwinProperties.LED))
@@ -204,6 +214,8 @@ namespace ContainerFarm.Services
                 if (App.Repo.Containers[0].Plant.LightActuator.IsOn && (led_command == "off" || led_command == "lights-off"))
                     App.Repo.Containers[0].Plant.LightActuator.IsOn = false;
             }
+            else
+                App.Repo.Containers[0].Plant.LightActuator.IsOn = false;
 
             return plantsLED.IsOnString;
         }
@@ -235,6 +247,8 @@ namespace ContainerFarm.Services
                     // Set the fan value according to the command
                     App.Repo.Containers[0].Plant.FanActuator.SetIsOn(fan_command);
                 }
+                else
+                    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                 // Check if the reported twin properties contains the plantsFan
                 if (reportedProperties.Contains(PlantsTwinProperties.FAN))
@@ -252,6 +266,8 @@ namespace ContainerFarm.Services
                         Console.WriteLine("fan turned off");
                     }
                 }
+                else
+                    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                 return plantsFan.IsOnString;
             }

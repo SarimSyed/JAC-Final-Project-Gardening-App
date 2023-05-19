@@ -1,4 +1,5 @@
 ﻿using ContainerFarm.Services;
+using Microsoft.Azure.Devices.Common.Exceptions;
 
 namespace ContainerFarm;
 
@@ -18,8 +19,13 @@ public partial class AppShell : Shell
     {
         try 
         {
-            await D2CService.Processor.StopProcessingAsync();
-         
+            //while (D2CService.Processor.IsRunning)
+            //{
+            //    Console.WriteLine(D2CService.Processor.IsRunning);
+            //}
+
+            await D2CService.Processor.StopProcessingAsync(new CancellationToken(true));
+                     
             // Validates that there's a signed in user
             if (AuthService.Client.User == null)
                 return;
@@ -29,6 +35,11 @@ public partial class AppShell : Shell
 
             // Correctly logged in
             await Shell.Current.GoToAsync("//Login");
+        }
+        catch (IotHubCommunicationException ex)
+        {
+            // Display alert message
+            await DisplayAlert("Invalid information", $"{ex.Message}", "OK");
         }
         catch (Exception ex)
         {

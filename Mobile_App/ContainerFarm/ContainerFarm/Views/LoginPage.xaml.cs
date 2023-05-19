@@ -6,6 +6,7 @@ using Firebase.Auth;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Common.Exceptions;
 using Microsoft.Azure.Devices.Shared;
+using System.Threading;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContainerFarm.Views;
@@ -146,13 +147,19 @@ public partial class LoginPage : ContentPage
             ActuatorsDeviceTwinService.RegistryManager ??= RegistryManager.CreateFromConnectionString(App.Settings.HubConnectionString);
 
             // Create a new thread for the twin readings
-            Thread twinThread = new Thread(ProcessTwinProperties);
+            Thread twinThread = new Thread(ProcessTwinProperties)
+            {
+                Name = "twinThread"
+            };
             twinThread.Start();
         }
         catch (IotHubCommunicationException ex)
         {
             // Create a new thread for the twin readings
-            Thread twinThread = new Thread(ProcessTwinProperties);
+            Thread twinThread = new Thread(ProcessTwinProperties)
+            {
+                Name = "twinThread"
+            };
             twinThread.Start();
         }
         catch (Exception ex)
@@ -177,7 +184,7 @@ public partial class LoginPage : ContentPage
                 {
                     twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
                 }
-                catch (IotHubCommunicationException ex)
+                catch (IotHubCommunicationException ex) 
                 {
                     Console.WriteLine(ex);
                     throw;

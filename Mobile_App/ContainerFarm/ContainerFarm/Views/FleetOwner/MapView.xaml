@@ -15,7 +15,6 @@
                   MapType="Street" 
                   Grid.Row="1"
                   IsZoomEnabled="True"
-                  IsShowingUser="True"
-                  IsTrafficEnabled="True"/>
+                  IsShowingUser="True"/>
     </Grid>
 </ContentPage>

@@ -30,7 +30,8 @@ public partial class TemperatureView : ContentPage
         new LineSeries<double>
         {
             Values = ContainerRepo.TemperatureValues.Select(tempValue => tempValue.Value),
-            DataLabelsFormatter = (point) => $"Temperature: {point.PrimaryValue.ToString("F2")}"
+            DataLabelsFormatter = (point) => $"Temperature: {point.PrimaryValue.ToString("F2")}",
+            TooltipLabelFormatter = (point) => $"Temperature: {point.PrimaryValue.ToString("F2")}"
         }
     };
 }
