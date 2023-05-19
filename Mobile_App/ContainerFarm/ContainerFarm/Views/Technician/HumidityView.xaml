@@ -28,6 +28,7 @@
                 
             x:Name="pie_chart"
             TooltipTextSize="40"
+                    LegendTextSize="50"
             />
             </Frame>
         </Grid>

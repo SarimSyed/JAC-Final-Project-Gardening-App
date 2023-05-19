@@ -190,11 +190,11 @@ public partial class LoginPage : ContentPage
                 ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
                 Thread.Sleep(1000);
             }
-            catch (IotHubCommunicationException)
+            catch (IotHubCommunicationException ex)
             {
                 throw;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
