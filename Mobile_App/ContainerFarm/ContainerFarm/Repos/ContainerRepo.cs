@@ -13,6 +13,7 @@ using System.Globalization;
 using ContainerFarm.Enums;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs;
+using Microsoft.Azure.Amqp.Framing;
 
 namespace ContainerFarm.Repos
 {
@@ -295,39 +296,52 @@ namespace ContainerFarm.Repos
                     NoiseSensor = new NoiseSensor() { Value = 0, Name = "Noise Sensor" },
                 }
 
-            //}); _containers.Add(new Container()
-            //{
-            //    Name = "Container 2",
-            //    Plant = new Plant()
-            //    {
-            //        Humidity = new HumiditySensor() { Name = "AH20", Value = 10 },
-            //        LightActuator = new LightActuator() { IsOn = true, Name = "Light" },
-            //        SoilMoisture = new SoilMoistureSensor() { Value = 50, Name = "Moisture Sensor" },
-            //        Temperature = new TemperatureSensor() { Name = "AH20", Value = 50 },
-            //        WaterLevel = new WaterLevelSensor() { Name = "Water Level", Value = 11 }
-            //    },
-            //    Location = new GeoLocation()
-            //    {
-            //        BuzzerActuator = new BuzzerActuator() { IsOn = false, Name = "Buzzer" },
-            //        GpsSensor = new GpsSensor() { Address = "John Abbott", Coordinates = "1.1.1.1.1.1", Name = "Sesame Street", Value = 0 },
-            //        PitchAngleSensor = new PitchAngleSensor() { Value = 4, Name = "Acelerometer" },
-            //        RollAngleSensor = new RollAngleSensor() { Name = "Acelerometer", Value = 3 },
-            //        VibrationSensor = new VibrationSensor() { Name = "Vibration Sensor", Value = 5 },
-            //    },
-            //    Security = new Models.Security()
-            //    {
-            //        BuzzerActuator = new BuzzerActuator() { Name = "Buzzer", IsOn = false },
-            //        DoorSensor = new DoorSensor() { Name = "Door Sensor", Value = 0 },
-            //        DoorlockActuator = new DoorlockActuator() { Name = "Door Lock", IsOn = true },
-            //        LuminositySensor = new LuminositySensor() { Name = "Light Sensor", Value = 1 },
-            //        MotionSensor = new MotionSensor() { Name = "Motion Sensor", Value = 1 },
-            //        NoiseSensor = new NoiseSensor() { Value = 1, Name = "Noise Sensor" },
-            //    }
+                //}); _containers.Add(new Container()
+                //{
+                //    Name = "Container 2",
+                //    Plant = new Plant()
+                //    {
+                //        Humidity = new HumiditySensor() { Name = "AH20", Value = 10 },
+                //        LightActuator = new LightActuator() { IsOn = true, Name = "Light" },
+                //        SoilMoisture = new SoilMoistureSensor() { Value = 50, Name = "Moisture Sensor" },
+                //        Temperature = new TemperatureSensor() { Name = "AH20", Value = 50 },
+                //        WaterLevel = new WaterLevelSensor() { Name = "Water Level", Value = 11 }
+                //    },
+                //    Location = new GeoLocation()
+                //    {
+                //        BuzzerActuator = new BuzzerActuator() { IsOn = false, Name = "Buzzer" },
+                //        GpsSensor = new GpsSensor() { Address = "John Abbott", Coordinates = "1.1.1.1.1.1", Name = "Sesame Street", Value = 0 },
+                //        PitchAngleSensor = new PitchAngleSensor() { Value = 4, Name = "Acelerometer" },
+                //        RollAngleSensor = new RollAngleSensor() { Name = "Acelerometer", Value = 3 },
+                //        VibrationSensor = new VibrationSensor() { Name = "Vibration Sensor", Value = 5 },
+                //    },
+                //    Security = new Models.Security()
+                //    {
+                //        BuzzerActuator = new BuzzerActuator() { Name = "Buzzer", IsOn = false },
+                //        DoorSensor = new DoorSensor() { Name = "Door Sensor", Value = 0 },
+                //        DoorlockActuator = new DoorlockActuator() { Name = "Door Lock", IsOn = true },
+                //        LuminositySensor = new LuminositySensor() { Name = "Light Sensor", Value = 1 },
+                //        MotionSensor = new MotionSensor() { Name = "Motion Sensor", Value = 1 },
+                //        NoiseSensor = new NoiseSensor() { Value = 1, Name = "Noise Sensor" },
+                //    }
 
             });
+
+            Do();
+
+            
 
 
         }
 
+        private async void Do()
+        {
+            IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(_containers[0].Location.GpsSensor.Address);
+
+            Location location = locations?.FirstOrDefault();
+
+            if (location != null)
+                Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
+        }
     }
 }
