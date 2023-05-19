@@ -168,10 +168,11 @@ class ConnectionManager:
                 raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, message_value)
                 
                 led_command = ACommand(ACommand.Type.LED, raw_message_body)
-                value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.plants , led_command)
-                if value_changed:
-                    print(f"New LED state:  {message_value}")
-                    await self._report_actuator_twin_property(ConnectionManager.PLANTS_LED_PROPERTY, message_value)
+                self.subsystems_controller.control_actuator(self.subsystems_controller.plants , led_command)
+                
+                # if value_changed:
+                print(f"New LED state:  {message_value}")
+                await self._report_actuator_twin_property(ConnectionManager.PLANTS_LED_PROPERTY, message_value)
 
         #PLANT FAN 
         if ConnectionManager.PLANTS_FAN_PROPERTY in desired_properties:
@@ -179,10 +180,10 @@ class ConnectionManager:
                 raw_message_body = self.create_raw_message_body(ConnectionManager.PROPERTY_KEY_NAME, message_value)
                 
                 fan_command = ACommand(ACommand.Type.FAN, raw_message_body)
-                value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.plants , fan_command)
-                if value_changed:
-                    print(f"New LED state:  {message_value}")
-                    await self._report_actuator_twin_property(ConnectionManager.PLANTS_FAN_PROPERTY, message_value)
+                self.subsystems_controller.control_actuator(self.subsystems_controller.plants , fan_command)
+                
+                print(f"New FAN state:  {message_value}")
+                await self._report_actuator_twin_property(ConnectionManager.PLANTS_FAN_PROPERTY, message_value)
                
 
         #SECURITY DOOR LOCK
@@ -198,12 +199,11 @@ class ConnectionManager:
             doorlock_command = ACommand(ACommand.Type.DOORLOCK, raw_message_body)
 
             #Calls the command from subsystems controller
-            value_changed = self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
+            self.subsystems_controller.control_actuator(self.subsystems_controller.security , doorlock_command)
 
             #Prints new door lock value if it was valid and sets the reported twin properties
-            if(value_changed):
-                print(f"New door lock value: {doorlock_value}")
-                await self._report_actuator_twin_property(ConnectionManager.SECURITY_DOORLOCK_PROPERTY, doorlock_value)
+            print(f"New door lock value: {doorlock_value}")
+            await self._report_actuator_twin_property(ConnectionManager.SECURITY_DOORLOCK_PROPERTY, doorlock_value)
 
     async def _handle_buzzer_twin_property(self, desired_properties, subsystem, property_name):
         """Handles the buzzer twin property for the specified subsystem (geolocation or security).
@@ -228,9 +228,9 @@ class ConnectionManager:
         value_changed = self.subsystems_controller.control_actuator(subsystem, buzzer_command)
 
         # Prints new door lock value if it was valid and sets the reported twin properties
-        if value_changed:
-            print(f"New security buzzer value: {buzzer_value}")
-            await self._report_actuator_twin_property(property_name, buzzer_value)
+        # if value_changed:
+        print(f"New security buzzer value: {buzzer_value}")
+        await self._report_actuator_twin_property(property_name, buzzer_value)
 
     async def _report_actuator_twin_property(self, property_name: str, property_value: str):
         """Updates the actuator's report properties when desired property is updated in IoT Hub.
