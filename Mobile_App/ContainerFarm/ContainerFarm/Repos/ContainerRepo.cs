@@ -281,7 +281,7 @@ namespace ContainerFarm.Repos
                 Location = new GeoLocation()
                 {
                     BuzzerActuator = new BuzzerActuator() { IsOn = false, Name = "Buzzer" },
-                    GpsSensor = new GpsSensor() { Address = "21 275 Rue Lakeshore Road, Sainte-Anne-de-Bellevue, QC H9X 3L9", Coordinates = "1.1.1.1.1.1", Name = "Sesame Street", Value = 0 },
+                    GpsSensor = new GpsSensor() { Address = "21 275 Rue Lakeshore Road, Sainte-Anne-de-Bellevue, QC H9X 3L9", Coordinates = "1.1.1.1.1.1", Name = "John Abbott College", Value = 0 },
                     PitchAngleSensor = new PitchAngleSensor() { Value = 10, Name = "Acelerometer" },
                     RollAngleSensor = new RollAngleSensor() { Name = "Acelerometer", Value = 1 },
                     VibrationSensor = new VibrationSensor() { Name = "Vibration Sensor", Value = 0 },
@@ -326,22 +326,6 @@ namespace ContainerFarm.Repos
                 //    }
 
             });
-
-            Do();
-
-            
-
-
-        }
-
-        private async void Do()
-        {
-            IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(_containers[0].Location.GpsSensor.Address);
-
-            Location location = locations?.FirstOrDefault();
-
-            if (location != null)
-                Console.WriteLine($"Latitude: {location.Latitude}, Longitude: {location.Longitude}, Altitude: {location.Altitude}");
         }
     }
 }
