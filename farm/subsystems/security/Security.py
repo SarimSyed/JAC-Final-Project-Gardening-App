@@ -8,9 +8,9 @@ from .DoorLock import DoorLock
 from .Luminosity import Luminosity
 from .Motion import Motion
 from .Noise import Noise
+from interfaces.subsystem import ISubsystem
 
-
-class Security:
+class Security(ISubsystem):
 
     def __init__(self) -> None:
         self._sensors: list[ISensor] = self._initialize_sensors()
