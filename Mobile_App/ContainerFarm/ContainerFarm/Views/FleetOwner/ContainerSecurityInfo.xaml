@@ -7,6 +7,7 @@
           RowSpacing="45">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
@@ -170,57 +171,9 @@
                 </Grid>
             </Grid>
         </Grid>
-        </Grid>
+
+        <Button Grid.Row="2"
+                Text="Show on map"
+                Clicked="Show_On_Map_Btn_Clicked"/>
+    </Grid>
 </ContentPage>
-<!--<Grid Padding="15" HorizontalOptions="Center">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-
-        --><!--Noise Level--><!--
-        <Label Text="Noise" Grid.Column="0" Grid.Row="0" FontSize="Medium" Margin="0,15" HorizontalOptions="Center" FontAttributes="Bold"/>
-        <Frame BorderColor="Black" CornerRadius="10" Grid.Column="0" Grid.Row="1" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding NoiseSensor.Detected}" FontSize="Small" HorizontalOptions="Center"/>
-        </Frame>
-
-        --><!--Luminosity Level--><!--
-        <Label Text="Luminosity" Grid.Column="1" Grid.Row="0" FontSize="Medium" HorizontalOptions="Center" Margin="0,15" FontAttributes="Bold"/>
-        <Frame BorderColor="Black" CornerRadius="10" Grid.Column="1" Grid.Row="1" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding LuminositySensor.Detected}" FontSize="Small" HorizontalOptions="Center"/>
-        </Frame>
-
-        --><!--Motion--><!--
-        <Label Text="Motion" Grid.Column="0" Grid.Row="2" FontSize="Medium" Margin="0,15" HorizontalOptions="Center" FontAttributes="Bold"/>
-        <Frame BorderColor="Black" CornerRadius="10" Grid.Column="0" Grid.Row="3" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding MotionSensor.Detected}" FontSize="Small" HorizontalOptions="Center"/>
-        </Frame>
-
-        --><!-- Door --><!--
-        <Label Text="Door" Grid.Column="1" Grid.Row="2" FontSize="Medium" HorizontalOptions="Center" Margin="0,15" FontAttributes="Bold"/>
-        <Frame BorderColor="Black" CornerRadius="10" Grid.Column="1" Grid.Row="3" HorizontalOptions="Center" Margin="25,0" WidthRequest="130">
-            <Label Text="{Binding DoorSensor.Detected}" FontSize="Small" HorizontalOptions="Center"/>
-        </Frame>
-
-        --><!--Door lock--><!--
-        <Label Text="Door Lock" Grid.Row="4" Grid.Column="0" Margin="25,50,25,0" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
-        <Switch IsToggled="{Binding DoorLockActuator.IsOn}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" Margin="0,50,0,0" PropertyChanged="DoorLockSwitch_PropertyChanged"/>
-        <Label x:Name="doorLockStatus" Grid.Row="4" Grid.Column="1" Margin="20,50,0,0" VerticalOptions="Center"/>
-
-        --><!--Buzzer--><!--
-        <Label Text="Buzzer" Grid.Row="5" Grid.Column="0" Margin="25,0" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold"/>
-        <Switch IsToggled="{Binding BuzzerActuator.IsOn}" Grid.Row="5"  Grid.Column="0" Grid.ColumnSpan="1" PropertyChanged="BuzzerSwitch_PropertyChanged"/>
-        <Label x:Name="buzzerStatus" Grid.Row="5" Grid.Column="1" Margin="20,0,0,0" VerticalOptions="Center"/>
-
-
-
-    </Grid>-->

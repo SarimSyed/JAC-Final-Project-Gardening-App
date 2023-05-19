@@ -7,6 +7,7 @@
           RowSpacing="40">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
@@ -151,5 +152,9 @@
                 </Grid>
             </Grid>
         </Grid>
+
+        <Button Grid.Row="2"
+                Text="Show on map"
+                Clicked="Show_On_Map_Btn_Clicked"/>
     </Grid>
 </ContentPage>

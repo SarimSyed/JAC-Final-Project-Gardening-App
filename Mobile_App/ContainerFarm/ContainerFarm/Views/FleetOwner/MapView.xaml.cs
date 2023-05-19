@@ -8,14 +8,22 @@ using Microsoft.Maui.Maps;
 using Map = Microsoft.Maui.Controls.Maps.Map;
 
 
-public partial class MapView : ContentPage
+public partial class MapView : ContentPage, IQueryAttributable
 {
 	public MapView()
 	{
 		InitializeComponent();
 
         AddContainersToMap();
-        PanToFirstContainerLocation();
+        PanToContainerLocationAsync(App.Repo.Containers[0].Location.GpsSensor.Address);
+    }
+
+    /// <summary>
+    /// Asks the user for permission to access their location when app loads.
+    /// </summary>
+    protected async override void OnAppearing()
+    {
+        await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
     }
 
     /// <summary>
@@ -54,11 +62,8 @@ public partial class MapView : ContentPage
     /// <summary>
     /// Pans to the first container's location on the map.
     /// </summary>
-    private async void PanToFirstContainerLocation()
+    private void PanToContainerLocation(Location location)
     {
-        // Get the location
-        Location location = await GetContainerMapCoordinates(App.Repo.Containers[0].Location.GpsSensor.Address);
-
         if (location == null) return;
 
         MapSpan mapSpan = MapSpan.FromCenterAndRadius(location, Distance.FromKilometers(0.44));
@@ -66,10 +71,24 @@ public partial class MapView : ContentPage
     }
 
     /// <summary>
-    /// Asks the user for permission to access their location when app loads.
+    /// Pans to the first container's location on the map asynchronously.
     /// </summary>
-    protected async override void OnAppearing()
+    /// <param name="address"></param>
+    private async void PanToContainerLocationAsync(string address)
     {
-        await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+        Location location = await GetContainerMapCoordinates(address);
+        PanToContainerLocation(location);
+    }
+
+    /// <summary>
+    /// Gets the query attributes from the location.
+    /// </summary>
+    /// <param name="query"></param>
+    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    {
+        if (query == null) return;
+
+        string address = query["address"] as string;
+        PanToContainerLocationAsync(address);
     }
 }

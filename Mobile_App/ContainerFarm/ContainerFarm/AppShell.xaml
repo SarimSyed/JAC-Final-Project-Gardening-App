@@ -74,7 +74,8 @@
             
         </Tab>
         <Tab Title="Map"
-             Icon="marker.png">
+             Icon="marker.png"
+             Route="Map">
             <ShellContent Title="Map" 
                           ContentTemplate="{DataTemplate fleetowner:MapView}"/>
         </Tab>
