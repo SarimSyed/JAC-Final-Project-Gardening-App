@@ -24,6 +24,29 @@ namespace ContainerFarm.Models.Actuators
         {
             get; set;
         }
+
+        public bool IsChanged { get; set; }
+
+        public string IsOnString
+        {
+            get
+            {
+                return IsOn
+                       ? "on"
+                       : "off";
+            }
+        }
+        /// <summary>
+        /// Sets the IsOn property of the <see cref="FanActuator"/> class based on the specified IsOn string representation.
+        /// </summary>
+        /// <param name="ledValue">The LED value in string representation (e.g. 'on' or 'off').</param>
+        public void SetIsOn(string ledValue)
+        {
+            IsOn = ledValue == "on"
+                 ? true
+                 : false;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }
