@@ -45,6 +45,15 @@ public partial class DeviceView : ContentPage
         Switch lightSwitch = sender as Switch;
         SetSwitchTextStatus(lightSwitch, lightStatus);
     }
+    
+    private void DoorLockSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        App.Repo.Containers[0].Security.DoorlockActuator.IsChanged = true;
+
+        //Shows the confimation to the user that the door lock has been turned on or off
+        Switch doorLockSwitch = sender as Switch;
+        SetSwitchTextStatus(doorLockSwitch, doorLockStatus);
+    }
 
     private void SetSwitchTextStatus(Switch actuatorSwitch, Label actuatorText)
     {

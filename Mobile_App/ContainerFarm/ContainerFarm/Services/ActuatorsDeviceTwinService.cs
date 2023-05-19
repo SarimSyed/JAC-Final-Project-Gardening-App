@@ -38,23 +38,23 @@ namespace ContainerFarm.Services
                 string plantsFAN = await PlantsFANTwinAsync(twin, desiredProperties, reportedProperties);
 
                 // Create the new twin patch
-                var patch =
-                    $@"{{
-                    properties: {{
-                        desired: {{
-                            ""{GeoLocationTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
-                            ""{SecurityTwinProperties.DOOR_LOCK}"": ""{securityDoorLock}"",
-                            ""{SecurityTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
-                            ""{PlantsTwinProperties.LED}"": ""{plantsLED}"",
-                            ""{PlantsTwinProperties.FAN}"": ""{plantsFAN}"",
-                        }}
-                    }}
-                }}";
+                //var patch =
+                //    $@"{{
+                //    properties: {{
+                //        desired: {{
+                //            ""{GeoLocationTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
+                //            ""{SecurityTwinProperties.DOOR_LOCK}"": ""{securityDoorLock}"",
+                //            ""{SecurityTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
+                //            ""{PlantsTwinProperties.LED}"": ""{plantsLED}"",
+                //            ""{PlantsTwinProperties.FAN}"": ""{plantsFAN}"",
+                //        }}
+                //    }}
+                //}}";
 
-                // Update the device twin with the new patch
-                await RegistryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
+                //// Update the device twin with the new patch
+                //await RegistryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
 
-                Console.WriteLine(twin.Properties.Reported);
+                //Console.WriteLine(twin.Properties.Reported);
             }
             catch (Exception ex)
             {
@@ -247,8 +247,8 @@ namespace ContainerFarm.Services
                     // Set the fan value according to the command
                     App.Repo.Containers[0].Plant.FanActuator.SetIsOn(fan_command);
                 }
-                else
-                    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
+                //else
+                //    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                 // Check if the reported twin properties contains the plantsFan
                 if (reportedProperties.Contains(PlantsTwinProperties.FAN))
@@ -266,8 +266,8 @@ namespace ContainerFarm.Services
                         Console.WriteLine("fan turned off");
                     }
                 }
-                else
-                    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
+                //else
+                //    App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                 return plantsFan.IsOnString;
             }
