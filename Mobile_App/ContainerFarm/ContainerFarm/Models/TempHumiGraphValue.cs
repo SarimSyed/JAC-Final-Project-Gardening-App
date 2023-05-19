@@ -17,7 +17,8 @@ namespace ContainerFarm.Models
         {
             get
             {
-                return $"{EnqueuedTime.ToString("M")}, {EnqueuedTime.Year}  {GetHourFrom12HourClock()}:{EnqueuedTime.Minute} {AM_PM_VALUE()}";
+                int hour = GetHourFrom12HourClock();
+                return $"{EnqueuedTime.ToString("M")}, {EnqueuedTime.Year}  {hour}:{EnqueuedTime.Minute} {AM_PM_VALUE(hour)}";
             }
         }
 
@@ -25,16 +26,26 @@ namespace ContainerFarm.Models
         /// Gets the AM or PM string representation of the Hour.
         /// </summary>
         /// <returns>The AM or PM string representation of the Hour.</returns>
-        private string AM_PM_VALUE()
+        private string AM_PM_VALUE(int hour)
         {
-            return EnqueuedTime.Hour >= 0 && EnqueuedTime.Hour <= 12
+            // Compress this
+            int UTC_EST_difference = EnqueuedTime.Hour - UTC_EST_TIME_HOUR_DIFF;
+
+            if (UTC_EST_difference < 0)
+                UTC_EST_difference += 24;
+
+            return UTC_EST_difference >= 0 && UTC_EST_difference <= 12
                 ? "AM"
                 : "PM";
         }
 
         private int GetHourFrom12HourClock()
         {
+            // Compress this
             int UTC_EST_difference = EnqueuedTime.Hour - UTC_EST_TIME_HOUR_DIFF;
+
+            if (UTC_EST_difference < 0)
+                UTC_EST_difference += 12;
 
             return UTC_EST_difference > 12
                 ? UTC_EST_difference - 12
