@@ -280,8 +280,12 @@ class ConnectionManager:
         msg.content_encoding = "utf-8"
         msg.content_type = "application/json"
 
+        try:
             
-        await self._client.send_message(msg)
+            await self._client.send_message(msg)
+        
+        except Exception as e:
+            print("Error: ", e)
 
     def create_raw_message_body(self, key, value):
         """Create a json message body to set the state of the actuators.
