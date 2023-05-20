@@ -48,17 +48,22 @@ namespace ContainerFarm.Services
                 string securityDoorLock = SecurityDoorLockTwin(twin, desiredProperties, reportedProperties);
                 string plantsLED = PlantsLEDTwin(twin, desiredProperties, reportedProperties);
                 string plantsFAN = await PlantsFANTwinAsync(twin, desiredProperties, reportedProperties);
+                int telemetryInterval = TelemetryIntervalModel.TelemetryInterval;
 
                 // Create the new twin patch
                 var patch =
                     $@"{{
                     properties: {{
                         desired: {{
+                            ""{TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY}"": {telemetryInterval},
                             ""{GeoLocationTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
                             ""{SecurityTwinProperties.DOOR_LOCK}"": ""{securityDoorLock}"",
                             ""{SecurityTwinProperties.BUZZER}"": ""{geolocationBuzzer}"",
                             ""{PlantsTwinProperties.LED}"": ""{plantsLED}"",
                             ""{PlantsTwinProperties.FAN}"": ""{plantsFAN}"",
+                        }},
+                        reported: {{
+                            ""{TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY}"": {telemetryInterval}
                         }}
                     }}
                 }}";
@@ -265,7 +270,7 @@ namespace ContainerFarm.Services
                 if (reportedProperties.Contains(PlantsTwinProperties.FAN))
                 {
                     // Get the twin fan command
-                    string fan_command = reportedProperties[PlantsTwinProperties.FAN];
+                    string fan_command = (string) reportedProperties[PlantsTwinProperties.FAN];
 
                     Console.WriteLine($"Reported - new {PlantsTwinProperties.FAN} command: {fan_command}");
 

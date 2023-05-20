@@ -1,6 +1,7 @@
 using ContainerFarm.Config;
 using ContainerFarm.Enums;
 using ContainerFarm.Helpers;
+using ContainerFarm.Models;
 using ContainerFarm.Services;
 using Firebase.Auth;
 using Microsoft.Azure.Devices;
@@ -93,6 +94,8 @@ public partial class LoginPage : ContentPage
                     break;
             }
 
+            PreferencesService.SetDefaultPreferences();
+
             // Display successful login
             ShowSnackbar.NewSnackbar($"Logged in successfully!");
 
@@ -182,24 +185,15 @@ public partial class LoginPage : ContentPage
             try
             {
                 // Create the twin with the specified device ID
-                Twin twin;
-
-                try
-                {
-                    twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
-                }
-                catch (IotHubCommunicationException ex) 
-                {
-                    Console.WriteLine(ex);
-                    throw;
-                }
+                Twin twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
 
                 if (twin == null || twin.ETag == null)
                     continue;
 
                 // Read and update values
                 ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
-                Thread.Sleep(ActuatorsDeviceTwinService.SLEEP_LOOP_TIME);
+                Thread.Sleep(TelemetryIntervalModel.TelemetryInterval * 1000);
+                Console.WriteLine($"Sleeping: {TelemetryIntervalModel.TelemetryInterval} seconds");
             }
             catch (AggregateException ex)
             {
@@ -207,6 +201,7 @@ public partial class LoginPage : ContentPage
             }
             catch (IotHubCommunicationException ex)
             {
+                Console.WriteLine(ex);
                 throw;
             }
             catch (Exception ex)

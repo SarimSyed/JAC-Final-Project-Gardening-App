@@ -32,12 +32,13 @@
                        Grid.Column="1"
                        VerticalTextAlignment="Center"
                        Style="{StaticResource SensorActuatorGridTitle}"/>
-                        <Entry Keyboard="Numeric"
+                        <Picker x:Name="temperatureHigh_pc"
                        HorizontalOptions="End"
                        Grid.Column="2"
                        FontSize="24"
+                                 SelectedItem="{Binding TemperatureHighThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                   Text="{Binding TemperatureHighThreshold, Mode=TwoWay}"/>
+                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                     </Grid>
 
                     <Grid ColumnDefinitions="auto, 1*, auto"
@@ -52,12 +53,13 @@
                        Grid.Column="1"
                        VerticalTextAlignment="Center"
                        Style="{StaticResource SensorActuatorGridTitle}"/>
-                        <Entry Keyboard="Numeric"
+                        <Picker x:Name="temperatureLow_pc"
                        HorizontalOptions="End"
                        Grid.Column="2"
                        FontSize="24"
+                                 SelectedItem="{Binding TemperatureLowThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                   Text="{Binding TemperatureLowThreshold, Mode=TwoWay}"/>
+                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                     </Grid>
                 </VerticalStackLayout>
 
@@ -74,12 +76,13 @@
                        Grid.Column="1"
                        VerticalTextAlignment="Center"
                        Style="{StaticResource SensorActuatorGridTitle}"/>
-                        <Entry Keyboard="Numeric"
+                        <Picker x:Name="humidityHigh_pc"
                        HorizontalOptions="End"
                        Grid.Column="2"
                        FontSize="24"
+                                 SelectedItem="{Binding HumidityHighThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                   Text="{Binding HumidityHighThreshold, Mode=TwoWay}"/>
+                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                     </Grid>
 
                     <Grid ColumnDefinitions="auto, 1*, auto"
@@ -94,12 +97,13 @@
                        Grid.Column="1"
                        VerticalTextAlignment="Center"
                        Style="{StaticResource SensorActuatorGridTitle}"/>
-                        <Entry Keyboard="Numeric"
+                        <Picker x:Name="humidityLow_pc"
                        HorizontalOptions="End"
                        Grid.Column="2"
                        FontSize="24"
+                                 SelectedItem="{Binding HumidityLowThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                   Text="{Binding HumidityLowThreshold, Mode=TwoWay}"/>
+                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                     </Grid>
                 </VerticalStackLayout>
 
@@ -116,12 +120,13 @@
                        Grid.Column="1"
                        VerticalTextAlignment="Center"
                        Style="{StaticResource SensorActuatorGridTitle}"/>
-                        <Entry Keyboard="Numeric"
+                        <Picker x:Name="waterLevelHigh_pc"
                        HorizontalOptions="End"
                        Grid.Column="2"
                        FontSize="24"
+                                 SelectedItem="{Binding WaterLevelHighThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                   Text="{Binding WaterLevelHighThreshold, Mode=TwoWay}"/>
+                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                     </Grid>
 
                     <Grid ColumnDefinitions="auto, 1*, auto"
@@ -136,12 +141,13 @@
                        Grid.Column="1"
                        VerticalTextAlignment="Center"
                        Style="{StaticResource SensorActuatorGridTitle}"/>
-                        <Entry Keyboard="Numeric"
+                        <Picker x:Name="waterLevelLow_pc"
                        HorizontalOptions="End"
                        Grid.Column="2"
                        FontSize="24"
+                                SelectedItem="{Binding WaterLevelLowThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                   Text="{Binding WaterLevelLowThreshold, Mode=TwoWay}"/>
+                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
                     </Grid>
                 </VerticalStackLayout>
             </Grid>
@@ -171,12 +177,14 @@
                        Grid.Column="1"
                        VerticalTextAlignment="Center"
                        Style="{StaticResource SensorActuatorGridTitle}"/>
-                        <Entry Keyboard="Numeric"
+                        <Picker 
+                            x:Name="telemetryInterval_pc"
                        HorizontalOptions="End"
                        Grid.Column="2"
                        FontSize="24"
+                             SelectedItem="{Binding ., Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                   Text="2"/>
+                            SelectedIndexChanged="telemetryInterval_pc_SelectedIndexChanged"/>
                     </Grid>
                 </VerticalStackLayout>
             </Grid>
