@@ -199,7 +199,7 @@ public partial class LoginPage : ContentPage
 
                 // Read and update values
                 ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
-                Thread.Sleep(1000);
+                Thread.Sleep(ActuatorsDeviceTwinService.SLEEP_LOOP_TIME);
             }
             catch (AggregateException ex)
             {

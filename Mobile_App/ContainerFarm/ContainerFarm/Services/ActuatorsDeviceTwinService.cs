@@ -14,6 +14,8 @@ namespace ContainerFarm.Services
 {
     public static class ActuatorsDeviceTwinService
     {
+        public static readonly int SLEEP_LOOP_TIME = 3000;
+
         public static RegistryManager RegistryManager;
 
         /// <summary>
