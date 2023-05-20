@@ -85,7 +85,7 @@
                        Grid.Column="0"/>
                     <Label Text="Door Lock" Style="{StaticResource ContainerDevicesTitle}"/>
                     <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="2" Margin="0,0,10,0" Spacing="7">
-                        <Switch IsToggled="{Binding DoorlockActuator.IsOn}" Margin="80,0,0,0" PropertyChanged="DoorLockSwitch_PropertyChanged"/>
+                        <Switch x:Name="doorLockSwitch" IsToggled="{Binding DoorlockActuator.IsOn}" Margin="80,0,0,0" PropertyChanged="DoorLockSwitch_PropertyChanged"/>
                         <Label x:Name="doorLockStatus" HorizontalOptions="End" VerticalTextAlignment="Center"/>
                     </HorizontalStackLayout>
                 </Grid>

@@ -25,7 +25,8 @@ public partial class DeviceView : ContentPage
         InitializeComponent();
 
         //Using the index 0 of the repo since technicians will only have access to one container
-        BindingContext = App.Repo.Containers[0].Plant;        
+        BindingContext = App.Repo.Containers[0].Plant;
+        doorLockSwitch.BindingContext = App.Repo.Containers[0].Security;
     }
 
     private void FanSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

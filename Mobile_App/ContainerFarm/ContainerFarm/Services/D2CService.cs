@@ -46,6 +46,13 @@ namespace ContainerFarm.Services
             // Processes the events
             async Task processEventHandler(ProcessEventArgs args)
             {
+                // Check internet connection
+                NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
+
+                // Throw exception if no internet access
+                if (networkAccess != NetworkAccess.Internet)
+                    throw new AggregateException($"No internet connection. Please connect to the internet.");
+
                 try
                 {
                     // Don't continue if cancelled
