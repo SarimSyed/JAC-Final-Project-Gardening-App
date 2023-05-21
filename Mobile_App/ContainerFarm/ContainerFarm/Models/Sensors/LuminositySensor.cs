@@ -1,4 +1,5 @@
-﻿using ContainerFarm.Interfaces;
+﻿using ContainerFarm.Enums;
+using ContainerFarm.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,7 +19,9 @@ namespace ContainerFarm.Models.Sensors
     {
         public enum Detection
         {
-            Detected,
+            Dark,
+            Bright,
+            VeryBright,
             NotDetected
         };
 
@@ -35,14 +38,19 @@ namespace ContainerFarm.Models.Sensors
         {
             get
             {
-                if (Value == 0)
-                {
-                    return Detection.NotDetected.ToString();
-                }
+                //Detection
+                if (Value > 0 && Value <= SecurityReadingTitle.LUMINOSITY_THRESHOLD_LOW)
+                    return string.Format($"{Detection.Dark}: {Value} Lux");
+
+                else if (Value <= SecurityReadingTitle.LUMINOSITY_THRESHOLD_MEDIUM)
+                    return string.Format($"{Detection.Bright}: {Value} Lux");
+
+                else if (Value > SecurityReadingTitle.LUMINOSITY_THRESHOLD_MEDIUM && 
+                    Value < SecurityReadingTitle.LUMINOSITY_THRESHOLD_HIGH)
+                    return string.Format($"{Detection.VeryBright}: {Value} Lux");
+
                 else
-                {
-                    return Detection.Detected.ToString();
-                }
+                    return Detection.NotDetected.ToString();
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;

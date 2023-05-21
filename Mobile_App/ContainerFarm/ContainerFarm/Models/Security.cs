@@ -80,9 +80,9 @@ namespace ContainerFarm.Models
                     issuesCount++;
                 if (DoorSensor.Detected == DoorSensor.OpenClosed.Open.ToString())
                     issuesCount++;
-                if (NoiseSensor.Detected == NoiseSensor.Detection.Detected.ToString())
+                if (NoiseSensor.Detected == NoiseSensor.Detection.High.ToString())
                     issuesCount++;
-                if (LuminositySensor.Detected == LuminositySensor.Detection.Detected.ToString())
+                if (LuminositySensor.Detected == LuminositySensor.Detection.VeryBright.ToString())
                     issuesCount++;
 
                 return issuesCount; 
@@ -101,9 +101,9 @@ namespace ContainerFarm.Models
                 stringBuilder.AppendLine("Motion was detected");
             if (DoorSensor.Detected == DoorSensor.OpenClosed.Open.ToString())
                 stringBuilder.AppendLine("Door is open");
-            if (NoiseSensor.Detected == NoiseSensor.Detection.Detected.ToString())
+            if (NoiseSensor.Detected == NoiseSensor.Detection.High.ToString())
                 stringBuilder.AppendLine("Noise was detected");
-            if (LuminositySensor.Detected == LuminositySensor.Detection.Detected.ToString())
+            if (LuminositySensor.Detected == LuminositySensor.Detection.VeryBright.ToString())
                 stringBuilder.AppendLine("Luminosity was detected");
 
             return stringBuilder.ToString();

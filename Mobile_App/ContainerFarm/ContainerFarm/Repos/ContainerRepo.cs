@@ -149,17 +149,13 @@ namespace ContainerFarm.Repos
             else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.NOISE))
             {
                 string noise_value = oneSensorObject[SecurityReadingTitle.NOISE][VALUE_KEY].ToString();
-                _containers[0].Security.NoiseSensor.Value = Convert.ToInt32(noise_value) <= SecurityReadingTitle.NOISE_LOW_THRESHOLD || Convert.ToInt32(noise_value) > SecurityReadingTitle.NOISE_HIGH_THRESHOLD
-                                                               ? SecurityReadingTitle.TURN_ON
-                                                               : SecurityReadingTitle.TURN_OFF;
+                _containers[0].Security.NoiseSensor.Value = Convert.ToInt32(noise_value);
             }
             // Luminosity sensor
             else if (oneSensorObject.ToString().Contains(SecurityReadingTitle.LUMINOSITY))
             {
                 string luminosity_value = oneSensorObject[SecurityReadingTitle.LUMINOSITY][VALUE_KEY].ToString();
-                _containers[0].Security.LuminositySensor.Value = Convert.ToInt32(luminosity_value) > SecurityReadingTitle.LUMINOSITY_THRESHOLD
-                                                               ? SecurityReadingTitle.TURN_ON
-                                                               : SecurityReadingTitle.TURN_OFF;
+                _containers[0].Security.LuminositySensor.Value = Convert.ToInt32(luminosity_value);
             }
         }
 

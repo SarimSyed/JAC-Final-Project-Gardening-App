@@ -44,9 +44,9 @@
                            Grid.Column="0"
                        Grid.Row="0"/>
 
-                    <Frame Style="{StaticResource SensorActuatorGridFrame}"
+                    <Frame Style="{StaticResource SensorActuatorGridFrame}" HeightRequest="100"
                        Grid.Row="1" >
-                        <Label Text="{Binding NoiseSensor.Detected}"
+                        <Label Text="{Binding NoiseSensor.Detected}" VerticalOptions="Center"
                            Style="{StaticResource SensorActuatorGridValue}"/>
                     </Frame>
                 </Grid>
@@ -62,8 +62,8 @@
 
                     <Frame  Grid.Column="0" 
                        Grid.Row="1" 
-                        Style="{StaticResource SensorActuatorGridFrame}">
-                        <Label Text="{Binding LuminositySensor.Detected}"
+                        Style="{StaticResource SensorActuatorGridFrame}" HeightRequest="100">
+                        <Label Text="{Binding LuminositySensor.Detected}" VerticalOptions="Center"
                            Style="{StaticResource SensorActuatorGridValue}"/>
                     </Frame>
                 </Grid>
