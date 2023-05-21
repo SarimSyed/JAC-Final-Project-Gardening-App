@@ -39,14 +39,15 @@ namespace ContainerFarm.Models.Sensors
             get
             {
                 //Detection
-                if (Value > 0 && Value <= SecurityReadingTitle.LUMINOSITY_THRESHOLD_LOW)
+                if (Value > 0 
+                    && Value <= SecurityReadingTitle.LUMINOSITY_THRESHOLD_LOW)
                     return string.Format($"{Detection.Dark}: {Value} Lux");
 
-                else if (Value <= SecurityReadingTitle.LUMINOSITY_THRESHOLD_MEDIUM)
+                else if (Value > SecurityReadingTitle.LUMINOSITY_THRESHOLD_LOW 
+                    && Value <= SecurityReadingTitle.LUMINOSITY_THRESHOLD_HIGH)
                     return string.Format($"{Detection.Bright}: {Value} Lux");
 
-                else if (Value > SecurityReadingTitle.LUMINOSITY_THRESHOLD_MEDIUM && 
-                    Value < SecurityReadingTitle.LUMINOSITY_THRESHOLD_HIGH)
+                else if (Value > SecurityReadingTitle.LUMINOSITY_THRESHOLD_HIGH)
                     return string.Format($"{Detection.VeryBright}: {Value} Lux");
 
                 else

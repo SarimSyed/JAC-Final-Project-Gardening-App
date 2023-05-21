@@ -20,7 +20,6 @@ namespace ContainerFarm.Enums
         public const string LUMINOSITY = "luminosity";
 
         public const byte LUMINOSITY_THRESHOLD_LOW = 5;
-        public const byte LUMINOSITY_THRESHOLD_MEDIUM = 50;
         public const byte LUMINOSITY_THRESHOLD_HIGH = 120;
 
         public const byte NOISE_LOW_THRESHOLD_LOW = 135;

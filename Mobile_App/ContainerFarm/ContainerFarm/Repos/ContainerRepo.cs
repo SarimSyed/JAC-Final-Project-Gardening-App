@@ -114,6 +114,8 @@ namespace ContainerFarm.Repos
                     UpdatePlantReading(oneSensorObject);
                     UpdateGeoLocationReading(oneSensorObject);
                 }
+
+                _containers[0].Security.GetIssuesCount();
             }
             catch (Exception ex)
             {
