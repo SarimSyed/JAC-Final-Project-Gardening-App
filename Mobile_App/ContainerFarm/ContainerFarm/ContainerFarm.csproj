@@ -58,7 +58,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Include="appsettings - Copy.json" />
 	  <EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
 

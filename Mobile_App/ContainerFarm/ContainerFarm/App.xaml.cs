@@ -1,5 +1,6 @@
 ﻿using ContainerFarm.Config;
 using ContainerFarm.Repos;
+using ContainerFarm.Services;
 using Microsoft.Extensions.Configuration;
 
 namespace ContainerFarm;
@@ -34,9 +35,12 @@ public partial class App : Application
         Connectivity.ConnectivityChanged += Connectivity_ConnectivityChanged;
     }
 
-    protected override void OnSleep()
+    protected async override void OnSleep()
     {
         Connectivity.ConnectivityChanged -= Connectivity_ConnectivityChanged;
+
+        if (D2CService.Processor != null)
+            await D2CService.Processor.StopProcessingAsync();
     }
 
     protected override void OnResume()

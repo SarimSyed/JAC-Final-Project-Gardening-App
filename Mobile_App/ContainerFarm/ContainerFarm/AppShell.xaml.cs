@@ -25,7 +25,7 @@ public partial class AppShell : Shell
             //    Console.WriteLine(D2CService.Processor.IsRunning);
             //}
 
-            await D2CService.Processor.StopProcessingAsync(new CancellationToken(true));
+            //await D2CService.Processor.StopProcessingAsync(new CancellationToken(true));
                      
             // Validates that there's a signed in user
             if (AuthService.Client.User == null)
