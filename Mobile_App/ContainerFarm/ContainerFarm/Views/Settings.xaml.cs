@@ -25,6 +25,13 @@ public partial class Settings : ContentPage
         SetPickerAndIndex(SettingsPickerRanges.TELEMETRY_INTERVAL_START, SettingsPickerRanges.TELEMETRY_INTERVAL_COUNT, telemetryInterval_pc, Preferences.Default.Get(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, TelemetryIntervalModel.TelemetryInterval));
     }
 
+    /// <summary>
+    /// Sets the specified picker values.
+    /// </summary>
+    /// <param name="start">The starting value of the picker.</param>
+    /// <param name="count">The count after the starting value (ex: starting value: 1 count: 20, value range: 1-20).</param>
+    /// <param name="picker">The specified picker in the settings page.</param>
+    /// <param name="threshold">The threshold value.</param>
     private void SetPickerAndIndex(int start, int count, Picker picker, int threshold)
     {
         List<int> pickerValues = Enumerable.Range(start, count).ToList();
@@ -72,7 +79,12 @@ public partial class Settings : ContentPage
         UpdatePreferences();
     }
 
-    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    /// <summary>
+    /// Updates the preferences of the specified picker.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Settings_Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
         Picker picker = sender as Picker;
 
@@ -81,6 +93,11 @@ public partial class Settings : ContentPage
         UpdatePreferences();
     }
 
+    /// <summary>
+    /// Updates the telemetry interval when the selected index is changed.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void telemetryInterval_pc_SelectedIndexChanged(object sender, EventArgs e)
     {
         Picker picker = sender as Picker;
@@ -92,6 +109,6 @@ public partial class Settings : ContentPage
         if (picker.IsFocused)
             TelemetryIntervalModel.IsChanged = true;
 
-        Picker_SelectedIndexChanged(sender, e);
+        Settings_Picker_SelectedIndexChanged(sender, e);
     }
 }

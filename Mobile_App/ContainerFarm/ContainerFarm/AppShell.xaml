@@ -35,9 +35,6 @@
         </Tab>
         <Tab Title="Graphs"
              Icon="line_chart.png">
-            <ShellContent Title="GraphView"
-                      ContentTemplate="{DataTemplate technician:GraphView}"
-                          IsVisible="False"/>
             <ShellContent Title="Temperature"
                           ContentTemplate="{DataTemplate technician:TemperatureView}"
                           Icon="temperature.png" />
@@ -52,14 +49,6 @@
                           ContentTemplate="{DataTemplate technician:SoilWaterView}"
                           Icon="water.png"/>
         </Tab>
-        
-        <!--<Tab Title="Test">
-            <ShellContent Title="Temperature/Humidity"
-                          ContentTemplate="{DataTemplate technician:TemperatureHumidityView}" />
-            <ShellContent Title="Soil/Water" 
-                          ContentTemplate="{DataTemplate technician:SoilWaterView}"/>
-        </Tab>-->
-
     </TabBar>
     <TabBar 
         Route="FleetOwner"

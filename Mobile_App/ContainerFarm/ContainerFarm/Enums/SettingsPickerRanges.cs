@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Enums
 {
+    /// <summary>
+    /// The settings picker start and count values.
+    /// </summary>
     public static class SettingsPickerRanges
     {
         public const int TEMPERATURE_HIGH_START = 15;

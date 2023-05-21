@@ -84,6 +84,7 @@ namespace ContainerFarm.Services
         /// Updates the GeoLocation buzzer actuator from the specified twin desired properties.
         /// </summary>
         /// <param name="desiredProperties">The desired properties of the device twin.</param>
+        /// <param name="reportedProperties">The desired properties of the device twin.</param>
         /// <returns>The GeoLocation buzzer actuator twin property value.</returns>
         private static async Task<string> GeoLocationBuzzerTwin(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
@@ -154,6 +155,12 @@ namespace ContainerFarm.Services
             }
         }
 
+        /// <summary>
+        /// Updates the Security door lock actuator from the specified twin desired properties.
+        /// </summary>
+        /// <param name="desiredProperties">The desired properties of the device twin.</param>
+        /// <param name="reportedProperties">The desired properties of the device twin.</param>
+        /// <returns>The Security door lock actuator twin property value.</returns>
         private static string SecurityDoorLockTwin(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             DoorlockActuator doorlock = App.Repo.Containers[0].Security.DoorlockActuator;
@@ -194,7 +201,13 @@ namespace ContainerFarm.Services
 
             return doorlock.IsOnString;
         }
-        
+
+        /// <summary>
+        /// Updates the Plants LED actuator from the specified twin desired properties.
+        /// </summary>
+        /// <param name="desiredProperties">The desired properties of the device twin.</param>
+        /// <param name="reportedProperties">The desired properties of the device twin.</param>
+        /// <returns>The Plants LED actuator twin property value.</returns>
         private static string PlantsLEDTwin(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             LightActuator plantsLED = App.Repo.Containers[0].Plant.LightActuator;
@@ -235,7 +248,13 @@ namespace ContainerFarm.Services
 
             return plantsLED.IsOnString;
         }
-        
+
+        /// <summary>
+        /// Updates the Plants FAN actuator from the specified twin desired properties.
+        /// </summary>
+        /// <param name="desiredProperties">The desired properties of the device twin.</param>
+        /// <param name="reportedProperties">The desired properties of the device twin.</param>
+        /// <returns>The Plants FAN actuator twin property value.</returns>
         private static async Task<string> PlantsFANTwinAsync(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             try
@@ -293,6 +312,11 @@ namespace ContainerFarm.Services
             }
         }
 
+        /// <summary>
+        /// Updates the Telemetry Interval from the specified twin desired properties.
+        /// </summary>
+        /// <param name="desiredProperties">The desired properties of the device twin.</param>
+        /// <returns>The Telemetry Interval.</returns>
         private static int TelemtryIntervalTwin(TwinCollection desiredProperties)
         {
             // If the telemetry interval was changes in the settings app
@@ -327,6 +351,9 @@ namespace ContainerFarm.Services
             }
         }
 
+        /// <summary>
+        /// Turns off all actuators in the app.
+        /// </summary>
         private static void TurnOffAllActuatorSwitches()
         {
             App.Repo.Containers[0].Location.BuzzerActuator.IsOn = false;

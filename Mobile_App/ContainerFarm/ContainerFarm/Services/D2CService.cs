@@ -17,6 +17,11 @@ namespace ContainerFarm.Services
     {
         public static EventProcessorClient Processor { get; set; }
 
+        /// <summary>
+        /// Initializes the Device to Cloud communication readings.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="AggregateException"></exception>
         public static async Task Initialize()
         {
             // Get the IoT Hub information

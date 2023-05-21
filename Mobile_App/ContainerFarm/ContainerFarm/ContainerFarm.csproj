@@ -117,9 +117,6 @@
 	  <MauiXaml Update="Views\Technician\DeviceView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Technician\GraphView.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\Technician\SoilWaterView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
