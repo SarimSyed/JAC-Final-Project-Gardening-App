@@ -13,16 +13,16 @@ public partial class Settings : ContentPage
 		this.BindingContext = App.Settings;
         telemetryInterval_pc.BindingContext = TelemetryIntervalModel.TelemetryInterval;
 
-        SetPickerAndIndex(15, 36, temperatureHigh_pc, Preferences.Default.Get("temperatureHigh", App.Settings.TemperatureHighThreshold));
-        SetPickerAndIndex(-20, 36, temperatureLow_pc, Preferences.Default.Get("temperatureLow", App.Settings.TemperatureLowThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.TEMPERATURE_HIGH_START, SettingsPickerRanges.TEMPERATURE_HIGH_COUNT, temperatureHigh_pc, Preferences.Default.Get(ThresholdKeys.TEMPERATURE_HIGH, App.Settings.TemperatureHighThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.TEMPERATURE_LOW_START, SettingsPickerRanges.TEMPERATURE_LOW_COUNT, temperatureLow_pc, Preferences.Default.Get(ThresholdKeys.TEMPERATURE_LOW, App.Settings.TemperatureLowThreshold));
 
-        SetPickerAndIndex(50, 51, humidityHigh_pc, Preferences.Default.Get("humidityHigh", App.Settings.HumidityHighThreshold));
-        SetPickerAndIndex(0, 51, humidityLow_pc, Preferences.Default.Get("humidityLow", App.Settings.HumidityLowThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.HUMIDITY_HIGH_START, SettingsPickerRanges.HUMIDITY_HIGH_COUNT, humidityHigh_pc, Preferences.Default.Get(ThresholdKeys.HUMIDITY_HIGH, App.Settings.HumidityHighThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.HUMIDITY_LOW_START, SettingsPickerRanges.HUMIDITY_LOW_COUNT, humidityLow_pc, Preferences.Default.Get(ThresholdKeys.HUMIDITY_LOW, App.Settings.HumidityLowThreshold));
 
-        SetPickerAndIndex(50, 51, waterLevelHigh_pc, Preferences.Default.Get("waterLevelHigh", App.Settings.WaterLevelHighThreshold));
-        SetPickerAndIndex(0, 51, waterLevelLow_pc, Preferences.Default.Get("waterLevelLow", App.Settings.WaterLevelLowThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.WATER_LEVEL_HIGH_START, SettingsPickerRanges.WATER_LEVEL_HIGH_COUNT, waterLevelHigh_pc, Preferences.Default.Get(ThresholdKeys.WATER_LEVEL_HIGH, App.Settings.WaterLevelHighThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.WATER_LEVEL_LOW_START, SettingsPickerRanges.WATER_LEVEL_LOW_COUNT, waterLevelLow_pc, Preferences.Default.Get(ThresholdKeys.WATER_LEVEL_LOW, App.Settings.WaterLevelLowThreshold));
 
-        SetPickerAndIndex(1, 20, telemetryInterval_pc, Preferences.Default.Get("telemetryInterval", TelemetryIntervalModel.TelemetryInterval));
+        SetPickerAndIndex(SettingsPickerRanges.TELEMETRY_INTERVAL_START, SettingsPickerRanges.TELEMETRY_INTERVAL_COUNT, telemetryInterval_pc, Preferences.Default.Get(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, TelemetryIntervalModel.TelemetryInterval));
     }
 
     private void SetPickerAndIndex(int start, int count, Picker picker, int threshold)
