@@ -1,5 +1,6 @@
 using ContainerFarm.Enums;
 using ContainerFarm.Models;
+using ContainerFarm.Services;
 
 namespace ContainerFarm.Views;
 
@@ -31,21 +32,22 @@ public partial class Settings : ContentPage
 
         int index = pickerValues.FindIndex(t => t == threshold);
         picker.SelectedIndex = index;
-
-        //picker.BindingContext = threshold;
     }
 
-    private void SetPreferences()
+    /// <summary>
+    /// Updates the specific preferences from the settings app.
+    /// </summary>
+    private void UpdatePreferences()
     {
         try
         {
-            Preferences.Default.Set(ThresholdKeys.TEMPERATURE_HIGH, (int) temperatureHigh_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.TEMPERATURE_LOW, (int)temperatureLow_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.HUMIDITY_HIGH, (int)humidityHigh_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.HUMIDITY_LOW, (int)humidityLow_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.WATER_LEVEL_HIGH, (int)waterLevelHigh_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.WATER_LEVEL_LOW, (int)waterLevelLow_pc.SelectedItem);
-            Preferences.Default.Set(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, (int)telemetryInterval_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_HIGH, (int)temperatureHigh_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_LOW, (int)temperatureLow_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_HIGH, (int)humidityHigh_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_LOW, (int)humidityLow_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_HIGH, (int)waterLevelHigh_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_LOW, (int)waterLevelLow_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, (int)telemetryInterval_pc.SelectedItem);
         }
         catch (NotSupportedException ex)
         {
@@ -59,7 +61,7 @@ public partial class Settings : ContentPage
 
     protected override bool OnBackButtonPressed()
     {
-        SetPreferences();
+        UpdatePreferences();
 
         return base.OnBackButtonPressed();
     }
@@ -67,7 +69,7 @@ public partial class Settings : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        SetPreferences();
+        UpdatePreferences();
     }
 
     private void Picker_SelectedIndexChanged(object sender, EventArgs e)
@@ -76,13 +78,19 @@ public partial class Settings : ContentPage
 
         if (picker == null || picker.SelectedItem == null || picker.SelectedIndex == -1) return;
 
-        SetPreferences();
+        UpdatePreferences();
     }
 
     private void telemetryInterval_pc_SelectedIndexChanged(object sender, EventArgs e)
     {
         Picker picker = sender as Picker;
+
+        if (picker == null || picker.SelectedItem == null || picker.SelectedIndex == -1) return;
+
         TelemetryIntervalModel.SetTelemetryInterval((int)picker.SelectedItem);
+        
+        if (picker.IsFocused)
+            TelemetryIntervalModel.IsChanged = true;
 
         Picker_SelectedIndexChanged(sender, e);
     }

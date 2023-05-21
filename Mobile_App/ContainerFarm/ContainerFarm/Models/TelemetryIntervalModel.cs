@@ -10,6 +10,7 @@ namespace ContainerFarm.Models
     {
         public const string TELEMETRY_INTERVAL_PROPERTY = "telemetryInterval";
         public static int TelemetryInterval { get; set; } = 3;
+        public static bool IsChanged { get; set; }
 
         public static void SetTelemetryInterval(int newTelemetryInterval)
         {

@@ -94,7 +94,8 @@ public partial class LoginPage : ContentPage
                     break;
             }
 
-            PreferencesService.SetDefaultPreferences();
+            // Set values from preferences
+            PreferencesService.SetValuesFromPreferences();
 
             // Display successful login
             ShowSnackbar.NewSnackbar($"Logged in successfully!");

@@ -44,11 +44,11 @@ namespace ContainerFarm.Services
                 TwinCollection reportedProperties = twin.Properties.Reported;
 
                 // Get the property values to updated the desired properties
-                string geolocationBuzzer = await GeoLocationBuzzerTwin(twin, desiredProperties, reportedProperties);
-                string securityDoorLock = SecurityDoorLockTwin(twin, desiredProperties, reportedProperties);
-                string plantsLED = PlantsLEDTwin(twin, desiredProperties, reportedProperties);
-                string plantsFAN = await PlantsFANTwinAsync(twin, desiredProperties, reportedProperties);
-                int telemetryInterval = TelemetryIntervalModel.TelemetryInterval;
+                string geolocationBuzzer = await GeoLocationBuzzerTwin(desiredProperties, reportedProperties);
+                string securityDoorLock = SecurityDoorLockTwin(desiredProperties, reportedProperties);
+                string plantsLED = PlantsLEDTwin(desiredProperties, reportedProperties);
+                string plantsFAN = await PlantsFANTwinAsync(desiredProperties, reportedProperties);
+                int telemetryInterval = TelemtryIntervalTwin(desiredProperties);
 
                 // Create the new twin patch
                 var patch =
@@ -85,7 +85,7 @@ namespace ContainerFarm.Services
         /// </summary>
         /// <param name="desiredProperties">The desired properties of the device twin.</param>
         /// <returns>The GeoLocation buzzer actuator twin property value.</returns>
-        private static async Task<string> GeoLocationBuzzerTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
+        private static async Task<string> GeoLocationBuzzerTwin(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             try
             {
@@ -154,7 +154,7 @@ namespace ContainerFarm.Services
             }
         }
 
-        private static string SecurityDoorLockTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
+        private static string SecurityDoorLockTwin(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             DoorlockActuator doorlock = App.Repo.Containers[0].Security.DoorlockActuator;
 
@@ -195,7 +195,7 @@ namespace ContainerFarm.Services
             return doorlock.IsOnString;
         }
         
-        private static string PlantsLEDTwin(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
+        private static string PlantsLEDTwin(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             LightActuator plantsLED = App.Repo.Containers[0].Plant.LightActuator;
 
@@ -236,7 +236,7 @@ namespace ContainerFarm.Services
             return plantsLED.IsOnString;
         }
         
-        private static async Task<string> PlantsFANTwinAsync(Twin twin, TwinCollection desiredProperties, TwinCollection reportedProperties)
+        private static async Task<string> PlantsFANTwinAsync(TwinCollection desiredProperties, TwinCollection reportedProperties)
         {
             try
             {
@@ -286,6 +286,40 @@ namespace ContainerFarm.Services
                     App.Repo.Containers[0].Plant.FanActuator.IsOn = false;
 
                 return plantsFan.IsOnString;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private static int TelemtryIntervalTwin(TwinCollection desiredProperties)
+        {
+            // If the telemetry interval was changes in the settings app
+            if (TelemetryIntervalModel.IsChanged)
+            {
+                TelemetryIntervalModel.IsChanged = false;
+                return TelemetryIntervalModel.TelemetryInterval;
+            }
+
+            try
+            {
+                // Check if the desired twin properties contains the telemetryInterval
+                if (desiredProperties.Contains(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY))
+                {
+                    // Get the twin telemetryInterval command
+                    int new_telemetry_interval = (int) desiredProperties[TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY];
+
+                    Console.WriteLine($"Desired - new {TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY} command: {new_telemetry_interval}");
+
+                    // Set the telemetryInterval value according to the command
+                    TelemetryIntervalModel.SetTelemetryInterval(new_telemetry_interval);
+
+                    // Update Preferences
+                    PreferencesService.UpdateSpecificPreference(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, new_telemetry_interval);
+                }
+
+                return TelemetryIntervalModel.TelemetryInterval;
             }
             catch (Exception ex)
             {
