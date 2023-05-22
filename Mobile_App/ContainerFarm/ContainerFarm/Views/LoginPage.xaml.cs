@@ -32,6 +32,7 @@ public partial class LoginPage : ContentPage
         Debug_Options();
 
         currentOption = LoginOptions.FleetOwner;
+        Shell.Current.FlyoutIsPresented = false;
 	}
 
     private async void SignInBtn_Clicked(object sender, EventArgs e)

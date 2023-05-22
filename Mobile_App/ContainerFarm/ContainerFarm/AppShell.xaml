@@ -10,7 +10,7 @@
     
     
     Shell.FlyoutBehavior="Flyout">
-    
+
 
     <MenuItem IconImageSource="logout.png" Clicked="Logout_MenuItem_Clicked" Text="Logout" />
     <MenuItem IconImageSource="settings.png" Clicked="Settings_MenuItem_Clicked" Text="Settings" />
@@ -22,6 +22,8 @@
          />
     </TabBar>
 
+
+    
     <TabBar
         Route="Technician" 
         FlyoutDisplayOptions="AsMultipleItems">

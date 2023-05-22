@@ -3,6 +3,7 @@ using CommunityToolkit.Maui;
 using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using SkiaSharp.Views.Maui.Controls.Hosting;
+using ContainerFarm.Views;
 
 namespace ContainerFarm;
 public static class MauiProgram
@@ -18,6 +19,8 @@ public static class MauiProgram
             fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
             fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
         }).UseMauiCommunityToolkit();
+        builder.Services.AddSingleton<Settings>();
+        builder.Services.AddSingleton<LoginPage>();
 #if DEBUG
         builder.Logging.AddDebug();
 #endif
