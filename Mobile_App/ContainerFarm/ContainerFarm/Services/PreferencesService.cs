@@ -20,6 +20,7 @@ namespace ContainerFarm.Services
         {
             try
             {
+                Preferences.Default.Clear();
                 // Set the TemperatureHighThreshold
                 if (Preferences.Default.ContainsKey(ThresholdKeys.TEMPERATURE_HIGH))
                 {

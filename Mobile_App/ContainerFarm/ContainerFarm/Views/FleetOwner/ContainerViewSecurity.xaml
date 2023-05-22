@@ -4,8 +4,8 @@
              x:Class="ContainerFarm.Views.FleetOwner.ContainerViewSecurity"
              xmlns:models="clr-namespace:ContainerFarm.Models"
              Title="Container Security">
-    <VerticalStackLayout>
-        <ScrollView>
+    <Grid RowDefinitions="1*, auto">
+        <ScrollView Grid.Row="0">
             <CollectionView
                 x:Name="securityCollection"
                 Margin="10">
@@ -42,5 +42,14 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
-    </VerticalStackLayout>
+
+        <ImageButton Source="plus.png"
+                     HeightRequest="45"
+                     WidthRequest="45"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"
+                     Margin="0,0,15,15"
+                     Grid.Row="1"
+                     Clicked="Add_Btn_Clicked"/>
+    </Grid>
 </ContentPage>

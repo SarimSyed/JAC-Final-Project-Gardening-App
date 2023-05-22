@@ -14,18 +14,18 @@ public partial class ContainerViewLocation : ContentPage
         containerCollection.ItemsSource = App.Repo.Containers;
     }
 
-    private async void Edit_Container(object sender, EventArgs e)
-    {
-        //Check if user can edit container
-        await DisplayAlert("Yay", "Edit worked", "Ok");
-    }
+    //private async void Edit_Container(object sender, EventArgs e)
+    //{
+    //    //Check if user can edit container
+    //    await DisplayAlert("Yay", "Edit worked", "Ok");
+    //}
 
-    private async void SwipeItem_Invoked(object sender, EventArgs e)
-    {
-        //Check if user can delete container
-        await DisplayAlert("Yay", "Delette worked", "Ok");
+    //private async void SwipeItem_Invoked(object sender, EventArgs e)
+    //{
+    //    //Check if user can delete container
+    //    await DisplayAlert("Yay", "Delette worked", "Ok");
 
-    }
+    //}
 
     private void Container_Farm_GeoLocation_Tapped(object sender, TappedEventArgs e)
     {
@@ -37,5 +37,10 @@ public partial class ContainerViewLocation : ContentPage
 
         //Navigates to the information details for that container
         Navigation.PushAsync(new ContainerLocationInfo(containerClicked));
+    }
+
+    private async void Add_Btn_Clicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Add Container", "Adding container feature coming soon!", "OK");
     }
 }
