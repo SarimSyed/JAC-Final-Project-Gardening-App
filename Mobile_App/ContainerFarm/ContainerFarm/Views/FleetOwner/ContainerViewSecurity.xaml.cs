@@ -35,4 +35,9 @@ public partial class ContainerViewSecurity : ContentPage
             // Display issues alert
             await DisplayAlert("Security Issues", App.Repo.Containers[0].Security.IssuesMessage(), "OK");
     }
+
+    private async void Add_Btn_Clicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Add Container", "Adding container feature coming soon!", "OK");
+    }
 }
