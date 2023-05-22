@@ -32,7 +32,7 @@ public partial class Settings : ContentPage
     /// <param name="count">The count after the starting value (ex: starting value: 1 count: 20, value range: 1-20).</param>
     /// <param name="picker">The specified picker in the settings page.</param>
     /// <param name="threshold">The threshold value.</param>
-    private void SetPickerAndIndex(int start, int count, Picker picker, int threshold)
+    private void SetPickerAndIndex(int start, int count, Picker picker, double threshold)
     {
         List<int> pickerValues = Enumerable.Range(start, count).ToList();
         picker.ItemsSource = pickerValues;
@@ -48,13 +48,13 @@ public partial class Settings : ContentPage
     {
         try
         {
-            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_HIGH, (int)temperatureHigh_pc.SelectedItem);
-            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_LOW, (int)temperatureLow_pc.SelectedItem);
-            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_HIGH, (int)humidityHigh_pc.SelectedItem);
-            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_LOW, (int)humidityLow_pc.SelectedItem);
-            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_HIGH, (int)waterLevelHigh_pc.SelectedItem);
-            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_LOW, (int)waterLevelLow_pc.SelectedItem);
-            PreferencesService.UpdateSpecificPreference(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, (int)telemetryInterval_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_HIGH, Convert.ToDouble(temperatureHigh_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_LOW, Convert.ToDouble(temperatureLow_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_HIGH, Convert.ToDouble(humidityHigh_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_LOW, Convert.ToDouble(humidityLow_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_HIGH, Convert.ToDouble(waterLevelHigh_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_LOW, Convert.ToDouble(waterLevelLow_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, Convert.ToDouble(telemetryInterval_pc.SelectedItem));
         }
         catch (NotSupportedException ex)
         {
