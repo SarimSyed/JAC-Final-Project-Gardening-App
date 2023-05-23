@@ -18,7 +18,7 @@ namespace ContainerFarm.Views.Technician;
 /// </summary>
 public partial class DeviceView : ContentPage
 {
-    PlantsRepo repo = new PlantsRepo();
+    
 
     public DeviceView()
     {

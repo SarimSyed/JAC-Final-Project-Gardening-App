@@ -13,6 +13,7 @@ namespace ContainerFarm.Interfaces
         Task<bool> UpdateItemAsync(T item);
         Task<bool> DeleteItemAsync(T item);
         Task<IEnumerable<T>> GetItemsAsync(bool forceRefresh = false);
+        Task<bool> GetLoginPermission(string id);
         public ObservableCollection<T> Items { get; } //Item to bind to the collecittion
     }
 }

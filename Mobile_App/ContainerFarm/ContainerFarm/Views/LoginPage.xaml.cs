@@ -33,6 +33,18 @@ public partial class LoginPage : ContentPage
 
         currentOption = LoginOptions.FleetOwner;
         Shell.Current.FlyoutIsPresented = false;
+
+        try
+        {
+
+
+        }
+        catch (Exception)
+        {
+
+            throw;
+        }
+
 	}
 
     private async void SignInBtn_Clicked(object sender, EventArgs e)
