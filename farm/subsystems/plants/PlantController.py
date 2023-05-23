@@ -9,7 +9,7 @@ from interfaces.actuators import ACommand, IActuator
 from time import sleep
 import json
 from interfaces.subsystem import ISubsystem
-
+from Constants.Pins import PlantGPIOPins as Pins
 
 class PlantSystem(ISubsystem):
     def __init__(self) -> None:
@@ -22,17 +22,17 @@ class PlantSystem(ISubsystem):
         return [
         
 
-            LiquidLevelSensor(4, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
-            SoilMoistureSensor(2, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
+            LiquidLevelSensor(Pins.LIQUIDLEVEL_SENSOR, "Water-Level-Sensor", AReading.Type.WATER_LEVEL ),
+            SoilMoistureSensor(Pins.SOILMOISTURE_SENSOR, "Soil-Moisture-Sensor",AReading.Type.MOISTURE),
 
-            HumiditySensor(26,"AHT20", AReading.Type.HUMIDITY ),
-            TemperatureSensor(26, "AHT20", AReading.Type.HUMIDITY )
+            HumiditySensor(Pins.HUMIDITY_AND_TEMPERATURE_SENSOR,"AHT20", AReading.Type.HUMIDITY ),
+            TemperatureSensor(Pins.HUMIDITY_AND_TEMPERATURE_SENSOR, "AHT20", AReading.Type.HUMIDITY )
         ]
 
     def _initialize_actuators(self)-> list[IActuator]:
         return [
-            Led(18, ACommand.Type.LED, initial_state={"value": Led.LIGHT_OFF}),
-            Fan(22, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_OFF})
+            Led(Pins.LED, ACommand.Type.LED, initial_state={"value": Led.LIGHT_OFF}),
+            Fan(Pins.FAN, ACommand.Type.FAN, initial_state={"value" : Fan.FAN_OFF})
         ]
 
     def read_sensors(self) -> list[AReading]:

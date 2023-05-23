@@ -9,6 +9,7 @@ from .Luminosity import Luminosity
 from .Motion import Motion
 from .Noise import Noise
 from interfaces.subsystem import ISubsystem
+from Constants.Pins import SecurityGPIOPins as Pins
 
 class Security(ISubsystem):
 
@@ -24,9 +25,9 @@ class Security(ISubsystem):
 
         return [
             # Instantiate each sensor inside this list, separate items by comma.
-            Door(5),
+            Door(Pins.DOOR_SENSOR),
             Luminosity(),
-            Motion(16),
+            Motion(Pins.MOTION_SENSOR),
             Noise()
         ]
         
@@ -39,7 +40,7 @@ class Security(ISubsystem):
         return [
             # Instantiate each actuator inside this list, separate items by comma.
             Buzzer({'value': 'off'}),
-            DoorLock(12, {'value': 'lock'})
+            DoorLock(Pins.DOOR_LOCK, {'value': 'lock'})
         ]
 
     def read_sensors(self) -> list[AReading]:
