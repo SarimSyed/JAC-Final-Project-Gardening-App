@@ -25,6 +25,16 @@ public partial class HumidityView : ContentPage
     }
 
     /// <summary>
+    /// Changes the chart when navigated to this page.
+    /// </summary>
+    /// <param name="args"></param>
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        humidity_cv.ItemsSource = ContainerRepo.HumidityValues.OrderByDescending(humi => humi.EnqueuedTime);
+    }
+
+    /// <summary>
     /// The Series for the humidity values chart.
     /// </summary>
     public ISeries[] Series { get; set; } =

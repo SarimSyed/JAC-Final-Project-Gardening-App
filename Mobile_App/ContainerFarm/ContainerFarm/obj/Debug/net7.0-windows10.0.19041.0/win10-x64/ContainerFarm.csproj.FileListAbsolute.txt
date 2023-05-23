@@ -387,3 +387,4 @@ C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\
 C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
 C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\ProjectArchitectures.txt
+C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\resizetizer\r\plus.scale-100.png
