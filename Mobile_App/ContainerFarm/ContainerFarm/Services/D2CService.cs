@@ -1,11 +1,13 @@
 ﻿using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
+using ContainerFarm.Enums;
 using ContainerFarm.Models.Actuators;
 using ContainerFarm.Repos;
 using ContainerFarm.Views.FleetOwner;
 using Newtonsoft.Json.Linq;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 
 
@@ -15,6 +17,11 @@ namespace ContainerFarm.Services
     {
         public static EventProcessorClient Processor { get; set; }
 
+        /// <summary>
+        /// Initializes the Device to Cloud communication readings.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="AggregateException"></exception>
         public static async Task Initialize()
         {
             // Get the IoT Hub information
@@ -44,6 +51,13 @@ namespace ContainerFarm.Services
             // Processes the events
             async Task processEventHandler(ProcessEventArgs args)
             {
+                // Check internet connection
+                NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
+
+                // Throw exception if no internet access
+                if (networkAccess != NetworkAccess.Internet)
+                    throw new AggregateException($"No internet connection. Please connect to the internet.");
+
                 try
                 {
                     // Don't continue if cancelled
@@ -57,7 +71,7 @@ namespace ContainerFarm.Services
                     string eventBodyCleaned = eventBodyString.Replace("\n", "");
 
                     // Update Readings
-                    App.Repo.UpdateReadings(eventBodyCleaned);
+                    App.Repo.UpdateReadings(eventBodyCleaned, args.Data);
 
                     int eventsSinceLastCheckpoint = partitionEventCount.AddOrUpdate(
                         key: partition,

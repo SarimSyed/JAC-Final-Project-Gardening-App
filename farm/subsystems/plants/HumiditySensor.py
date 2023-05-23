@@ -22,10 +22,16 @@ class HumiditySensor(ISensor) :
     def read_sensor(self) -> AReading:
         
         #Return humidity
-        (temp, humid) = self.sensor.read()
-        self.value = round(humid, 2)                                                                                    
+        try:
 
-        return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, {"value":  self.value})
+            (temp, humid) = self.sensor.read()
+            self.value = round(humid, 2)                                                                                    
+
+            return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, {"value":  self.value})
+        except:
+            return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, {"value":  self.value})
+
+            
 
     
 if __name__ == "__main__":

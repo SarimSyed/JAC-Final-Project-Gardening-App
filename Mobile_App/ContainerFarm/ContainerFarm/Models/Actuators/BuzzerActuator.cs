@@ -21,6 +21,32 @@ namespace ContainerFarm.Models.Actuators
         public string Name { get; set; }
         public bool IsOn { get; set; }
 
+        /// <summary>
+        /// Tracks if the actuator was changed in the app.
+        /// </summary>
+        public bool IsChanged { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public string IsOnString
+        {
+            get
+            {
+                return   IsOn
+                       ? "on"
+                       : "off";
+            }
+        }
+
+        /// <summary>
+        /// Sets the IsOn property of the <see cref="BuzzerActuator"/> class based on the specified IsOn string representation.
+        /// </summary>
+        /// <param name="buzzerValue">The buzzer value in string representation (e.g. 'on' or 'off').</param>
+        public void SetIsOn(string buzzerValue)
+        {
+            IsOn = buzzerValue == "on"
+                 ? true 
+                 : false;
+        }
     }
 }

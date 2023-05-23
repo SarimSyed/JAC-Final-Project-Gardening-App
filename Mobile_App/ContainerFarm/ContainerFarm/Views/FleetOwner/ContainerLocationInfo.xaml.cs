@@ -1,4 +1,5 @@
 using ContainerFarm.Models;
+using System.Collections.Generic;
 
 namespace ContainerFarm.Views.FleetOwner;
 
@@ -20,6 +21,12 @@ public partial class ContainerLocationInfo : ContentPage
     {
         //Shows the user confirmation that the buzzer has been turned on or off.
         Switch buzzerSwitch = sender as Switch;
+
+        if (buzzerSwitch == null || buzzerStatus == null)
+            return;
+
+        App.Repo.Containers[0].Location.BuzzerActuator.IsChanged = true;
+
         if (buzzerSwitch.IsToggled)
         {
             buzzerStatus.Text = "ON";
@@ -30,5 +37,22 @@ public partial class ContainerLocationInfo : ContentPage
             buzzerStatus.Text = "OFF";
             buzzerStatus.TextColor = Colors.Red;
         }
+    }
+
+    /// <summary>
+    /// Navigates to the map location of the container.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private async void Show_On_Map_Btn_Clicked(object sender, EventArgs e)
+    {
+        // Create the address dictionnary
+        var navigationParameter = new Dictionary<string, object>
+        {
+            { "address", App.Repo.Containers[0].Location.GpsSensor.Address.ToString() }
+        };
+
+        // Go to the map
+        await Shell.Current.GoToAsync($"//FleetOwner//Map", navigationParameter);
     }
 }

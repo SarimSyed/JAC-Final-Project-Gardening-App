@@ -1,4 +1,6 @@
 using Azure;
+using Azure.Messaging.EventHubs.Consumer;
+using Azure.Messaging.EventHubs.Producer;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using ContainerFarm.Repos;
@@ -24,10 +26,13 @@ public partial class DeviceView : ContentPage
 
         //Using the index 0 of the repo since technicians will only have access to one container
         BindingContext = App.Repo.Containers[0].Plant;
+        doorLockSwitch.BindingContext = App.Repo.Containers[0].Security;
     }
 
     private void FanSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
+        App.Repo.Containers[0].Plant.FanActuator.IsChanged = true;
+
         //Shows the confimation to the user that the fan has been turned on or off
         Switch fanSwitch = sender as Switch;
         SetSwitchTextStatus(fanSwitch, fanStatus);
@@ -35,13 +40,26 @@ public partial class DeviceView : ContentPage
 
     private void LightSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
     {
+        App.Repo.Containers[0].Plant.LightActuator.IsChanged = true;
+
         //Shows the confimation to the user that the fan has been turned on or off
         Switch lightSwitch = sender as Switch;
         SetSwitchTextStatus(lightSwitch, lightStatus);
     }
+    
+    private void DoorLockSwitch_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        App.Repo.Containers[0].Security.DoorlockActuator.IsChanged = true;
+
+        //Shows the confimation to the user that the door lock has been turned on or off
+        Switch doorLockSwitch = sender as Switch;
+        SetSwitchTextStatus(doorLockSwitch, doorLockStatus);
+    }
 
     private void SetSwitchTextStatus(Switch actuatorSwitch, Label actuatorText)
     {
+        if (actuatorSwitch == null || actuatorText == null) return;
+
         if (actuatorSwitch.IsToggled)
         {
             actuatorText.Text = "ON";

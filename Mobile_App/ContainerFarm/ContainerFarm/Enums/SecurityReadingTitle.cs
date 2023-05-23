@@ -19,9 +19,17 @@ namespace ContainerFarm.Enums
         public const string NOISE = "noise";
         public const string LUMINOSITY = "luminosity";
 
-        public const byte LUMINOSITY_THRESHOLD = 30;
-        public const byte NOISE_LOW_THRESHOLD = 100;
-        public const byte NOISE_HIGH_THRESHOLD = 180;
+        public const byte LUMINOSITY_THRESHOLD_LOW = 5;
+        public const byte LUMINOSITY_THRESHOLD_HIGH = 120;
+
+        public const byte NOISE_LOW_THRESHOLD_LOW = 135;
+        public const byte NOISE_HIGH_THRESHOLD_LOW = 155;
+
+        public const byte NOISE_LOW_THRESHOLD_MEDIUM = 100;
+        public const byte NOISE_HIGH_THRESHOLD_MEDIUM = 180;
+
+        public const byte NOISE_LOW_THRESHOLD_HIGH = 80;
+        public const byte NOISE_HIGH_THRESHOLD_HIGH = 220;
 
         public const byte TURN_ON = 1;
         public const byte TURN_OFF = 0;

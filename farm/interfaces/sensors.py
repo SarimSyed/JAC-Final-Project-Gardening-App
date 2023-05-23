@@ -83,7 +83,7 @@ class AReading:
         :return str: json string representation of the reading
         """
         temp = self.value["value"]
-        return {self.reading_type:{"value": temp, "unit": self.reading_unit.value}}
+        return {self.reading_type:{"value": temp, "unit": self.reading_unit.value}} # type: ignore
 
 
 

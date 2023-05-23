@@ -27,4 +27,17 @@ public partial class ContainerViewSecurity : ContentPage
         //Navigates to security info datails of that container
         Navigation.PushAsync(new ContainerSecurityInfo(containerClicked));
     }
+
+    private async void Issues_Warning_Btn_Clicked(object sender, EventArgs e)
+    {
+        // Only show alert if issues
+        if (App.Repo.Containers[0].Security.IssuesCount > 0)
+            // Display issues alert
+            await DisplayAlert("Security Issues", App.Repo.Containers[0].Security.IssuesMessage(), "OK");
+    }
+
+    private async void Add_Btn_Clicked(object sender, EventArgs e)
+    {
+        await DisplayAlert("Add Container", "Adding container feature coming soon!", "OK");
+    }
 }

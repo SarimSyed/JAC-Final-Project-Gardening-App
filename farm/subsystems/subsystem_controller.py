@@ -3,7 +3,7 @@ from subsystems.geoLocation.GeoLocation import GeoLocation
 from subsystems.security.Security import Security
 from interfaces.sensors import AReading
 from interfaces.actuators import ACommand
-
+from interfaces.subsystem import ISubsystem
 
 class SubsystemController:
     """This class will manage all the subsystems created and allow them to be manipulated from one class instead of 3 instantiations
@@ -22,10 +22,10 @@ class SubsystemController:
         Returns:
             list[AReading]: List of all sensor readings
         """
-        # return self.security.read_sensors()
+        # return self.geolocation.read_sensors()
         return self.security.read_sensors() + self.plants.read_sensors() + self.geolocation.read_sensors()
     
-    def control_actuator(self, subsystem, command: ACommand) -> bool:
+    def control_actuator(self, subsystem : ISubsystem, command: ACommand) -> bool:
         """Controls the specified actuator in the subsystem.
 
         Args:

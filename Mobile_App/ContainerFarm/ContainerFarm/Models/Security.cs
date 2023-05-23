@@ -1,6 +1,8 @@
 ﻿using ContainerFarm.Models.Actuators;
 using ContainerFarm.Models.Sensors;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace ContainerFarm.Models
 {
@@ -33,6 +35,8 @@ namespace ContainerFarm.Models
         private DoorSensor doorSensor;
         private DoorlockActuator doorlockActuator;
         private BuzzerActuator buzzerActuator;
+        private string motionsensor;
+        private int issueCount;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,7 +50,7 @@ namespace ContainerFarm.Models
             buzzerActuator = new BuzzerActuator();
         }
 
-        public NoiseSensor NoiseSensor { get { return noiseSensor; } set { noiseSensor = value; } }
+        public NoiseSensor NoiseSensor { get { return noiseSensor; } set { noiseSensor = value;} }
         public LuminositySensor LuminositySensor { get { return luminositySensor; }
             set
             {
@@ -68,7 +72,74 @@ namespace ContainerFarm.Models
                 doorlockActuator = value;
             } }
         public BuzzerActuator BuzzerActuator { get { { return buzzerActuator; } } set { buzzerActuator = value; } }
+        
+        public int IssuesCount
+        {
+            get { return issueCount; }
+            set
+            {
+                issueCount = value;
+            }
+        }
 
+        public int GetIssuesCount()
+        {
+            int issuesCount = 0;
+            if (MotionSensor.Detected == MotionSensor.Detection.Detected.ToString())
+                issuesCount++;
+            if (DoorSensor.Detected == DoorSensor.OpenClosed.Open.ToString())
+                issuesCount++;
+            if (NoiseSensor.Detected.Contains(NoiseSensor.Detection.High.ToString()))
+                issuesCount++;
+            if (LuminositySensor.Detected.Contains(LuminositySensor.Detection.VeryBright.ToString()))
+                issuesCount++;
+
+            IssuesCount = issuesCount;
+
+            return issuesCount;
+        }
+
+        /// <summary>
+        /// Builds the list of issue messages.
+        /// </summary>
+        /// <returns></returns>
+        public string IssuesMessage()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (MotionSensor.Detected == MotionSensor.Detection.Detected.ToString())
+                stringBuilder.AppendLine("Motion was detected");
+            if (DoorSensor.Detected == DoorSensor.OpenClosed.Open.ToString())
+                stringBuilder.AppendLine("Door is open");
+            if (NoiseSensor.Detected.Contains(NoiseSensor.Detection.High.ToString()))
+                stringBuilder.AppendLine("High noise level was detected");
+            if (LuminositySensor.Detected.Contains(LuminositySensor.Detection.VeryBright.ToString()))
+                stringBuilder.AppendLine("HIgh luminosity level was detected");
+
+            return stringBuilder.ToString();
+        }
+
+        public string IssuesUri
+        {
+            get
+            {
+                if (IssuesCount == 0)
+                    return "accept.png";
+                else if (IssuesCount > 3)
+                    return "bad.png";
+                else
+                    return "warning.png";
+            }
+        }
+
+        /// <summary>
+        /// Invokes property changed event for a property whose value changed.
+        /// </summary>
+        /// <param name="name">The name of the property that changed.</param>
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
 
 

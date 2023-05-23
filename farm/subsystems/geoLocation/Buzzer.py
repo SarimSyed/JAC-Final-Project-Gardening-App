@@ -2,6 +2,7 @@ import seeed_python_reterminal.core as rt
 from time import sleep
 from interfaces.actuators import IActuator, ACommand
 
+
 class Buzzer(IActuator):
     """A Buzzer represents an alarm in the Geo-Location subsytem.
 
@@ -21,6 +22,7 @@ class Buzzer(IActuator):
         # Initialize object variables
         self.type = type or ACommand.Type.BUZZER
         self._current_state = initial_state
+        print(rt.buzzer)
 
     def validate_command(self, command: ACommand) -> bool:
         """Validates that a command can be used with the specific actuator.

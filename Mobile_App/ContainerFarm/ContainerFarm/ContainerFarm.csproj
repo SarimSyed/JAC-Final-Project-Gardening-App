@@ -49,9 +49,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="appsettings - Copy.json" />
 	  <None Remove="appsettings.json" />
 	  <None Remove="Resources\Images\addbtn.png" />
+	  <None Remove="Resources\Images\bad.png" />
 	  <None Remove="Resources\Images\container.png" />
+	  <None Remove="Resources\Images\warning.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -107,10 +110,10 @@
 	  <MauiXaml Update="Views\FleetOwner\MapView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Technician\DeviceView.xaml">
+	  <MauiXaml Update="Views\Settings.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\Technician\GraphView.xaml">
+	  <MauiXaml Update="Views\Technician\DeviceView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Technician\SoilWaterView.xaml">

@@ -1,9 +1,13 @@
 using ContainerFarm.Config;
 using ContainerFarm.Enums;
 using ContainerFarm.Helpers;
+using ContainerFarm.Models;
 using ContainerFarm.Services;
 using Firebase.Auth;
 using Microsoft.Azure.Devices;
+using Microsoft.Azure.Devices.Common.Exceptions;
+using Microsoft.Azure.Devices.Shared;
+using System.Threading;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContainerFarm.Views;
@@ -20,7 +24,7 @@ public partial class LoginPage : ContentPage
     private const string USERNAME = "user@email.com";
     private const string PASSWORD = "password";
 
-    private LoginOptions currentOption;
+    public static LoginOptions currentOption;
 
     public LoginPage()
 	{
@@ -28,12 +32,15 @@ public partial class LoginPage : ContentPage
         Debug_Options();
 
         currentOption = LoginOptions.FleetOwner;
+        Shell.Current.FlyoutIsPresented = false;
 	}
 
     private async void SignInBtn_Clicked(object sender, EventArgs e)
     {
         try
         {
+            signInBtn.IsEnabled = false;
+
             // Check internet connection
             NetworkAccess networkAccess = Connectivity.Current.NetworkAccess;
 
@@ -88,66 +95,128 @@ public partial class LoginPage : ContentPage
                     break;
             }
 
+            // Set values from preferences
+            PreferencesService.SetValuesFromPreferences();
+
             // Display successful login
             ShowSnackbar.NewSnackbar($"Logged in successfully!");
 
-            // Initialize the service
-            await D2CService.Initialize();
-            await D2CService.Processor.StartProcessingAsync();
+            if(D2CService.Processor == null)
+            {
+                // Initialize the service
+                await D2CService.Initialize();
+                await D2CService.Processor.StartProcessingAsync();
+            }
+
+            // Create the twin thread
+            CreateDeviceTwinThread();
+
+            signInBtn.IsEnabled = true;
         }
         catch (AggregateException ex)
         {
             // Display alert message
             await DisplayAlert("No Internet Connection", $"{ex.Message}", "OK");
+            signInBtn.IsEnabled = true;
         }
         catch (FirebaseAuthException ex)
         {
             // Display alert message
             await DisplayAlert("Invalid information", $"{ex.Reason}", "OK");
+            signInBtn.IsEnabled = true;
+
         }
         catch (ArgumentException ex)
         {
             // Display alert message
             await DisplayAlert("IoT Hub Error", $"{ex.Message}", "OK");
+            signInBtn.IsEnabled = true;
+
         }
         catch (Exception ex)
         {
             // Display alert message
             await DisplayAlert("Exception Thrown", $"{ex.Message}", "OK");
+            signInBtn.IsEnabled = true;
+
         }
     }
 
-    // Invoke the direct method on the device, passing the payload.
-    private static async Task InvokeMethodAsync(string deviceId, ServiceClient serviceClient, string directMethod)
+    #region Device Twin - IoT Hub
+
+    /// <summary>
+    /// Creates a new thread to run the twin in the background off the main UI thread.
+    /// </summary>
+    private static void CreateDeviceTwinThread()
     {
-        var methodInvocation = new CloudToDeviceMethod(directMethod)
+        try
         {
-            ResponseTimeout = TimeSpan.FromSeconds(30),
-        };
+            // Create the Registry Manager
+            ActuatorsDeviceTwinService.RegistryManager ??= RegistryManager.CreateFromConnectionString(App.Settings.HubConnectionString);
 
-        switch (directMethod)
-        {
-            case "lights-on":
-                methodInvocation.SetPayloadJson("{'status': 'completed'}");
-                break;
-            case "door-unlock":
-                methodInvocation.SetPayloadJson("{'status': 'completed'}");
-                break;
-            case "fan-on":
-                methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
-                break;
-            default:
-                methodInvocation.SetPayloadJson("{'status': 'incomplete'}");
-                break;
+            // Create a new thread for the twin readings
+            Thread twinThread = new Thread(ProcessTwinProperties)
+            {
+                Name = "twinThread"
+            };
+            twinThread.Start();
         }
-
-        Console.WriteLine($"Invoking direct method for device: {deviceId}");
-
-        // Invoke the direct method asynchronously and get the response from the simulated device.
-        CloudToDeviceMethodResult response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
-
-        Console.WriteLine($"Response status: {response.Status}, payload:\n\t{response.GetPayloadAsJson()}");
+        catch (AggregateException ex)
+        {
+            throw;
+        }
+        catch (IotHubCommunicationException ex)
+        {
+            // Create a new thread for the twin readings
+            Thread twinThread = new Thread(ProcessTwinProperties)
+            {
+                Name = "twinThread"
+            };
+            twinThread.Start();
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
     }
+
+    /// <summary>
+    /// Handles the processing of the device twin via IoT Hub in forever loop.
+    /// </summary>
+    private static async void ProcessTwinProperties()
+    {
+        while (true)
+        {
+            try
+            {
+                // Create the twin with the specified device ID
+                Twin twin = await ActuatorsDeviceTwinService.RegistryManager.GetTwinAsync(App.Settings.DeviceId);
+
+                if (twin == null || twin.ETag == null)
+                    continue;
+
+                // Read and update values
+                ActuatorsDeviceTwinService.DeviceTwinLoop(twin).Wait();
+                Thread.Sleep(TelemetryIntervalModel.TelemetryInterval * 1000);
+                Console.WriteLine($"Sleeping: {TelemetryIntervalModel.TelemetryInterval} seconds");
+            }
+            catch (AggregateException ex)
+            {
+                throw;
+            }
+            catch (IotHubCommunicationException ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+    }
+
+    #endregion
 
     private void Debug_Options()
     {

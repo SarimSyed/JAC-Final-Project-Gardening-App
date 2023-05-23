@@ -4,8 +4,8 @@
              x:Class="ContainerFarm.Views.FleetOwner.ContainerViewSecurity"
              xmlns:models="clr-namespace:ContainerFarm.Models"
              Title="Container Security">
-    <VerticalStackLayout>
-        <ScrollView>
+    <Grid RowDefinitions="1*, auto">
+        <ScrollView Grid.Row="0">
             <CollectionView
                 x:Name="securityCollection"
                 Margin="10">
@@ -29,17 +29,27 @@
                                         FontSize="20" FontAttributes="Bold"
                                             VerticalTextAlignment="Center"
                                        VerticalOptions="Center"/>
-                                    <Label Text="0 Issues"
+                                    <Label Text="{Binding Security.IssuesCount, StringFormat='Issues: {0:F0}'}"
                                            VerticalTextAlignment="Center"
                                            VerticalOptions="Center"/>
                                 </VerticalStackLayout>
-                                <Image Source="accept.png" Grid.Column="2" WidthRequest="30"
-                                           HorizontalOptions="Center"/>
+                                <ImageButton Source="{Binding Security.IssuesUri}" Grid.Column="2" WidthRequest="30"
+                                           HorizontalOptions="End"
+                                       Clicked="Issues_Warning_Btn_Clicked"/>
                             </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
-    </VerticalStackLayout>
+
+        <ImageButton Source="plus.png"
+                     HeightRequest="45"
+                     WidthRequest="45"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"
+                     Margin="0,0,15,15"
+                     Grid.Row="1"
+                     Clicked="Add_Btn_Clicked"/>
+    </Grid>
 </ContentPage>
