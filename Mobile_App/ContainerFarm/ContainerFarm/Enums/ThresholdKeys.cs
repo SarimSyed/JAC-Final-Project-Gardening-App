@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Enums
 {
+    /// <summary>
+    /// The keys for the threshold preferences.
+    /// </summary>
     public static class ThresholdKeys
     {
         public const string TEMPERATURE_HIGH = "temperatureHigh";

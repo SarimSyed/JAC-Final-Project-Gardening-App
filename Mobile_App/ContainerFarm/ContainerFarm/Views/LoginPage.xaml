@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContainerFarm.Views.LoginPage"
              Title="Fleet Owner Login">
+    
     <Grid RowDefinitions="1.5*,auto,2*">
         <Image Grid.Row="0" 
                x:Name="login_image"

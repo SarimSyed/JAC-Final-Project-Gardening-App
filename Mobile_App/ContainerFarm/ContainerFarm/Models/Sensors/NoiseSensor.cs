@@ -1,4 +1,5 @@
-﻿using ContainerFarm.Interfaces;
+﻿using ContainerFarm.Enums;
+using ContainerFarm.Interfaces;
 using System.ComponentModel;
 
 namespace ContainerFarm.Models.Sensors
@@ -15,7 +16,9 @@ namespace ContainerFarm.Models.Sensors
     {
         public enum Detection
         {
-            Detected,
+            Low,
+            Medium,
+            High,
             NotDetected
         };
         public event PropertyChangedEventHandler PropertyChanged;
@@ -26,14 +29,18 @@ namespace ContainerFarm.Models.Sensors
         {
             get
             {
-                if (Value == 0)
-                {
-                    return Detection.NotDetected.ToString();
-                }
+                //Detection
+                if (Value <= SecurityReadingTitle.NOISE_LOW_THRESHOLD_HIGH || Value > SecurityReadingTitle.NOISE_HIGH_THRESHOLD_HIGH)
+                    return string.Format($"{Detection.High} detection: {Value} dB");
+
+                else if (Value <= SecurityReadingTitle.NOISE_LOW_THRESHOLD_MEDIUM || Value > SecurityReadingTitle.NOISE_HIGH_THRESHOLD_MEDIUM)
+                    return string.Format($"{Detection.Medium} detection: {Value} dB");
+
+                else if (Value <= SecurityReadingTitle.NOISE_LOW_THRESHOLD_LOW || Value > SecurityReadingTitle.NOISE_HIGH_THRESHOLD_LOW)
+                    return string.Format($"{Detection.Low} detection: {Value} dB");
+
                 else
-                {
-                    return Detection.Detected.ToString();
-                }
+                    return Detection.NotDetected.ToString();
             }
         }
     }

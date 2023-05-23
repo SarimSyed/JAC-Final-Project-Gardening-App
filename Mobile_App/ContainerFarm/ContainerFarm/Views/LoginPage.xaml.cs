@@ -32,6 +32,7 @@ public partial class LoginPage : ContentPage
         Debug_Options();
 
         currentOption = LoginOptions.FleetOwner;
+        Shell.Current.FlyoutIsPresented = false;
 	}
 
     private async void SignInBtn_Clicked(object sender, EventArgs e)
@@ -94,14 +95,18 @@ public partial class LoginPage : ContentPage
                     break;
             }
 
-            PreferencesService.SetDefaultPreferences();
+            // Set values from preferences
+            PreferencesService.SetValuesFromPreferences();
 
             // Display successful login
             ShowSnackbar.NewSnackbar($"Logged in successfully!");
 
-            // Initialize the service
-            await D2CService.Initialize();
-            await D2CService.Processor.StartProcessingAsync();
+            if(D2CService.Processor == null)
+            {
+                // Initialize the service
+                await D2CService.Initialize();
+                await D2CService.Processor.StartProcessingAsync();
+            }
 
             // Create the twin thread
             CreateDeviceTwinThread();

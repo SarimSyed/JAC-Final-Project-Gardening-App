@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Enums
 {
+    /// <summary>
+    /// The login options.
+    /// </summary>
     public enum LoginOptions
     {
         FleetOwner,

@@ -2,7 +2,14 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContainerFarm.Views.Technician.DeviceView"
+             xmlns:conv="clr-namespace:ContainerFarm.Converters"
              Title="Container Devices">
+    <ContentPage.Resources>
+        <conv:TemperatureThresholdConverter x:Key="TemperatureThresholdConverter"/>
+        <conv:HumidityThresholdConverter x:Key="HumidityThresholdConverter"/>
+        <conv:WaterLevelThresholdConverter x:Key="WaterLevelThresholdConverter"/>
+    </ContentPage.Resources>
+    
     <ScrollView>
         <VerticalStackLayout Padding="8">
             <Label Text="Container Devices" FontSize="27" FontAttributes="Bold" Margin="2,0,0,7"/>
@@ -13,7 +20,10 @@
                   ColumnSpacing="7">
                     <Image Source="temperature.png" WidthRequest="50" Grid.Column="0"/>
                     <Label Text="Temperature" Style="{StaticResource ContainerDevicesTitle}"/>
-                    <Label Text="{Binding Temperature.Value, StringFormat='{0:F2} C'}" Style="{StaticResource ContainerDevicesValueText}"/>
+                    <Label x:Name="temperature_lb" 
+                           Text="{Binding Temperature.Value, StringFormat='{0:F2} C'}" 
+                           Style="{StaticResource ContainerDevicesValueText}"
+                           TextColor="{Binding Temperature.Value, Converter={StaticResource TemperatureThresholdConverter}}"/>
                 </Grid>
             </Frame>
 
@@ -23,7 +33,9 @@
                   ColumnSpacing="13">
                     <Image Source="humidity.png" WidthRequest="45" Grid.Column="0"/>
                     <Label Text="Humidity" Style="{StaticResource ContainerDevicesTitle}"/>
-                    <Label Text="{Binding Humidity.Value, StringFormat='{0:F2} %'}" Style="{StaticResource ContainerDevicesValueText}" />
+                    <Label Text="{Binding Humidity.Value, StringFormat='{0:F2} %'}"
+                           Style="{StaticResource ContainerDevicesValueText}" 
+                           TextColor="{Binding Humidity.Value, Converter={StaticResource HumidityThresholdConverter}}"/>
                 </Grid>
             </Frame>
 
@@ -43,7 +55,9 @@
                   ColumnSpacing="13">
                     <Image Source="water.png"  WidthRequest="45" Grid.Column="0"/>
                     <Label Text="Water" Style="{StaticResource ContainerDevicesTitle}"/>
-                    <Label Text="{Binding WaterLevel.Value, StringFormat='{0:F2} %'}" Style="{StaticResource ContainerDevicesValueText}" />
+                    <Label Text="{Binding WaterLevel.Value, StringFormat='{0:F2} %'}" 
+                           Style="{StaticResource ContainerDevicesValueText}"
+                           TextColor="{Binding WaterLevel.Value, Converter={StaticResource WaterLevelThresholdConverter}}"/>
                 </Grid>
             </Frame>
 

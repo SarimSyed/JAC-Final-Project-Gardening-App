@@ -38,7 +38,7 @@
                        FontSize="24"
                                  SelectedItem="{Binding TemperatureHighThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
                     </Grid>
 
                     <Grid ColumnDefinitions="auto, 1*, auto"
@@ -59,7 +59,7 @@
                        FontSize="24"
                                  SelectedItem="{Binding TemperatureLowThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
                     </Grid>
                 </VerticalStackLayout>
 
@@ -82,7 +82,7 @@
                        FontSize="24"
                                  SelectedItem="{Binding HumidityHighThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
                     </Grid>
 
                     <Grid ColumnDefinitions="auto, 1*, auto"
@@ -103,7 +103,7 @@
                        FontSize="24"
                                  SelectedItem="{Binding HumidityLowThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
                     </Grid>
                 </VerticalStackLayout>
 
@@ -126,7 +126,7 @@
                        FontSize="24"
                                  SelectedItem="{Binding WaterLevelHighThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
                     </Grid>
 
                     <Grid ColumnDefinitions="auto, 1*, auto"
@@ -147,7 +147,7 @@
                        FontSize="24"
                                 SelectedItem="{Binding WaterLevelLowThreshold, Mode=TwoWay}"
                                HorizontalTextAlignment="Center"
-                                SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
                     </Grid>
                 </VerticalStackLayout>
             </Grid>

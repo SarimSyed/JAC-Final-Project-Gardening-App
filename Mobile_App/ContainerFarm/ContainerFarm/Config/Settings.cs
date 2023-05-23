@@ -20,11 +20,11 @@ namespace ContainerFarm.Config
         public string DeviceId { get; set; }
 
         // Thresholds
-        public int TemperatureHighThreshold { get; set; } = 40;
-        public int TemperatureLowThreshold { get; set; } = 15;
-        public int HumidityHighThreshold { get; set; } = 60;
-        public int HumidityLowThreshold { get; set; } = 30;
-        public int WaterLevelHighThreshold { get; set; } = 50;
-        public int WaterLevelLowThreshold { get; set; } = 20;
+        public double TemperatureHighThreshold { get; set; } = 40;
+        public double TemperatureLowThreshold { get; set; } = 15;
+        public double HumidityHighThreshold { get; set; } = 60;
+        public double HumidityLowThreshold { get; set; } = 30;
+        public double WaterLevelHighThreshold { get; set; } = 50;
+        public double WaterLevelLowThreshold { get; set; } = 20;
     }
 }

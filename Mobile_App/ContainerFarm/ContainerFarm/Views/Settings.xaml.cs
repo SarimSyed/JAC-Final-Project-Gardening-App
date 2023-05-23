@@ -1,5 +1,6 @@
 using ContainerFarm.Enums;
 using ContainerFarm.Models;
+using ContainerFarm.Services;
 
 namespace ContainerFarm.Views;
 
@@ -12,40 +13,48 @@ public partial class Settings : ContentPage
 		this.BindingContext = App.Settings;
         telemetryInterval_pc.BindingContext = TelemetryIntervalModel.TelemetryInterval;
 
-        SetPickerAndIndex(15, 36, temperatureHigh_pc, Preferences.Default.Get("temperatureHigh", App.Settings.TemperatureHighThreshold));
-        SetPickerAndIndex(-20, 36, temperatureLow_pc, Preferences.Default.Get("temperatureLow", App.Settings.TemperatureLowThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.TEMPERATURE_HIGH_START, SettingsPickerRanges.TEMPERATURE_HIGH_COUNT, temperatureHigh_pc, Preferences.Default.Get(ThresholdKeys.TEMPERATURE_HIGH, App.Settings.TemperatureHighThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.TEMPERATURE_LOW_START, SettingsPickerRanges.TEMPERATURE_LOW_COUNT, temperatureLow_pc, Preferences.Default.Get(ThresholdKeys.TEMPERATURE_LOW, App.Settings.TemperatureLowThreshold));
 
-        SetPickerAndIndex(50, 51, humidityHigh_pc, Preferences.Default.Get("humidityHigh", App.Settings.HumidityHighThreshold));
-        SetPickerAndIndex(0, 51, humidityLow_pc, Preferences.Default.Get("humidityLow", App.Settings.HumidityLowThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.HUMIDITY_HIGH_START, SettingsPickerRanges.HUMIDITY_HIGH_COUNT, humidityHigh_pc, Preferences.Default.Get(ThresholdKeys.HUMIDITY_HIGH, App.Settings.HumidityHighThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.HUMIDITY_LOW_START, SettingsPickerRanges.HUMIDITY_LOW_COUNT, humidityLow_pc, Preferences.Default.Get(ThresholdKeys.HUMIDITY_LOW, App.Settings.HumidityLowThreshold));
 
-        SetPickerAndIndex(50, 51, waterLevelHigh_pc, Preferences.Default.Get("waterLevelHigh", App.Settings.WaterLevelHighThreshold));
-        SetPickerAndIndex(0, 51, waterLevelLow_pc, Preferences.Default.Get("waterLevelLow", App.Settings.WaterLevelLowThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.WATER_LEVEL_HIGH_START, SettingsPickerRanges.WATER_LEVEL_HIGH_COUNT, waterLevelHigh_pc, Preferences.Default.Get(ThresholdKeys.WATER_LEVEL_HIGH, App.Settings.WaterLevelHighThreshold));
+        SetPickerAndIndex(SettingsPickerRanges.WATER_LEVEL_LOW_START, SettingsPickerRanges.WATER_LEVEL_LOW_COUNT, waterLevelLow_pc, Preferences.Default.Get(ThresholdKeys.WATER_LEVEL_LOW, App.Settings.WaterLevelLowThreshold));
 
-        SetPickerAndIndex(1, 20, telemetryInterval_pc, Preferences.Default.Get("telemetryInterval", TelemetryIntervalModel.TelemetryInterval));
+        SetPickerAndIndex(SettingsPickerRanges.TELEMETRY_INTERVAL_START, SettingsPickerRanges.TELEMETRY_INTERVAL_COUNT, telemetryInterval_pc, Preferences.Default.Get(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, TelemetryIntervalModel.TelemetryInterval));
     }
 
-    private void SetPickerAndIndex(int start, int count, Picker picker, int threshold)
+    /// <summary>
+    /// Sets the specified picker values.
+    /// </summary>
+    /// <param name="start">The starting value of the picker.</param>
+    /// <param name="count">The count after the starting value (ex: starting value: 1 count: 20, value range: 1-20).</param>
+    /// <param name="picker">The specified picker in the settings page.</param>
+    /// <param name="threshold">The threshold value.</param>
+    private void SetPickerAndIndex(int start, int count, Picker picker, double threshold)
     {
         List<int> pickerValues = Enumerable.Range(start, count).ToList();
         picker.ItemsSource = pickerValues;
 
         int index = pickerValues.FindIndex(t => t == threshold);
         picker.SelectedIndex = index;
-
-        //picker.BindingContext = threshold;
     }
 
-    private void SetPreferences()
+    /// <summary>
+    /// Updates the specific preferences from the settings app.
+    /// </summary>
+    private void UpdatePreferences()
     {
         try
         {
-            Preferences.Default.Set(ThresholdKeys.TEMPERATURE_HIGH, (int) temperatureHigh_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.TEMPERATURE_LOW, (int)temperatureLow_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.HUMIDITY_HIGH, (int)humidityHigh_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.HUMIDITY_LOW, (int)humidityLow_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.WATER_LEVEL_HIGH, (int)waterLevelHigh_pc.SelectedItem);
-            Preferences.Default.Set(ThresholdKeys.WATER_LEVEL_LOW, (int)waterLevelLow_pc.SelectedItem);
-            Preferences.Default.Set(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, (int)telemetryInterval_pc.SelectedItem);
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_HIGH, Convert.ToDouble(temperatureHigh_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.TEMPERATURE_LOW, Convert.ToDouble(temperatureLow_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_HIGH, Convert.ToDouble(humidityHigh_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.HUMIDITY_LOW, Convert.ToDouble(humidityLow_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_HIGH, Convert.ToDouble(waterLevelHigh_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(ThresholdKeys.WATER_LEVEL_LOW, Convert.ToDouble(waterLevelLow_pc.SelectedItem));
+            PreferencesService.UpdateSpecificPreference(TelemetryIntervalModel.TELEMETRY_INTERVAL_PROPERTY, Convert.ToDouble(telemetryInterval_pc.SelectedItem));
         }
         catch (NotSupportedException ex)
         {
@@ -59,7 +68,7 @@ public partial class Settings : ContentPage
 
     protected override bool OnBackButtonPressed()
     {
-        SetPreferences();
+        UpdatePreferences();
 
         return base.OnBackButtonPressed();
     }
@@ -67,23 +76,39 @@ public partial class Settings : ContentPage
     protected override void OnDisappearing()
     {
         base.OnDisappearing();
-        SetPreferences();
+        UpdatePreferences();
     }
 
-    private void Picker_SelectedIndexChanged(object sender, EventArgs e)
+    /// <summary>
+    /// Updates the preferences of the specified picker.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Settings_Picker_SelectedIndexChanged(object sender, EventArgs e)
     {
         Picker picker = sender as Picker;
 
         if (picker == null || picker.SelectedItem == null || picker.SelectedIndex == -1) return;
 
-        SetPreferences();
+        UpdatePreferences();
     }
 
+    /// <summary>
+    /// Updates the telemetry interval when the selected index is changed.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void telemetryInterval_pc_SelectedIndexChanged(object sender, EventArgs e)
     {
         Picker picker = sender as Picker;
-        TelemetryIntervalModel.SetTelemetryInterval((int)picker.SelectedItem);
 
-        Picker_SelectedIndexChanged(sender, e);
+        if (picker == null || picker.SelectedItem == null || picker.SelectedIndex == -1) return;
+
+        TelemetryIntervalModel.SetTelemetryInterval((int)picker.SelectedItem);
+        
+        if (picker.IsFocused)
+            TelemetryIntervalModel.IsChanged = true;
+
+        Settings_Picker_SelectedIndexChanged(sender, e);
     }
 }

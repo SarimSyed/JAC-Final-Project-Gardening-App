@@ -25,7 +25,7 @@ public partial class AppShell : Shell
             //    Console.WriteLine(D2CService.Processor.IsRunning);
             //}
 
-            await D2CService.Processor.StopProcessingAsync(new CancellationToken(true));
+            //await D2CService.Processor.StopProcessingAsync(new CancellationToken(true));
                      
             // Validates that there's a signed in user
             if (AuthService.Client.User == null)
@@ -35,7 +35,11 @@ public partial class AppShell : Shell
             AuthService.Client.SignOut();
 
             // Correctly logged in
+            Shell.Current.FlyoutIsPresented = false;
+
             await Shell.Current.GoToAsync("//Login");
+
+            
         }
         catch (IotHubCommunicationException ex)
         {
@@ -63,7 +67,9 @@ public partial class AppShell : Shell
                 return;
 
             // Push the settings page
+            
             await Navigation.PushAsync(new Settings());
+            Shell.Current.FlyoutIsPresented = false;
         }
         catch (Exception ex)
         {

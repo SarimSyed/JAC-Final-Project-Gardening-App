@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ContainerFarm.Config
 {
+    /// <summary>
+    /// The resource strings for authentication.
+    /// </summary>
     static internal class ResourceStrings
     {
         static public string AuthorizedDomain { get; set; } = "container-farms.firebaseapp.com";
