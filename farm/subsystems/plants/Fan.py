@@ -8,11 +8,11 @@ class Fan(IActuator):
     FAN_OFF = "off"
     FAN_ON = "on"
 
-    def __init__(self, gpio: int, type: ACommand.Type.FAN, initial_state: dict) -> None:
+    def __init__(self, gpio: int, type: ACommand.Type, initial_state: dict) -> None:
         super().__init__(gpio, type, initial_state)
 
         self.type = type or ACommand.Type.LED
-        self._current_state = initial_state or Fan.FAN_OFF
+        self._current_state = initial_state
         
         self.isOn : bool = str(initial_state['value']).lower() == Fan.FAN_ON 
         

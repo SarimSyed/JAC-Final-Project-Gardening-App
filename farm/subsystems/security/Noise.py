@@ -35,26 +35,27 @@ class Noise(ISensor):
 
         #Get the sensor reading
         noise_value = self.noise_adc.read(0)
+        return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": noise_value})        
         #Low sensitivity
-        if(self._sensitivity == AReading.Sensitivity.LOW.value):
-            if(noise_value < Noise.LOW_VALUES[0] or noise_value > Noise.LOW_VALUES[1]):
-                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
-            else:
-                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
+        # if(self._sensitivity == AReading.Sensitivity.LOW.value):
+        #     if(noise_value < Noise.LOW_VALUES[0] or noise_value > Noise.LOW_VALUES[1]):
+        #         return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
+        #     else:
+        #         return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
         
-        #Medium sensitivity
-        elif(self._sensitivity == AReading.Sensitivity.MEDIUM.value):
-            if(noise_value < Noise.MED_VALUES[0] or noise_value > Noise.MED_VALUES[1]):
-                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
-            else:
-                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
+        # #Medium sensitivity
+        # elif(self._sensitivity == AReading.Sensitivity.MEDIUM.value):
+        #     if(noise_value < Noise.MED_VALUES[0] or noise_value > Noise.MED_VALUES[1]):
+        #         return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
+        #     else:
+        #         return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
         
-        #High sensitivity
-        else:
-            if(noise_value < Noise.HIGH_VALUES[0] or noise_value > Noise.HIGH_VALUES[1]):
-                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
-            else:
-                return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
+        # #High sensitivity
+        # else:
+        #     if(noise_value < Noise.HIGH_VALUES[0] or noise_value > Noise.HIGH_VALUES[1]):
+        #         return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.DETECTED.value})
+        #     else:
+        #         return AReading(AReading.Type.NOISE,  AReading.Unit.NONE, {"value": AReading.Response.NOT_DETECTED.value})
         
 if __name__ == "__main__":
     noise = Noise()

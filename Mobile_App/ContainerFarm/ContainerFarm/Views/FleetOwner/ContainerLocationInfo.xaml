@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.FleetOwner.ContainerLocationInfo"
+             Title="ContainerLocationInfo">
+    <Grid Padding="15"
+          RowSpacing="40">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid RowDefinitions="auto, 1*"
+              RowSpacing="10"
+              Grid.Row="0">
+            <Label Text="Sensors" 
+               FontSize="25"
+               FontAttributes="Bold"
+               Grid.Row="0"
+                   TextColor="#79D863"
+               />
+
+            <Grid 
+              Grid.Row="1"
+              Padding="20,0"
+              RowSpacing="20"
+                  ColumnSpacing="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Address Level-->
+                <Grid Style="{StaticResource SensorActuatorGrid}"
+                  Grid.Column="0" 
+                Grid.ColumnSpan="2"
+                   Grid.Row="0">
+                    <Label Text="Address" 
+                   Style="{StaticResource SensorActuatorGridTitle}"
+                   Grid.ColumnSpan="2"
+                       Grid.Row="0"/>
+
+                    <Frame Style="{StaticResource SensorActuatorGridFrame}"
+                       Grid.Row="1" 
+                       Grid.ColumnSpan="2">
+                        <Label Text="{Binding GpsSensor.Address}" 
+                           Style="{StaticResource SensorActuatorGridValue}"/>
+                    </Frame>
+                </Grid>
+
+                <!--Pitch-->
+                <Grid Style="{StaticResource SensorActuatorGrid}"
+                  Grid.Column="0" 
+                   Grid.Row="1">
+                    <Label Text="Pitch" 
+                       Grid.Column="0" 
+                       Grid.Row="0" 
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+
+                    <Frame  Grid.Column="0" 
+                       Grid.Row="1" 
+                        Style="{StaticResource SensorActuatorGridFrame}">
+                        <Label Text="{Binding PitchAngleSensor.Value, StringFormat='{0:F2}'}" 
+                           Style="{StaticResource SensorActuatorGridValue}"/>
+                    </Frame>
+                </Grid>
+
+                <!-- Roll Angle-->
+                <Grid Style="{StaticResource SensorActuatorGrid}"
+                  Grid.Column="1" 
+                   Grid.Row="1">
+                    <Label Text="Roll Angle" 
+                       Grid.Column="0" 
+                       Grid.Row="0" 
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+
+                    <Frame  Grid.Column="0" 
+                       Grid.Row="1" 
+                        Style="{StaticResource SensorActuatorGridFrame}">
+                        <Label Text="{Binding RollAngleSensor.Value, StringFormat='{0:F2}'}"
+                           Style="{StaticResource SensorActuatorGridValue}"/>
+                    </Frame>
+                </Grid>
+
+                <!--Vibration Level-->
+                <Grid Style="{StaticResource SensorActuatorGrid}"
+                  Grid.Column="0" 
+                   Grid.Row="2">
+                    <Label Text="Vibration" 
+                       Grid.Column="0" 
+                       Grid.Row="0" 
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+
+                    <Frame  Grid.Column="0" 
+                       Grid.Row="1" 
+                        Style="{StaticResource SensorActuatorGridFrame}">
+                        <Label  Text="{Binding VibrationSensor.Value, StringFormat='{0:F2}'}"
+                           Style="{StaticResource SensorActuatorGridValue}"/>
+                    </Frame>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Grid RowDefinitions="auto, auto"
+              RowSpacing="10"
+              Grid.Row="1">
+
+            <Label Text="Controllers (Actuators)" 
+               FontSize="25"
+               FontAttributes="Bold"
+               Grid.Row="0"
+                   TextColor="#79D863"
+               />
+
+            <Grid 
+              Grid.Row="1"
+              Padding="20,0"
+              ColumnSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Buzzer-->
+                <Grid RowDefinitions="1*"
+                  ColumnDefinitions="1*, auto"
+                  Grid.Column="0" 
+                   Grid.Row="2">
+                    <Label Text="Buzzer"
+                       Grid.Column="0"
+                       VerticalOptions="Center" 
+                       FontSize="Medium" 
+                       FontAttributes="Bold"/>
+
+                    <HorizontalStackLayout
+                        Margin="0,0,20,0"
+                        HorizontalOptions="End"
+                        Spacing="10">
+                        <Switch IsToggled="{Binding BuzzerActuator.IsOn}"  
+                        PropertyChanged="BuzzerSwitch_PropertyChanged"/>
+                        <Label x:Name="buzzerStatus"
+                       VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <Button Grid.Row="2"
+                Text="Show on map"
+                Clicked="Show_On_Map_Btn_Clicked"/>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.LoginPage"
+             Title="Fleet Owner Login">
+    
+    <Grid RowDefinitions="1.5*,auto,2*">
+        <Image Grid.Row="0" 
+               x:Name="login_image"
+            Source="containers.png"
+               HeightRequest="225"
+               Margin="0,10"/>
+
+        <Label Grid.Row="1" 
+            Text="Login"
+            FontAttributes="Bold"
+            FontSize="35"
+               Margin="0,0,0,15"
+            HorizontalTextAlignment="Center"/>
+
+        <Frame Grid.Row="2" 
+            BackgroundColor="LightPink"
+               Margin="15"
+               Padding="0"
+               CornerRadius="20"
+               BorderColor="Black"
+               ZIndex="1">
+            <VerticalStackLayout >
+                <Grid ColumnDefinitions="auto,auto" 
+                      ColumnSpacing="0">
+                    <Button
+                        x:Name="fleet_owner_btn"
+                        Grid.Column="0"
+                        Text="Fleet Owner"
+                            CornerRadius="0"
+                            FontAttributes="Bold"
+                            FontSize="24"
+                        BorderColor="{StaticResource Primary}"
+                        BackgroundColor="LightPink"
+                        BorderWidth="1"
+                        TextColor="{StaticResource Primary}"
+                        Clicked="Fleet_Owner_Clicked"/>
+
+                    <Button
+                        x:Name="farm_technician_btn"
+                        Grid.Column="1"
+                        Text="Farm Technician"
+                            CornerRadius="0"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            FontSize="24"
+                        BorderColor="Black"
+                        BackgroundColor="LightPink"
+                        BorderWidth="1"
+                        Clicked="Farm_Technician_Clicked"/>
+                    
+                    <!--<Border
+                        Grid.Column="1"
+                        Padding="0"
+                        Margin="0"
+                        Stroke="Black"
+                        StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0,17,0,0" />
+                        </Border.StrokeShape>
+                        <Button
+                        Text="Farm Technician"
+                            CornerRadius="0"
+                            BackgroundColor="LightPink"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            FontSize="24"/>
+                    </Border>-->
+                </Grid>
+
+                <VerticalStackLayout Padding="20">
+                    <Label Text="Username" FontAttributes="Bold"/>
+                    <Border Stroke="Black" StrokeThickness="3" 
+                        StrokeShape="RoundRectangle 5,5,5,5" >
+                        <Entry Placeholder="Username" BackgroundColor="White"
+                       x:Name="username"
+                               />
+                    </Border>
+                    
+                    <Label Text="Password" FontAttributes="Bold"/>
+                    <Border Stroke="Black" StrokeThickness="3" 
+                        StrokeShape="RoundRectangle 5,5,5,5">
+                        <Entry IsPassword="True" Placeholder="Password" BackgroundColor="White"
+                           x:Name="password"/>
+
+                    </Border>
+                    <!--<Button Text="Sign In" Clicked="SignInBtn_Clicked"/>-->
+
+                    <ImageButton Source="right_arrow.png"
+                                 x:Name="signInBtn"
+                                 Clicked="SignInBtn_Clicked"
+                                 BackgroundColor="{StaticResource Primary}"
+                                 HorizontalOptions="Center"
+                                 Padding="10"
+                                 Margin="0,20,0,0"
+                                 WidthRequest="80"
+                                 HeightRequest="80"
+                                 CornerRadius="30"
+                                 />
+                    
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

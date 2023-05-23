@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.Technician.DeviceView"
+             xmlns:conv="clr-namespace:ContainerFarm.Converters"
+             Title="Container Devices">
+    <ContentPage.Resources>
+        <conv:TemperatureThresholdConverter x:Key="TemperatureThresholdConverter"/>
+        <conv:HumidityThresholdConverter x:Key="HumidityThresholdConverter"/>
+        <conv:WaterLevelThresholdConverter x:Key="WaterLevelThresholdConverter"/>
+    </ContentPage.Resources>
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="8">
+            <Label Text="Container Devices" FontSize="27" FontAttributes="Bold" Margin="2,0,0,7"/>
+
+            <!--Temperature-->
+            <Frame CornerRadius="15" Padding="10,13,15,13" BackgroundColor="#79D863" Margin="0,8">
+                <Grid ColumnDefinitions="auto, 1*, auto"
+                  ColumnSpacing="7">
+                    <Image Source="temperature.png" WidthRequest="50" Grid.Column="0"/>
+                    <Label Text="Temperature" Style="{StaticResource ContainerDevicesTitle}"/>
+                    <Label x:Name="temperature_lb" 
+                           Text="{Binding Temperature.Value, StringFormat='{0:F2} C'}" 
+                           Style="{StaticResource ContainerDevicesValueText}"
+                           TextColor="{Binding Temperature.Value, Converter={StaticResource TemperatureThresholdConverter}}"/>
+                </Grid>
+            </Frame>
+
+            <!--Humidity-->
+            <Frame CornerRadius="15" Padding="13,13,15,13" BackgroundColor="#79D863" Margin="0,8">
+                <Grid ColumnDefinitions="auto, 1*, auto"
+                  ColumnSpacing="13">
+                    <Image Source="humidity.png" WidthRequest="45" Grid.Column="0"/>
+                    <Label Text="Humidity" Style="{StaticResource ContainerDevicesTitle}"/>
+                    <Label Text="{Binding Humidity.Value, StringFormat='{0:F2} %'}"
+                           Style="{StaticResource ContainerDevicesValueText}" 
+                           TextColor="{Binding Humidity.Value, Converter={StaticResource HumidityThresholdConverter}}"/>
+                </Grid>
+            </Frame>
+
+            <!--Soil-->
+            <Frame CornerRadius="15" Padding="13,13,15,13" BackgroundColor="#79D863" Margin="0,8">
+                <Grid ColumnDefinitions="auto, 1*, auto"
+                  ColumnSpacing="13">
+                    <Image Source="soil.png"  WidthRequest="45" Grid.Column="0"/>
+                    <Label Text="Soil" Style="{StaticResource ContainerDevicesTitle}"/>
+                    <Label Text="{Binding SoilMoisture.SoilMoisture}" Style="{StaticResource ContainerDevicesValueText}" />
+                </Grid>
+            </Frame>
+
+            <!--Water-->
+            <Frame CornerRadius="15" Padding="13,10,15,10"  BackgroundColor="#79D863" Margin="0,8">
+                <Grid ColumnDefinitions="auto, 1*, auto"
+                  ColumnSpacing="13">
+                    <Image Source="water.png"  WidthRequest="45" Grid.Column="0"/>
+                    <Label Text="Water" Style="{StaticResource ContainerDevicesTitle}"/>
+                    <Label Text="{Binding WaterLevel.Value, StringFormat='{0:F2} %'}" 
+                           Style="{StaticResource ContainerDevicesValueText}"
+                           TextColor="{Binding WaterLevel.Value, Converter={StaticResource WaterLevelThresholdConverter}}"/>
+                </Grid>
+            </Frame>
+
+            <!--Light-->
+            <Frame CornerRadius="15" Padding="10,13"  BackgroundColor="#79D863" Margin="0,8">
+                <Grid ColumnDefinitions="auto, 1*, auto"
+                  ColumnSpacing="13">
+                    <Image Source="light.png" WidthRequest="45"
+                           Grid.Column="0"/>
+                    <Label Text="Light" Style="{StaticResource ContainerDevicesTitle}"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="2" Margin="0,0,10,0" Spacing="7">
+                        <Switch IsToggled="{Binding LightActuator.IsOn}" Margin="80,0,0,0" PropertyChanged="LightSwitch_PropertyChanged"/>
+                        <Label x:Name="lightStatus" HorizontalOptions="End" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Frame>
+
+            <!--Fan-->
+            <Frame CornerRadius="15" Padding="10,13"  BackgroundColor="#79D863" Margin="0,8">
+                <Grid ColumnDefinitions="auto, 1*, auto"
+                  ColumnSpacing="13">
+
+                    <Image Source="fan.png" WidthRequest="45"
+                       Grid.Column="0"/>
+                    <Label Text="Fan" Style="{StaticResource ContainerDevicesTitle}"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="2" Margin="0,0,10,0" Spacing="7">
+                        <Switch IsToggled="{Binding FanActuator.IsOn}" Margin="80,0,0,0" PropertyChanged="FanSwitch_PropertyChanged"/>
+                        <Label x:Name="fanStatus" HorizontalOptions="End" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Frame>
+            
+            <!--Door Lock-->
+            <Frame CornerRadius="15" Padding="10,13"  BackgroundColor="#79D863" Margin="0,8">
+                <Grid ColumnDefinitions="auto, 1*, auto"
+                  ColumnSpacing="13">
+
+                    <Image Source="door_lock.png" WidthRequest="45"
+                       Grid.Column="0"/>
+                    <Label Text="Door Lock" Style="{StaticResource ContainerDevicesTitle}"/>
+                    <HorizontalStackLayout HorizontalOptions="Center" Grid.Column="2" Margin="0,0,10,0" Spacing="7">
+                        <Switch x:Name="doorLockSwitch" IsToggled="{Binding DoorlockActuator.IsOn}" Margin="80,0,0,0" PropertyChanged="DoorLockSwitch_PropertyChanged"/>
+                        <Label x:Name="doorLockStatus" HorizontalOptions="End" VerticalTextAlignment="Center"/>
+                    </HorizontalStackLayout>
+                </Grid>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

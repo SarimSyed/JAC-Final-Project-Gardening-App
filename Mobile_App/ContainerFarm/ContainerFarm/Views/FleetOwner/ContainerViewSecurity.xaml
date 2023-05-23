@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.FleetOwner.ContainerViewSecurity"
+             xmlns:models="clr-namespace:ContainerFarm.Models"
+             Title="Container Security">
+    <Grid RowDefinitions="1*, auto">
+        <ScrollView Grid.Row="0">
+            <CollectionView
+                x:Name="securityCollection"
+                Margin="10">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Container">
+                        <Frame Margin="10" BackgroundColor="LightGreen">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Container_Farm_Security_Tapped"/>
+                            </Frame.GestureRecognizers>
+                        <Grid RowDefinitions="auto"
+                              ColumnDefinitions="auto,auto,1*"
+                              VerticalOptions="Center"
+                              ColumnSpacing="25">
+                            
+                            <!--Containers-->
+                                <Image Source="container.png" Grid.RowSpan="2" WidthRequest="80" />
+                                <VerticalStackLayout Grid.Column="1" 
+                                                     VerticalOptions="Center"
+                                                     Spacing="12">
+                                    <Label  Text="{Binding Name}" x:Name="nameBtn"  TextColor="Black" 
+                                        FontSize="20" FontAttributes="Bold"
+                                            VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"/>
+                                    <Label Text="{Binding Security.IssuesCount, StringFormat='Issues: {0:F0}'}"
+                                           VerticalTextAlignment="Center"
+                                           VerticalOptions="Center"/>
+                                </VerticalStackLayout>
+                                <ImageButton Source="{Binding Security.IssuesUri}" Grid.Column="2" WidthRequest="30"
+                                           HorizontalOptions="End"
+                                       Clicked="Issues_Warning_Btn_Clicked"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+        <ImageButton Source="plus.png"
+                     HeightRequest="45"
+                     WidthRequest="45"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"
+                     Margin="0,0,15,15"
+                     Grid.Row="1"
+                     Clicked="Add_Btn_Clicked"/>
+    </Grid>
+</ContentPage>

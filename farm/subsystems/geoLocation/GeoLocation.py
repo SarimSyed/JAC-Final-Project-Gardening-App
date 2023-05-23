@@ -4,11 +4,11 @@ from .GPSLocation import GPSLocation
 from .Pitch import Pitch
 from .RollAngle import RollAngle
 from .Vibration import Vibration
-
+from interfaces.subsystem import ISubsystem
 from interfaces.actuators import ACommand, IActuator
 from interfaces.sensors import AReading, ISensor
 
-class GeoLocation:
+class GeoLocation(ISubsystem):
     """The Geo-Location subsystem of the container farm.
     """    
     def __init__(self) -> None:
@@ -45,6 +45,7 @@ class GeoLocation:
         """  
 
         readings: list[AReading] = []
+        print("\n---------------------GEO-LOCATION SENSORS---------------------")
 
         for sensor in self._sensors:
             # Get the sensor reading
@@ -68,7 +69,7 @@ class GeoLocation:
 
         return readings
 
-    def control_actuators(self, command: ACommand) -> None:
+    def control_actuators(self, command: ACommand) -> bool:
         """Controls the actuators inside the Geo-Location subsystem.
 
         Args:
@@ -81,7 +82,9 @@ class GeoLocation:
                 # Validate command
                 if actuator.validate_command(command):
                     # Control actuator with command data
-                    actuator.control_actuator(command.data)
+                    return actuator.control_actuator(command.data)
+                
+        return False
 
 
 if __name__ == "__main__":

@@ -1,7 +1,10 @@
 from abc import ABC, abstractmethod
 from enum import Enum
+import json
 
-
+"""
+We are using the 'AReading' and 'ISensor' classes from Mauricio Andres Buschinelli: https://github.com/maujac.
+"""
 class AReading:
     """Class for sensor readings. Defines possible types of readings and reading units using enums.
     """
@@ -50,7 +53,7 @@ class AReading:
 
         #Geo-Location
         LOCATION = 'loc'
-        PITCH = 'Hz'
+        PITCH = '°'
         ROLL_ANGLE = '°'
         VIBRATION = 'm/s2'
 
@@ -75,11 +78,13 @@ class AReading:
         """
         return f"{self.reading_type}: {self.value} {self.reading_unit}"
 
-    def export_json(self) -> str:
+    def export_json(self) -> dict[Type, dict[str, dict[str, str]]]:
         """Exports a reading as a json encoded string
         :return str: json string representation of the reading
         """
-        return {"value": self.value, "unit": self.reading_unit.value}.__str__()
+        temp = self.value["value"]
+        return {self.reading_type:{"value": temp, "unit": self.reading_unit.value}} # type: ignore
+
 
 
 class ISensor(ABC):

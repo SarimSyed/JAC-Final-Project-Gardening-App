@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.Settings"
+             Title="Settings">
+    <Grid RowDefinitions="auto, auto"
+          Padding="15"
+          RowSpacing="20">
+        
+        <Grid RowDefinitions="auto, 1*"
+          RowSpacing="10"
+              Grid.Row="0">
+            <Label Text="Thresholds"
+               FontSize="25"
+               FontAttributes="Bold"
+               Grid.Row="0"
+               TextColor="#79D863"/>
+
+            <Grid RowDefinitions="auto, auto, auto, auto"
+              Grid.Row="1"
+              RowSpacing="20">
+                <VerticalStackLayout Grid.Row="0">
+                    <Grid ColumnDefinitions="auto, 1*, auto"
+                  Margin="0,0,30,0"
+                  VerticalOptions="Center">
+                        <Image Source="temperature.png"
+                       WidthRequest="40"
+                       Margin="0,0,7,0"
+                       Grid.Column="0"/>
+                        <Label Text="Temperature High"
+                       HorizontalOptions="Start"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center"
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+                        <Picker x:Name="temperatureHigh_pc"
+                       HorizontalOptions="End"
+                       Grid.Column="2"
+                       FontSize="24"
+                                 SelectedItem="{Binding TemperatureHighThreshold, Mode=TwoWay}"
+                               HorizontalTextAlignment="Center"
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="auto, 1*, auto"
+                  Margin="0,0,30,0" 
+                  VerticalOptions="Center">
+                        <Image Source="temperature.png"
+                       WidthRequest="40"
+                       Margin="0,0,7,0"
+                       Grid.Column="0"/>
+                        <Label Text="Temperature Low"
+                       HorizontalOptions="Start"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center"
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+                        <Picker x:Name="temperatureLow_pc"
+                       HorizontalOptions="End"
+                       Grid.Column="2"
+                       FontSize="24"
+                                 SelectedItem="{Binding TemperatureLowThreshold, Mode=TwoWay}"
+                               HorizontalTextAlignment="Center"
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="1">
+                    <Grid ColumnDefinitions="auto, 1*, auto"
+                  Margin="0,0,30,0"
+                  VerticalOptions="Center">
+                        <Image Source="humidity.png"
+                       WidthRequest="40"
+                       Margin="0,0,7,0"
+                       Grid.Column="0"/>
+                        <Label Text="Humidity High"
+                       HorizontalOptions="Start"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center"
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+                        <Picker x:Name="humidityHigh_pc"
+                       HorizontalOptions="End"
+                       Grid.Column="2"
+                       FontSize="24"
+                                 SelectedItem="{Binding HumidityHighThreshold, Mode=TwoWay}"
+                               HorizontalTextAlignment="Center"
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="auto, 1*, auto"
+                  Margin="0,0,30,0"
+                  VerticalOptions="Center">
+                        <Image Source="humidity.png"
+                       WidthRequest="40"
+                       Margin="0,0,7,0"
+                       Grid.Column="0"/>
+                        <Label Text="Humidity Low"
+                       HorizontalOptions="Start"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center"
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+                        <Picker x:Name="humidityLow_pc"
+                       HorizontalOptions="End"
+                       Grid.Column="2"
+                       FontSize="24"
+                                 SelectedItem="{Binding HumidityLowThreshold, Mode=TwoWay}"
+                               HorizontalTextAlignment="Center"
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Row="2">
+                    <Grid ColumnDefinitions="auto, 1*, auto"
+                  Margin="0,0,30,0"
+                  VerticalOptions="Center">
+                        <Image Source="water.png"
+                       WidthRequest="40"
+                       Margin="0,0,7,0"
+                       Grid.Column="0"/>
+                        <Label Text="Water Level High"
+                       HorizontalOptions="Start"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center"
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+                        <Picker x:Name="waterLevelHigh_pc"
+                       HorizontalOptions="End"
+                       Grid.Column="2"
+                       FontSize="24"
+                                 SelectedItem="{Binding WaterLevelHighThreshold, Mode=TwoWay}"
+                               HorizontalTextAlignment="Center"
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
+                    </Grid>
+
+                    <Grid ColumnDefinitions="auto, 1*, auto"
+                  Margin="0,0,30,0"
+                  VerticalOptions="Center">
+                        <Image Source="water.png"
+                       WidthRequest="40"
+                       Margin="0,0,7,0"
+                       Grid.Column="0"/>
+                        <Label Text="Water Level Low"
+                       HorizontalOptions="Start"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center"
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+                        <Picker x:Name="waterLevelLow_pc"
+                       HorizontalOptions="End"
+                       Grid.Column="2"
+                       FontSize="24"
+                                SelectedItem="{Binding WaterLevelLowThreshold, Mode=TwoWay}"
+                               HorizontalTextAlignment="Center"
+                                SelectedIndexChanged="Settings_Picker_SelectedIndexChanged"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+
+        <Grid RowDefinitions="auto, 1*"
+          RowSpacing="10"
+              Grid.Row="1">
+            <Label Text="Telemetry"
+               FontSize="25"
+               FontAttributes="Bold"
+               Grid.Row="0"
+               TextColor="#79D863"/>
+
+            <Grid RowDefinitions="auto, auto, auto, auto"
+              Grid.Row="1">
+                <VerticalStackLayout Grid.Row="3">
+                    <Grid ColumnDefinitions="auto, 1*, auto"
+                  Margin="0,0,30,0"
+                  VerticalOptions="Center">
+                        <Image Source="telemetry.png"
+                       WidthRequest="35"
+                       Margin="0,0,10,0"
+                       Grid.Column="0"/>
+                        <Label Text="Telemetry Interval"
+                       HorizontalOptions="Start"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center"
+                       Style="{StaticResource SensorActuatorGridTitle}"/>
+                        <Picker 
+                            x:Name="telemetryInterval_pc"
+                       HorizontalOptions="End"
+                       Grid.Column="2"
+                       FontSize="24"
+                             SelectedItem="{Binding ., Mode=TwoWay}"
+                               HorizontalTextAlignment="Center"
+                            SelectedIndexChanged="telemetryInterval_pc_SelectedIndexChanged"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

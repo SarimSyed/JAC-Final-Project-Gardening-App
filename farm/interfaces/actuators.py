@@ -2,7 +2,9 @@ from abc import ABC, abstractmethod
 from enum import Enum
 import json
 
-
+"""
+We are using the 'ACommand' and 'IActuator' classes from Mauricio Andres Buschinelli: https://github.com/maujac.
+"""
 class ACommand:
     """Class for actuator commands. Defines all possible command types via enums.
     """
@@ -27,7 +29,7 @@ class ACommand:
         # the body are left as an implementation detail of each specific actuator.
         self.data: dict = json.loads(raw_message_body)
 
-        print(f"data: {self.data}")
+        print(f"{self.target_type}: {self.data}")
 
     def __repr__(self) -> str:
         return f'Command for {self.target_type} as {self.data}'

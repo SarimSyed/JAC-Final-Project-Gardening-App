@@ -1,5 +1,5 @@
 from interfaces.sensors import ISensor, AReading
-from grove.grove_temperature_humidity_aht20 import GroveTemperatureHumidityAHT20 as Sensor
+from .library.grove_temperature_humidity_aht20 import GroveTemperatureHumidityAHT20 as Sensor
 from time import sleep
 
 
@@ -14,7 +14,7 @@ class HumiditySensor(ISensor) :
         
         self.reading_type: AReading.Type = AReading.Type.HUMIDITY
         self.reading_unit = AReading.Unit.HUMIDITY
-        self.sensor = Sensor(bus= HumiditySensor.SENSOR_BUS, address= HumiditySensor.SENSOR_ADDRESS)
+        self.sensor = Sensor(bus= 4, address= 0x38)
 
         
 
@@ -22,10 +22,16 @@ class HumiditySensor(ISensor) :
     def read_sensor(self) -> AReading:
         
         #Return humidity
-        (temp, humid) = self.sensor.read()
-        self.value = round(humid, 2)                                                                                    
+        try:
 
-        return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, self.value)
+            (temp, humid) = self.sensor.read()
+            self.value = round(humid, 2)                                                                                    
+
+            return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, {"value":  self.value})
+        except:
+            return AReading(AReading.Type.HUMIDITY, AReading.Unit.HUMIDITY, {"value":  self.value})
+
+            
 
     
 if __name__ == "__main__":

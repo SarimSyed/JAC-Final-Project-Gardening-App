@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.Technician.HumidityView"
+             xmlns:charts="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             xmlns:models="clr-namespace:ContainerFarm.Models"
+             xmlns:tabView="clr-namespace:Syncfusion.Maui.TabView;assembly=Syncfusion.Maui.TabView"
+             Title="HumidityView">
+    <Grid RowDefinitions="1*,1*"
+          Padding="10"
+          RowSpacing="20">
+        <Grid RowDefinitions="auto, 1*" 
+            Grid.Row="0"
+               RowSpacing="7" 
+                             Style="{StaticResource GraphTitleToFrame}">
+            <Label
+                Text="Data over the last 24 hours"
+                 Style="{StaticResource GraphTitleText}"/>
+
+            <Frame
+                Padding="10"
+                Margin="0"
+                CornerRadius="20"
+                Grid.Row="1"
+                BorderColor="{StaticResource Primary}">
+                <charts:CartesianChart
+                    
+                
+            x:Name="pie_chart"
+            TooltipTextSize="40"
+                    LegendTextSize="50"
+            />
+            </Frame>
+        </Grid>
+            <!--Series="{Binding Series}"-->
+
+        <Grid RowDefinitions="auto, 1*" 
+            Grid.Row="1"
+               RowSpacing="7"
+                             Style="{StaticResource GraphTitleToFrame}">
+            <Label
+                Grid.Row="0"
+                Text="More data over the last 24 hours"
+                Style="{StaticResource GraphTitleText}"/>
+
+            <Frame
+                Grid.Row="1"
+                HeightRequest="250"
+                CornerRadius="20" 
+                Padding="0"
+                Margin="0"
+                BorderColor="{StaticResource Primary}">
+                <ScrollView>
+                    <CollectionView x:Name="humidity_cv">
+                        <!--<CollectionView.ItemsSource>
+                            <x:Array Type="{x:Type models:PlantOld}">
+                                <models:PlantOld 
+                                Temperature="14"
+                               />
+                                <models:PlantOld 
+                                Temperature="24"
+                               />
+                                <models:PlantOld 
+                                Temperature="24"
+                               />
+                                <models:PlantOld 
+                                Temperature="24"
+                               />
+                                <models:PlantOld 
+                                Temperature="24"
+                               />
+                                <models:PlantOld 
+                                Temperature="24"
+                               />
+
+                            </x:Array>
+                        </CollectionView.ItemsSource>-->
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout>
+                                    <VerticalStackLayout Padding="15,10">
+                                        <Grid ColumnDefinitions="auto, 1*"
+                                              RowDefinitions="1*"
+                                              >
+                                            <HorizontalStackLayout 
+                                                Grid.Column="0"
+                                                HorizontalOptions="Start">
+                                                <Label
+                                        Text="Humi: "/>
+                                                <Label
+                                                    FontAttributes="Bold"
+                                                    Margin="0,0,5,0"
+                                        Text="{Binding Value, StringFormat='{0:F2}'}"/>
+                                                <Label
+                                                    
+                                        Text="{Binding Unit}"/>
+                                            </HorizontalStackLayout>
+
+                                            <HorizontalStackLayout 
+                                                Grid.Column="1"
+                                                HorizontalOptions="End">
+                                                <Label
+                                        Text="{Binding EnqueuedTimeFormatted}"/>
+                                                <!--<Label
+                                        Text="April 2, 2023 12:23 PM"/>-->
+                                            </HorizontalStackLayout>
+                                        </Grid>
+
+                                    </VerticalStackLayout>
+                                    <Line HeightRequest="1" BackgroundColor="Black"/>
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+            </Frame>
+        </Grid>
+    </Grid>
+</ContentPage>

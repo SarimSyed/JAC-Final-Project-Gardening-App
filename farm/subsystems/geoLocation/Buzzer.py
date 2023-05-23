@@ -2,12 +2,16 @@ import seeed_python_reterminal.core as rt
 from time import sleep
 from interfaces.actuators import IActuator, ACommand
 
+
 class Buzzer(IActuator):
     """A Buzzer represents an alarm in the Geo-Location subsytem.
 
     Args:
         IActuator (IActuator): Implements the interface.
     """
+
+    ONSTATE = "on"
+    OFFSTATE = "off"
 
     def __init__(self, type: ACommand.Type, initial_state: dict) -> None:
         """Constructor for Buzzer class. Must define interface's class properties
@@ -18,6 +22,7 @@ class Buzzer(IActuator):
         # Initialize object variables
         self.type = type or ACommand.Type.BUZZER
         self._current_state = initial_state
+        print(rt.buzzer)
 
     def validate_command(self, command: ACommand) -> bool:
         """Validates that a command can be used with the specific actuator.
@@ -25,7 +30,7 @@ class Buzzer(IActuator):
         :return bool: True if command can be consumed by the actuator.
         """
 
-        return command.target_type == self.type and str(command.data.get("value")).lower() == "on" or str(command.data.get("value")).lower() == "off"
+        return command.target_type == self.type and str(command.data.get("value")).lower() == Buzzer.ONSTATE or str(command.data.get("value")).lower() == Buzzer.OFFSTATE
 
     def control_actuator(self, data: dict) -> bool:
         """Sets the actuator to the value passed as argument.
@@ -33,20 +38,21 @@ class Buzzer(IActuator):
         :return bool: True if the state of the actuator changed, false otherwise.
         """
 
-        # Get the previous actuator state
-        # current_state = str(self._current_state.get("value"))
+        #Check if value changed
+        isChanged = self._current_state["value"] != data["value"]
+        self._current_state = data
 
         # Get the value from the dictionnary
         data_value = data["value"]
 
-        # Turn on buzzer
-        if data_value == "on":
+        # Turn on fan
+        if data_value == Buzzer.ONSTATE:
             rt.buzzer = True
-        # Turn off buzzer
-        elif data_value == "off":
+        # Turn off fan
+        elif data_value == Buzzer.OFFSTATE:
             rt.buzzer = False
 
-        return rt.buzzer 
+        return isChanged
 
 
 

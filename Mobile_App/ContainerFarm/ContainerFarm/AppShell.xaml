@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="ContainerFarm.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:ContainerFarm"
+    xmlns:views="clr-namespace:ContainerFarm.Views"
+    xmlns:technician="clr-namespace:ContainerFarm.Views.Technician"
+    xmlns:fleetowner="clr-namespace:ContainerFarm.Views.FleetOwner"
+    
+    
+    Shell.FlyoutBehavior="Flyout">
+
+
+    <MenuItem IconImageSource="logout.png" Clicked="Logout_MenuItem_Clicked" Text="Logout" />
+    <MenuItem IconImageSource="settings.png" Clicked="Settings_MenuItem_Clicked" Text="Settings" />
+
+    <TabBar>
+        <ShellContent Route="Login"
+            Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+         />
+    </TabBar>
+
+
+    
+    <TabBar
+        Route="Technician" 
+        FlyoutDisplayOptions="AsMultipleItems">
+
+        <Tab Title="Devices"
+             Icon="temperature_control.png">
+
+            <ShellContent Title="My Container"
+                      ContentTemplate="{DataTemplate technician:DeviceView}"/>
+
+        </Tab>
+        <Tab Title="Graphs"
+             Icon="line_chart.png">
+            <ShellContent Title="Temperature"
+                          ContentTemplate="{DataTemplate technician:TemperatureView}"
+                          Icon="temperature.png" />
+
+            <ShellContent Title="Humidity"
+                          ContentTemplate="{DataTemplate technician:HumidityView}" 
+                          Icon="humidity.png"/>
+            <ShellContent Title="Soil" 
+                          ContentTemplate="{DataTemplate technician:SoilWaterView}"
+                          Icon="soil.png" />
+            <ShellContent Title="Water" 
+                          ContentTemplate="{DataTemplate technician:SoilWaterView}"
+                          Icon="water.png"/>
+        </Tab>
+    </TabBar>
+    <TabBar 
+        Route="FleetOwner"
+        FlyoutDisplayOptions="AsMultipleItems">
+
+        <Tab Title="Geo-Location"
+             Icon="container.png">
+        <ShellContent Title="Geo-Location"
+                      ContentTemplate="{DataTemplate fleetowner:ContainerViewLocation}"
+                      Icon="container.png"/>
+        <ShellContent Title="Security" 
+                      ContentTemplate="{DataTemplate fleetowner:ContainerViewSecurity}"
+                       Icon="marker.png"/>
+            
+        </Tab>
+        <Tab Title="Map"
+             Icon="marker.png"
+             Route="Map">
+            <ShellContent Title="Map" 
+                          ContentTemplate="{DataTemplate fleetowner:MapView}"/>
+        </Tab>
+
+    </TabBar>
+</Shell>

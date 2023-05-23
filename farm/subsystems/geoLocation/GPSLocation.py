@@ -6,6 +6,11 @@ from geopy.geocoders import Nominatim
 from interfaces.sensors import ISensor, AReading
 
 """
+geopy: This is a Python client for several popular geocoding web services. It easy for Python developers to locate the coordinates of addresses, cities, countries, and landmarks across the globe using third-party geocoders and other data sources.
+"""
+
+
+"""
 I used this resource as a guide to connect & read the GPS (Air530) data with the Seeed reTerminal: 
 https://github.com/microsoft/IoT-For-Beginners/blob/main/3-transport/lessons/1-location-tracking/pi-gps-sensor.md
 
@@ -46,6 +51,8 @@ class GPSLocation(ISensor):
         :return list[AReading]: List of readinds measured by the sensor. Most sensors return a list with a single item.
         """
 
+        SATELLITE_LOCK_COUNT = 4
+
         data_line = ''
         full_address_location = ''
 
@@ -60,48 +67,45 @@ class GPSLocation(ISensor):
 
                     # If the parsed data is a position fix message, and isprocessed
                     if gps_data.sentence_type == GPSLocation.VALID_MESSAGE_TYPE:
-                        
-                        # Get the latitude value from the gps data
-                        latitude = pynmea2.dm_to_sd(gps_data.lat)
-                        # Get the longitude value from the gps data
-                        longitude = pynmea2.dm_to_sd(gps_data.lon)
 
-                        # Correct invalid latitude value
-                        if gps_data.lat_dir == 'S':
-                            latitude = latitude * -1
-                        # Correct invalid longitude value
-                        if gps_data.lon_dir == 'W':
-                            longitude = longitude * -1
+                        # Ensure the GPS is locked to a minimum of 'x' satellites
+                        if gps_data.num_sats != SATELLITE_LOCK_COUNT:
+                            # Get the latitude value from the gps data
+                            latitude = pynmea2.dm_to_sd(gps_data.lat)
+                            # Get the longitude value from the gps data
+                            longitude = pynmea2.dm_to_sd(gps_data.lon)
 
-                        # Print the coordinates with the number of satellites
-                        print(
-                            f'{latitude},{longitude} - from {gps_data.num_sats} satellites')
+                            # Correct invalid latitude value
+                            if gps_data.lat_dir == 'S':
+                                latitude = latitude * -1
+                            # Correct invalid longitude value
+                            if gps_data.lon_dir == 'W':
+                                longitude = longitude * -1
 
-                        # Get the full address location
-                        full_address_location = self._geolocator.reverse(
-                            f"{latitude}, {longitude}")
+                            # Print the coordinates with the number of satellites
+                            print(
+                                f'{latitude},{longitude} - from {gps_data.num_sats} satellites')
 
-                        print(full_address_location)
+                            # Get the full address location
+                            full_address_location = self._geolocator.reverse(
+                                f"{latitude}, {longitude}")
 
-                        # Return a new reading
-                        return AReading(AReading.Type.GPSLOCATION,
-                                    AReading.Unit.LOCATION, 
-                                    {
-                                        'value': f'({latitude}, {longitude})'
-                                    })
+                            print(full_address_location)
+
+                            # Return a new reading
+                            return AReading(AReading.Type.GPSLOCATION,
+                                        AReading.Unit.LOCATION, 
+                                        {
+                                            'value': f'Address: {full_address_location}'
+                                        })
 
                     # Read the data line from the GPS
                     data_line = self._serial.readline().decode('utf-8')
 
             except UnicodeDecodeError:
                 data_line = self._serial.readline().decode('utf-8')
-                
-            return AReading(AReading.Type.GPSLOCATION,
-                                    AReading.Unit.LOCATION, 
-                                    {
-                                        'value': f'(,)'
-                                    })
-        
+            except pynmea2.nmea.ParseError:
+                data_line = self._serial.readline().decode('utf-8')
 
 
 if __name__ == "__main__":

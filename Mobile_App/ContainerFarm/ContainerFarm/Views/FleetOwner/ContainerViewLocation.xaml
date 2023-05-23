@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ContainerFarm.Views.FleetOwner.ContainerViewLocation"
+             xmlns:models="clr-namespace:ContainerFarm.Models"
+             Title="Container Locations">
+    <Grid RowDefinitions="1*, auto">
+        <ScrollView Grid.Row="0">
+            <CollectionView
+            Margin="10"
+            x:Name="containerCollection">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Container">
+                        <SwipeView>
+                            <!--<SwipeView.LeftItems>
+
+                            <SwipeItem Text="Edit"
+                                       BackgroundColor="CornflowerBlue"
+                                       CommandParameter="{Binding .}"
+                                       Invoked="Edit_Container"/>
+                        </SwipeView.LeftItems>
+                        <SwipeView.RightItems>
+                            <SwipeItem Text="Delete"
+                                       CommandParameter="{Binding .}"
+
+                                       BackgroundColor="Red"
+                                       Invoked="SwipeItem_Invoked" />
+                        </SwipeView.RightItems>-->
+
+                            <Frame Margin="10" BackgroundColor="LightGreen">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Container_Farm_GeoLocation_Tapped"/>
+                                </Frame.GestureRecognizers>
+
+                                <Grid 
+                                RowDefinitions="auto, auto" 
+                                ColumnDefinitions="auto, auto, auto" 
+                                ColumnSpacing="25"
+                                VerticalOptions="Center"
+                                RowSpacing="10">
+                                    <!--Containers-->
+                                    <Image x:Name="containerNameLbl"
+                                       Grid.RowSpan="2"
+                                       Source="container"
+                                       WidthRequest="80"/>
+                                    <Label Grid.Column="1"
+                                        x:Name="nameBtn"
+                                        TextColor="Black"
+                                        Text="{Binding Name}"
+                                           LineBreakMode="CharacterWrap"
+                                        FontAttributes="Bold"
+                                        FontSize="20"
+                                       VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"/>
+                                    <Label Grid.Column="1"
+                                       Grid.Row="1"
+                                       Text="{Binding Location.GpsSensor.Address}"/>
+                                </Grid>
+
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+
+        <ImageButton Source="plus.png"
+                     HeightRequest="45"
+                     WidthRequest="45"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"
+                     Margin="0,0,15,15"
+                     Grid.Row="1"
+                     Clicked="Add_Btn_Clicked"/>
+    </Grid>
+</ContentPage>
