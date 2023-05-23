@@ -23,6 +23,16 @@ public partial class TemperatureView : ContentPage
     }
 
     /// <summary>
+    /// Changes the chart when navigated to this page.
+    /// </summary>
+    /// <param name="args"></param>
+    protected override void OnNavigatedTo(NavigatedToEventArgs args)
+    {
+        base.OnNavigatedTo(args);
+        temperature_cv.ItemsSource = ContainerRepo.TemperatureValues.OrderByDescending(temp => temp.EnqueuedTime);
+    }
+
+    /// <summary>
     /// The Series for the temperature values chart.
     /// </summary>
     public ISeries[] Series { get; set; } =

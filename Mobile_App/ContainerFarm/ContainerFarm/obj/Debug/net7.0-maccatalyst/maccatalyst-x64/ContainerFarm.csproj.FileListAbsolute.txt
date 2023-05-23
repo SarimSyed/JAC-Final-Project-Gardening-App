@@ -322,3 +322,4 @@ C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\
 C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\ContainerFarm.pdb
 C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\ContainerFarm.genruntimeconfig.cache
 C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\ref\ContainerFarm.dll
+C:\Users\Braeden\Documents\project\course-project-connected-tractors\Mobile_App\ContainerFarm\ContainerFarm\obj\Debug\net7.0-maccatalyst\maccatalyst-x64\resizetizer\r\Resources\plus.png

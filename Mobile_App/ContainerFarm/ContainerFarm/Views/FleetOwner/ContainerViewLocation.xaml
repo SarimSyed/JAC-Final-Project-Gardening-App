@@ -47,6 +47,7 @@
                                         x:Name="nameBtn"
                                         TextColor="Black"
                                         Text="{Binding Name}"
+                                           LineBreakMode="CharacterWrap"
                                         FontAttributes="Bold"
                                         FontSize="20"
                                        VerticalTextAlignment="Center"
