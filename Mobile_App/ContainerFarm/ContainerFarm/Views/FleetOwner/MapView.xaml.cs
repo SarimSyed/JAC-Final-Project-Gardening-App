@@ -50,13 +50,24 @@ public partial class MapView : ContentPage, IQueryAttributable
     /// <returns>The container's location from the specified address.</returns>
     private async Task<Location> GetContainerMapCoordinates(string containerAddress)
     {
-        IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(containerAddress);
+        try
+        {
+            IEnumerable<Location> locations = await Geocoding.Default.GetLocationsAsync(containerAddress);
 
-        Location location = locations?.FirstOrDefault();
+            Location location = locations?.FirstOrDefault();
 
-        return location == null
-            ? new Location(45.40872533174768, -74.15082292759962)
-            : location;
+            return location == null
+                ? new Location(45.40872533174768, -74.15082292759962)
+                : location;
+        }
+        catch (Exception e)
+        {
+
+            await DisplayAlert("GPS Error", $"The GPS took too long to respond: {e.Message}", "Ok");
+            //return default location
+            return new Location(45.40872533174768, -74.15082292759962);
+        }
+
     }
 
     /// <summary>
